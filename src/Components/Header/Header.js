@@ -11,7 +11,7 @@ const Header = ({ isMobile, setIsMobile }) => {
   const headerData = [
     { name: "HOME", icon: <Home size={20} />, path: "/" },
     { name: "RESUME", icon: <FileText size={20} />, path: "/resumebuild" },
-    { name: "PORTFOLIO", icon: <User size={20} />, path: "/portfolio" },
+    { name: "PORTFOLIO", icon: <FileText size={20} />, path: "/portfolio" },
     // { name: "LOGIN", icon: <LogIn size={20} />, path: "/login" },
     // { name: "SIGNUP", icon: <UserPlus size={20} />, path: "/signup" },
   ];
