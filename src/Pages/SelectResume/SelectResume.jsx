@@ -28,7 +28,7 @@ const SelectResume = ({ isMobile, setIsMobile }) => {
         <>
             <Header isMobile={isMobile} setIsMobile={setIsMobile} />
             <div className="p-4" style={{ minHeight: '100vh' }}>
-                <h2>Select Your Preferred Resume Template</h2>
+                <h2>Select Your Preferred Resume Template and Click to Download Yours</h2>
                 <p>Browse through our collection of professionally designed resume templates and choose the one that best represents your skills and experience.</p>
                 <p>Ensure your resume stands out by selecting a layout that highlights your strengths effectively.</p>
                 <PdfGenerator data={data} />

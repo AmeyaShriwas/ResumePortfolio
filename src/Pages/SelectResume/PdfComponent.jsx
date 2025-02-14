@@ -16,38 +16,38 @@ import pdf8 from './../../Assets/img8.png'
 
 
 const PdfComponent = ({ data }) => {
-    const [pdfUrls, setPdfUrls] = useState([]);
-    const [show, setShow] = useState(false);
-    const [selectedPDF, setSelectedPDF] = useState(null);
-    const [bgColor, setBgColor] = useState("");
-    const [textColor, setTextColor] = useState("");
-    const dispatch = useDispatch()
-    const colorsGet = useSelector(state => state.color)
-    console.log('data', data)
+  const [pdfUrls, setPdfUrls] = useState([]);
+  const [show, setShow] = useState(false);
+  const [selectedPDF, setSelectedPDF] = useState(null);
+  const [bgColor, setBgColor] = useState("");
+  const [textColor, setTextColor] = useState("");
+  const dispatch = useDispatch()
+  const colorsGet = useSelector(state => state.color)
+  console.log('data', data)
 
-    // const pdfDummu = [
-    //   pdf1, pdf2, pdf3, pdf4, pdf5, pdf6, pdf7, pdf8
-    // ]
+  // const pdfDummu = [
+  //   pdf1, pdf2, pdf3, pdf4, pdf5, pdf6, pdf7, pdf8
+  // ]
 
-    const pdfDummu = [
-      pdf1, pdf2, pdf3, pdf4, pdf5, pdf6, pdf7, pdf8
-    ]
-    // console.log('pdfD', pdfDummu)
+  const pdfDummu = [
+    pdf1, pdf2, pdf3, pdf4, pdf5, pdf6, pdf7, pdf8
+  ]
+  // console.log('pdfD', pdfDummu)
 
-    const resumeColors = [
-        { bgColor: "rgb(225, 61, 99)", textColor: "rgb(255, 255, 255)" }, // Format 1
-        { bgColor: "rgb(34, 109, 11)", textColor: "rgb(255, 255, 255)" }, // Format 2
-        { bgColor: " #282c36", textColor: "rgb(255, 255, 255)" }, // Format 3
-        { bgColor: "rgb(55, 49, 49)", textColor: "rgb(255, 255, 255)" }, // Format 4
-        { bgColor: "rgb(235, 89, 67)", textColor: "rgb(255, 255, 255)" }, // Format 5
-    ];
+  const resumeColors = [
+    { bgColor: "rgb(225, 61, 99)", textColor: "rgb(255, 255, 255)" }, // Format 1
+    { bgColor: "rgb(34, 109, 11)", textColor: "rgb(255, 255, 255)" }, // Format 2
+    { bgColor: " #282c36", textColor: "rgb(255, 255, 255)" }, // Format 3
+    { bgColor: "rgb(55, 49, 49)", textColor: "rgb(255, 255, 255)" }, // Format 4
+    { bgColor: "rgb(235, 89, 67)", textColor: "rgb(255, 255, 255)" }, // Format 5
+  ];
 
-    useEffect(() => {
-        dispatch(addColor(resumeColors))
-    }, [])
+  useEffect(() => {
+    dispatch(addColor(resumeColors))
+  }, [])
 
 
-    const generatePDF = (autoDisplay = false) => {
+  const generatePDF = (autoDisplay = false) => {
     //   if (!data || Object.keys(data).length === 0) return; // Ensure data exists
     //   const hasValidArrayData =
     //   Array.isArray(data.educational) && data.educational.length > 0 &&
@@ -57,9 +57,9 @@ const PdfComponent = ({ data }) => {
     // if (!hasValidArrayData) {
     //  return
     // }
-        return new Promise((resolve, reject) => {
-            const htmlString = [
-                `<html>
+    return new Promise((resolve, reject) => {
+      const htmlString = [
+        `<html>
       <body>
         <style>
           body {
@@ -190,30 +190,30 @@ const PdfComponent = ({ data }) => {
             <div class="left-section">
               <div class="section-title">Experience & Training</div>
               ${data.training_expe
-                    .map(
-                        (exp) => `
+          .map(
+            (exp) => `
                   <div class="experience-item">
                     <div class="date-range">${exp.from} - ${exp.to}</div>
                     <div class="job-title">${exp.training_company} - ${exp.course_job}</div>
                     <div class="description">${exp.description}</div>
                   </div>
                 `
-                    )
-                    .join("")}
+          )
+          .join("")}
             </div>
 
             <div class="right-section">
               <div class="section-title">Education</div>
               ${data.educational
-                    .map(
-                        (edu) => `
+          .map(
+            (edu) => `
                   <div class="education-item">
                     <div class="date-range">${edu.from} - ${edu.to}</div>
                     <div class="job-title">${edu.university_school} - ${edu.degree_class}</div>
                   </div>
                 `
-                    )
-                    .join("")}
+          )
+          .join("")}
 
               <div class="section-title">Skills</div>
               <div class="skills">
@@ -227,7 +227,7 @@ const PdfComponent = ({ data }) => {
  `,
 
 
-                `<html>
+        `<html>
   <body>
     <style>
       body {
@@ -391,7 +391,7 @@ const PdfComponent = ({ data }) => {
 </html>`,
 
 
-                `<html>
+        `<html>
   <body>
     <style>
       body {
@@ -521,7 +521,7 @@ const PdfComponent = ({ data }) => {
   </body>
 </html>
 `,
-                `<html>
+        `<html>
 <head>
   <style>
     body {
@@ -658,7 +658,7 @@ const PdfComponent = ({ data }) => {
 </body>
 </html>
 `,
-                `<html>
+        `<html>
   <body>
     <style>
       body {
@@ -833,7 +833,7 @@ const PdfComponent = ({ data }) => {
   </body>
 </html>
 `,
-`<html>
+        `<html>
   <body>
     <style>
       body {
@@ -975,7 +975,7 @@ const PdfComponent = ({ data }) => {
   </body>
 </html>
 `,
-`<html>
+        `<html>
   <body>
     <style>
       body {
@@ -1113,7 +1113,7 @@ const PdfComponent = ({ data }) => {
   </body>
 </html>
 `,
-`<html>
+        `<html>
   <body>
     <style>
       body {
@@ -1247,130 +1247,130 @@ const PdfComponent = ({ data }) => {
 `
 
 
-            ]
+      ]
 
-            const pdfUrlsArray = [];
-            htmlString.forEach((html, index) => {
-                const iframe = document.createElement("iframe");
-                document.body.appendChild(iframe);
-                const doc = iframe.contentDocument || iframe.contentWindow.document;
-                doc.open();
-                doc.write(html);
-                doc.close();
+      const pdfUrlsArray = [];
+      htmlString.forEach((html, index) => {
+        const iframe = document.createElement("iframe");
+        document.body.appendChild(iframe);
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        doc.open();
+        doc.write(html);
+        doc.close();
 
-                iframe.onload = () => {
-                    html2canvas(doc.body, { scale: 2 }).then((canvas) => {
-                        const imgData = canvas.toDataURL("image/png");
-                        const pdf = new jsPDF("p", "mm", "a4");
-                        const pdfWidth = pdf.internal.pageSize.getWidth();
-                        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-                        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-                        const pdfBlob = pdf.output("blob");
-                        const pdfUrl = URL.createObjectURL(pdfBlob);
+        iframe.onload = () => {
+          html2canvas(doc.body, { scale: 2 }).then((canvas) => {
+            const imgData = canvas.toDataURL("image/png");
+            const pdf = new jsPDF("p", "mm", "a4");
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+            pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+            const pdfBlob = pdf.output("blob");
+            const pdfUrl = URL.createObjectURL(pdfBlob);
 
-                        pdfUrlsArray.push(pdfUrl);
-                        if (pdfUrlsArray.length === htmlString.length) {
-                            setPdfUrls(pdfUrlsArray);
-                            resolve(pdfUrlsArray);
-                        }
+            pdfUrlsArray.push(pdfUrl);
+            if (pdfUrlsArray.length === htmlString.length) {
+              setPdfUrls(pdfUrlsArray);
+              resolve(pdfUrlsArray);
+            }
 
-                        document.body.removeChild(iframe);
-                    });
-                };
-            });
-        })
+            document.body.removeChild(iframe);
+          });
+        };
+      });
+    })
+  };
+
+  useEffect(() => {
+    const checkDataAndGenerate = () => {
+      if (!data || Object.keys(data).length === 0) {
+        setTimeout(checkDataAndGenerate, 4000);
+        return;
+      }
+
+      const hasValidArrayData =
+        Array.isArray(data.educational) && data.educational.length > 0 &&
+        Array.isArray(data.training_expe) && data.training_expe.length > 0 &&
+        Array.isArray(data.skill) && data.skill.length > 0;
+
+      if (!hasValidArrayData) {
+        setTimeout(checkDataAndGenerate, 4000);
+        return;
+      }
+
+      console.log("Running generatePDF()");
+      generatePDF();
     };
 
-    useEffect(() => {
-      const checkDataAndGenerate = () => {
-        if (!data || Object.keys(data).length === 0) {
-          setTimeout(checkDataAndGenerate, 4000);
-          return;
-        }
-  
-        const hasValidArrayData =
-          Array.isArray(data.educational) && data.educational.length > 0 &&
-          Array.isArray(data.training_expe) && data.training_expe.length > 0 &&
-          Array.isArray(data.skill) && data.skill.length > 0;
-  
-        if (!hasValidArrayData) {
-          setTimeout(checkDataAndGenerate, 4000);
-          return;
-        }
-  
-        console.log("Running generatePDF()");
-        generatePDF();
-      };
-  
-      checkDataAndGenerate();
-    }, [data]); // Runs again if `data` updates
+    checkDataAndGenerate();
+  }, [data]); // Runs again if `data` updates
 
-    const choosePDFEdit = (index) => {
-        alert(index)
-    }
+  const choosePDFEdit = (index) => {
+    alert(index)
+  }
 
-    const handleColorChange = (e) => {
+  const handleColorChange = (e) => {
 
-    }
+  }
 
-    const handleShow = (index) => {
-        setSelectedPDF(index);
-        setShow(true);
-        console.log('color', colorsGet[index])
-    };
+  const handleShow = (index) => {
+    setSelectedPDF(index);
+    setShow(true);
+    console.log('color', colorsGet[index])
+  };
 
-    const handleClose = () => setShow(false);
+  const handleClose = () => setShow(false);
 
-    return (
-        <div className="flex flex-col items-center p-0">
-            <div style={{ display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', gap: "30px", height: '50vh', }}>
-                {pdfUrls.length >0 ? pdfUrls.map((url, index) => (
-                    <div key={index} style={{ position: "relative", padding: '10px', boxShadow: `rgba(0, 0, 0, 0.24) 0px 3px 8px` }}>
-                        <div style={{
-                            display: 'inline-block',
-                            transition: 'transform 0.3s ease-in-out, z-index 0s',
-                            position: 'relative'
-                        }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.transform = 'scale(1.1)';
-                                e.currentTarget.style.zIndex = '1000'; // Increase z-index
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.transform = 'scale(1)';
-                                e.currentTarget.style.zIndex = '1'; // Reset z-index
-                            }}
-                        >
-                          <img
-    src={pdfDummu[index]}
-    style={{
-        width: "200px",
-        height: "281px",
-        border: "none",
-        backgroundColor: "white",
-    }}
-></img>
-
-                        </div>
-
-
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
-                            {/* <Button variant="dark" onClick={() => handleShow(index)} style={{ marginTop: "10px", fontSize: "12px", padding: "5px 10px" }}>
-                                Edit
-                            </Button> */}
-                            <Button variant="success" target="_blank" rel="noopener noreferrer" href={url} style={{ marginTop: "10px", fontSize: "12px", padding: "5px 10px" }}>
-                                Download
-                            </Button>
-                        </div>
-
-                    </div>
-                )): null}
-
-             
+  return (
+    <div className="flex flex-col items-center p-0">
+      <div style={{ display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', gap: "30px", height: '50vh', }}>
+        {pdfUrls.length > 0 ? pdfUrls.map((url, index) => (
+          <div key={index} style={{ position: "relative", padding: '10px', boxShadow: `rgba(0, 0, 0, 0.24) 0px 3px 8px` }}>
+            <div style={{
+              display: 'inline-block',
+              transition: 'transform 0.3s ease-in-out, z-index 0s',
+              position: 'relative'
+            }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'scale(1.1)';
+                e.currentTarget.style.zIndex = '1000'; // Increase z-index
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.zIndex = '1'; // Reset z-index
+              }}
+            >
+              <img
+                src={pdfDummu[index]}
+                style={{
+                  width: "200px",
+                  height: "281px",
+                  border: "none",
+                  backgroundColor: "white",
+                }}
+              ></img>
 
             </div>
-           
-        </div>
-    );
+
+
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+              {/* <Button variant="dark" onClick={() => handleShow(index)} style={{ marginTop: "10px", fontSize: "12px", padding: "5px 10px" }}>
+                                Edit
+                            </Button> */}
+              <Button variant="success" target="_blank" rel="noopener noreferrer" href={url} style={{ marginTop: "10px", fontSize: "12px", padding: "5px 10px" }}>
+                Download
+              </Button>
+            </div>
+
+          </div>
+        )) : null}
+
+
+
+      </div>
+
+    </div>
+  );
 };
 
 export default PdfComponent;
