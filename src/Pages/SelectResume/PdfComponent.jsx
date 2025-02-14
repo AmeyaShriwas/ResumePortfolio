@@ -13,9 +13,10 @@ import pdf5 from './../../Assets/img5.png'
 import pdf6 from './../../Assets/img6.png'
 import pdf7 from './../../Assets/img7.png'
 import pdf8 from './../../Assets/img8.png'
+import Footer from "../../Components/Footer/Footer";
 
 
-const PdfComponent = ({ data }) => {
+const PdfComponent = ({ data, isMobile, setIsMobile }) => {
   const [pdfUrls, setPdfUrls] = useState([]);
   const [show, setShow] = useState(false);
   const [selectedPDF, setSelectedPDF] = useState(null);
@@ -23,6 +24,8 @@ const PdfComponent = ({ data }) => {
   const [textColor, setTextColor] = useState("");
   const dispatch = useDispatch()
   const colorsGet = useSelector(state => state.color)
+  const [isLoading, setIsLoading] = useState(true);
+
   console.log('data', data)
 
   // const pdfDummu = [
@@ -1321,16 +1324,24 @@ const PdfComponent = ({ data }) => {
 
   const handleClose = () => setShow(false);
 
+  useEffect(() => {
+    if (pdfUrls.length > 0) {
+      setIsLoading(false);
+    }
+  }, [pdfUrls]);
+
   return (
-    <div className="flex flex-col items-center p-0">
-      <div style={{ display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', gap: "30px", height: '50vh', }}>
-        {pdfUrls.length > 0 ? pdfUrls.map((url, index) => (
-          <div key={index} style={{ position: "relative", padding: '10px', boxShadow: `rgba(0, 0, 0, 0.24) 0px 3px 8px` }}>
-            <div style={{
-              display: 'inline-block',
-              transition: 'transform 0.3s ease-in-out, z-index 0s',
-              position: 'relative'
-            }}
+    <div className="flex flex-col items-center p-0" style={{ height: '100%' }}>
+    <div style={{ display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', gap: "30px", height: '100%' }}>
+      {isLoading ? <Spinner /> : (
+        pdfUrls?.map((url, index) => (
+          <div key={index} style={{  padding: '10px', boxShadow: `rgba(0, 0, 0, 0.24) 0px 3px 8px` }}>
+            <div
+              style={{
+                display: 'inline-block',
+                transition: 'transform 0.3s ease-in-out, z-index 0s',
+                position: 'relative'
+              }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'scale(1.1)';
                 e.currentTarget.style.zIndex = '1000'; // Increase z-index
@@ -1348,28 +1359,18 @@ const PdfComponent = ({ data }) => {
                   border: "none",
                   backgroundColor: "white",
                 }}
-              ></img>
-
+              />
             </div>
-
-
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
-              {/* <Button variant="dark" onClick={() => handleShow(index)} style={{ marginTop: "10px", fontSize: "12px", padding: "5px 10px" }}>
-                                Edit
-                            </Button> */}
               <Button variant="success" target="_blank" rel="noopener noreferrer" href={url} style={{ marginTop: "10px", fontSize: "12px", padding: "5px 10px" }}>
                 Download
               </Button>
             </div>
-
           </div>
-        )) : null}
-
-
-
-      </div>
-
+        ))
+      )}
     </div>
+  </div>
   );
 };
 

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Header from '../../Components/Header/Header';
 import Footer from '../../Components/Footer/Footer';
 import { useSelector } from 'react-redux';
-import PdfComponent from './PdfComponent';
 import PdfGenerator from './PdfComponent';
 
 const SelectResume = ({ isMobile, setIsMobile }) => {
@@ -31,11 +30,11 @@ const SelectResume = ({ isMobile, setIsMobile }) => {
                 <h2>Select Your Preferred Resume Template and Click to Download Yours</h2>
                 <p>Browse through our collection of professionally designed resume templates and choose the one that best represents your skills and experience.</p>
                 <p>Ensure your resume stands out by selecting a layout that highlights your strengths effectively.</p>
-                <PdfGenerator data={data} />
+                <PdfGenerator data={data} isMobile={isMobile} setIsMobile={setIsMobile} />
+
             </div>
-            <div>
-            {/* <Footer isMobile={isMobile} setIsMobile={setIsMobile} /> */}
-            </div>
+            <Footer isMobile={isMobile} setIsMobile={setIsMobile}/>
+         
         </>
     );
 };

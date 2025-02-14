@@ -25,7 +25,7 @@ const Training_ExperienceDetails = ({training_experience, settraining_experience
         );
     
         const shortDescription = training_experience.some((data) => 
-            data.description.length < 300
+            data.description.length < 200
         );
     
         if (emptyFields) {
@@ -110,6 +110,7 @@ const Training_ExperienceDetails = ({training_experience, settraining_experience
                                 onChange={(e) => handleDataChange(e, index)}
                                 as="textarea"
                                 rows={3}
+                                maxLength={300}
                                 placeholder="Describe your training or experience"
                             />
                         </Form.Group>

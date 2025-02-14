@@ -3,6 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
+import pdf1 from "./../../Assets/img1.png";
+import pdf2 from "./../../Assets/img2.png";
+import pdf3 from "./../../Assets/img3.png";
+import pdf4 from "./../../Assets/img4.png";
+import pdf5 from "./../../Assets/img5.png";
+import pdf6 from "./../../Assets/img6.png";
+import pdf7 from "./../../Assets/img7.png";
+import pdf8 from "./../../Assets/img8.png";
 
 const Home = ({ isMobile, setIsMobile }) => {
   const navigate = useNavigate();
@@ -12,66 +20,60 @@ const Home = ({ isMobile, setIsMobile }) => {
       <Header isMobile={isMobile} setIsMobile={setIsMobile} />
 
       {/* Hero Section */}
-      <motion.div 
+      <motion.div
         className="hero-section"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        {/* Text Section */}
-        <motion.div 
+        <motion.div
           className="text-section"
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1 }}
         >
-          <h1 className="title">
-            🚀 Create a Stunning Resume & Portfolio <br /> **in Minutes – Free!**
-          </h1>
+          <h1 className="title">🚀 Create a Stunning Resume & Portfolio <br /> <b>in Minutes – Free!</b></h1>
           <p className="description">
-            Build your resume and portfolio effortlessly with our free online tools. 
-            Showcase your skills, experience, and projects with a beautifully designed portfolio, 
+            Build your resume and portfolio effortlessly with our free online tools.
+            Showcase your skills, experience, and projects with a beautifully designed portfolio,
             or craft a professional resume that stands out.
           </p>
-
-          {/* Buttons */}
           <div className="button-group">
-            <motion.button 
+            <motion.button
               className="btn resume-btn"
               onClick={() => navigate("/resumeBuild")}
               whileHover={{ scale: 1.1 }}
-            >
-              ✍️ Create a Resume Now
-            </motion.button>
-
-            <motion.button 
+            >✍️ Create a Resume Now</motion.button>
+            <motion.button
               className="btn portfolio-btn"
-              onClick={() => navigate("/portfolioBuild")}
+              onClick={() => navigate("/portfolio")}
               whileHover={{ scale: 1.1 }}
-            >
-              🌟 Create a Portfolio Now
-            </motion.button>
+            >🌟 Create a Portfolio Now</motion.button>
           </div>
         </motion.div>
-
-        {/* Image Section */}
-        {/* <motion.div 
-          className="image-section"
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <img 
-            src="https://media.istockphoto.com/id/1412764569/photo/resume-and-keyboard-on-the-table-closeup.jpg?s=612x612&w=0&k=20&c=ZwTB59-CJq9yZADaO4j5cxaW9wlIUexcx4_iNjrNGXw="
-            alt="Resume Builder"
-            className="hero-image"
-          />
-        </motion.div> */}
       </motion.div>
+
+      {/* View Our Templates Section */}
+      <div className="templates-section">
+        <h2 className="templates-title">View Our Templates</h2>
+        <motion.div 
+          className="templates-slider"
+          animate={{ x: [0, -300, -600, -900, 0] }}
+          transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
+        >
+          <img src={pdf1} alt="Template 1" className="template-image" />
+          <img src={pdf2} alt="Template 2" className="template-image" />
+          <img src={pdf3} alt="Template 3" className="template-image" />
+          <img src={pdf4} alt="Template 4" className="template-image" />
+          <img src={pdf5} alt="Template 1" className="template-image" />
+          <img src={pdf6} alt="Template 2" className="template-image" />
+          <img src={pdf7} alt="Template 3" className="template-image" />
+          <img src={pdf8} alt="Template 4" className="template-image" />
+        </motion.div>
+      </div>
 
       <Footer isMobile={isMobile} />
 
-      {/* Styles */}
       <style jsx>{`
         .hero-section {
           display: flex;
@@ -80,7 +82,6 @@ const Home = ({ isMobile, setIsMobile }) => {
           justify-content: center;
           text-align: center;
           padding: 50px 20px;
-          // background: linear-gradient(to right,rgb(0, 0, 0),rgb(136, 122, 103));
           color: black;
           min-height: 80vh;
         }
@@ -113,7 +114,6 @@ const Home = ({ isMobile, setIsMobile }) => {
           border-radius: 30px;
           cursor: pointer;
           box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .resume-btn {
           background: linear-gradient(to right, #007bff, #00c6ff);
@@ -121,32 +121,26 @@ const Home = ({ isMobile, setIsMobile }) => {
         .portfolio-btn {
           background: linear-gradient(to right, #28a745, #00ff99);
         }
-        .btn:hover {
-          transform: scale(1.1);
-          box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+        .templates-section {
+          text-align: center;
+          margin-top: 50px;
+          overflow: hidden;
         }
-        .image-section {
-          max-width: 500px;
+        .templates-title {
+          font-size: 30px;
+          font-weight: bold;
+          margin-bottom: 20px;
         }
-        .hero-image {
-          width: 100%;
-          border-radius: 20px;
-          box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+        .templates-slider {
+          display: flex;
+          width: 1200px;
         }
-        @media (max-width: 768px) {
-          .title {
-            font-size: 32px;
-          }
-          .description {
-            font-size: 18px;
-          }
-          .btn {
-            font-size: 16px;
-            padding: 12px 20px;
-          }
-          .image-section {
-            max-width: 100%;
-          }
+        .template-image {
+          width: 300px;
+          height: auto;
+          margin-right: 20px;
+          border-radius: 10px;
+          box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
         }
       `}</style>
     </>
