@@ -5,16 +5,14 @@ import { Modal, Button, Form } from "react-bootstrap";
 import Spinner from "../../Components/Spinner/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { addColor } from "../../Redux/Slices/ResumeSlice";
-import pdf1 from './../../Assets/pdf1.pdf'
-import pdf2 from './../../Assets/pdf2.pdf'
-
-import pdf3 from './../../Assets/pdf3.pdf'
-
-import pdf4 from './../../Assets/pdf4.pdf'
-import pdf5 from './../../Assets/pdf5.pdf'
-import pdf6 from './../../Assets/pdf6.pdf'
-import pdf7 from './../../Assets/pdf7.pdf'
-import pdf8 from './../../Assets/pdf8.pdf'
+import pdf1 from './../../Assets/img1.png'
+import pdf2 from './../../Assets/img2.png'
+import pdf3 from './../../Assets/img3.png'
+import pdf4 from './../../Assets/img4.png'
+import pdf5 from './../../Assets/img5.png'
+import pdf6 from './../../Assets/img6.png'
+import pdf7 from './../../Assets/img7.png'
+import pdf8 from './../../Assets/img8.png'
 
 
 const PdfComponent = ({ data }) => {
@@ -26,6 +24,10 @@ const PdfComponent = ({ data }) => {
     const dispatch = useDispatch()
     const colorsGet = useSelector(state => state.color)
     console.log('data', data)
+
+    // const pdfDummu = [
+    //   pdf1, pdf2, pdf3, pdf4, pdf5, pdf6, pdf7, pdf8
+    // ]
 
     const pdfDummu = [
       pdf1, pdf2, pdf3, pdf4, pdf5, pdf6, pdf7, pdf8
@@ -1338,15 +1340,15 @@ const PdfComponent = ({ data }) => {
                                 e.currentTarget.style.zIndex = '1'; // Reset z-index
                             }}
                         >
-                          <iframe
-    src={`https://web.resumebuilder.ameyashriwas.in${pdfDummu[index]}`}
+                          <img
+    src={pdfDummu[index]}
     style={{
         width: "200px",
         height: "281px",
         border: "none",
         backgroundColor: "white",
     }}
-></iframe>
+></img>
 
                         </div>
 
