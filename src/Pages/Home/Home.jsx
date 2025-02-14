@@ -32,7 +32,7 @@ const Home = ({ isMobile, setIsMobile }) => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1 }}
         >
-          <h1 className="title">🚀 Create a Stunning Resume & Portfolio <br /> <b>in Minutes – Free!</b></h1>
+          <span className="title">🚀 Create a Stunning Resume & Portfolio <br /> <b>in Minutes – Free!</b></span>
           <p className="description">
             Build your resume and portfolio effortlessly with our free online tools.
             Showcase your skills, experience, and projects with a beautifully designed portfolio,
@@ -90,7 +90,7 @@ const Home = ({ isMobile, setIsMobile }) => {
           margin-bottom: 30px;
         }
         .title {
-          font-size: 60px;
+          font-size: 3rem;
           font-weight: bold;
           line-height: 1.3;
         }
@@ -125,6 +125,7 @@ const Home = ({ isMobile, setIsMobile }) => {
           text-align: center;
           margin-top: 50px;
           overflow: hidden;
+          padding: 20px;
         }
         .templates-title {
           font-size: 30px;
