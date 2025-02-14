@@ -30,6 +30,7 @@ const PdfComponent = ({ data }) => {
     const pdfDummu = [
       pdf1, pdf2, pdf3, pdf4, pdf5, pdf6, pdf7, pdf8
     ]
+    // console.log('pdfD', pdfDummu)
 
     const resumeColors = [
         { bgColor: "rgb(225, 61, 99)", textColor: "rgb(255, 255, 255)" }, // Format 1
@@ -1329,7 +1330,7 @@ const PdfComponent = ({ data }) => {
                             position: 'relative'
                         }}
                             onMouseEnter={(e) => {
-                                e.currentTarget.style.transform = 'scale(2.1)';
+                                e.currentTarget.style.transform = 'scale(1.1)';
                                 e.currentTarget.style.zIndex = '1000'; // Increase z-index
                             }}
                             onMouseLeave={(e) => {
@@ -1337,15 +1338,16 @@ const PdfComponent = ({ data }) => {
                                 e.currentTarget.style.zIndex = '1'; // Reset z-index
                             }}
                         >
-                            <iframe
-                                src={pdfDummu[index]}
-                                style={{
-                                    width: "200px",
-                                    height: "281px",
-                                    border: 'none',
-                                    backgroundColor: 'white'
-                                }}
-                            ></iframe>
+                          <iframe
+    src={`https://web.resumebuilder.ameyashriwas.in${pdfDummu[index]}`}
+    style={{
+        width: "200px",
+        height: "281px",
+        border: "none",
+        backgroundColor: "white",
+    }}
+></iframe>
+
                         </div>
 
 
