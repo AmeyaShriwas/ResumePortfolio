@@ -5,6 +5,17 @@ import { Modal, Button, Form } from "react-bootstrap";
 import Spinner from "../../Components/Spinner/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { addColor } from "../../Redux/Slices/ResumeSlice";
+import pdf1 from './../../Assets/pdf1.pdf'
+import pdf2 from './../../Assets/pdf2.pdf'
+
+import pdf3 from './../../Assets/pdf3.pdf'
+
+import pdf4 from './../../Assets/pdf4.pdf'
+import pdf5 from './../../Assets/pdf5.pdf'
+import pdf6 from './../../Assets/pdf6.pdf'
+import pdf7 from './../../Assets/pdf7.pdf'
+import pdf8 from './../../Assets/pdf8.pdf'
+
 
 const PdfComponent = ({ data }) => {
     const [pdfUrls, setPdfUrls] = useState([]);
@@ -15,6 +26,10 @@ const PdfComponent = ({ data }) => {
     const dispatch = useDispatch()
     const colorsGet = useSelector(state => state.color)
     console.log('data', data)
+
+    const pdfDummu = [
+      pdf1, pdf2, pdf3, pdf4, pdf5, pdf6, pdf7, pdf8
+    ]
 
     const resumeColors = [
         { bgColor: "rgb(225, 61, 99)", textColor: "rgb(255, 255, 255)" }, // Format 1
@@ -1304,98 +1319,53 @@ const PdfComponent = ({ data }) => {
     const handleClose = () => setShow(false);
 
     return (
-      <div className="flex flex-col items-center p-0">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexWrap: "wrap",
-          gap: "20px",
-          minHeight: "50vh",
-          width: "100%",
-        }}
-      >
-        {pdfUrls.length > 0
-          ? pdfUrls.map((url, index) => (
-              <div
-                key={index}
-                style={{
-                  position: "relative",
-                  padding: "10px",
-                  boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                  borderRadius: "8px",
-                  backgroundColor: "#fff",
-                }}
-              >
-                <div
-                  style={{
-                    display: "inline-block",
-                    transition: "transform 0.3s ease-in-out, z-index 0s",
-                    position: "relative",
-                    transformOrigin: "center",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "scale(2.1)";
-                    e.currentTarget.style.zIndex = "1000";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "scale(1)";
-                    e.currentTarget.style.zIndex = "1";
-                  }}
-                >
-                 <iframe
-  src={`https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`}
-  style={{
-    width: "200px",
-    height: "281px",
-    border: "none",
-    backgroundColor: "white",
-  }}
-></iframe>
+        <div className="flex flex-col items-center p-0">
+            <div style={{ display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', gap: "30px", height: '50vh', }}>
+                {pdfUrls.length >0 ? pdfUrls.map((url, index) => (
+                    <div key={index} style={{ position: "relative", padding: '10px', boxShadow: `rgba(0, 0, 0, 0.24) 0px 3px 8px` }}>
+                        <div style={{
+                            display: 'inline-block',
+                            transition: 'transform 0.3s ease-in-out, z-index 0s',
+                            position: 'relative'
+                        }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.transform = 'scale(2.1)';
+                                e.currentTarget.style.zIndex = '1000'; // Increase z-index
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.transform = 'scale(1)';
+                                e.currentTarget.style.zIndex = '1'; // Reset z-index
+                            }}
+                        >
+                            <iframe
+                                src={pdfDummu[index]}
+                                style={{
+                                    width: "200px",
+                                    height: "281px",
+                                    border: 'none',
+                                    backgroundColor: 'white'
+                                }}
+                            ></iframe>
+                        </div>
 
-                </div>
 
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "100%",
-                    marginTop: "10px",
-                  }}
-                >
-                  <Button
-                    variant="success"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={url}
-                    style={{
-                      fontSize: "12px",
-                      padding: "5px 10px",
-                    }}
-                  >
-                    Download
-                  </Button>
-                </div>
-              </div>
-            ))
-          : null}
-      </div>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+                            {/* <Button variant="dark" onClick={() => handleShow(index)} style={{ marginTop: "10px", fontSize: "12px", padding: "5px 10px" }}>
+                                Edit
+                            </Button> */}
+                            <Button variant="success" target="_blank" rel="noopener noreferrer" href={url} style={{ marginTop: "10px", fontSize: "12px", padding: "5px 10px" }}>
+                                Download
+                            </Button>
+                        </div>
 
-      <style jsx>{`
-        @media (max-width: 600px) {
-          div[style*="width: 200px"] iframe {
-            width: 140px !important;
-            height: 200px !important;
-          }
+                    </div>
+                )): null}
 
-          div[style*="scale(2.1)"] {
-            transform: scale(1.5) !important;
-          }
-        }
-      `}</style>
-    </div>
+             
+
+            </div>
+           
+        </div>
     );
 };
 
