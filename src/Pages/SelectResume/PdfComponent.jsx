@@ -1306,7 +1306,7 @@ const PdfComponent = ({ data }) => {
     return (
         <div className="flex flex-col items-center p-0">
             <div style={{ display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', gap: "30px", height: '50vh', }}>
-                {pdfUrls.length == 0 ? <Spinner /> : pdfUrls.map((url, index) => (
+                {pdfUrls.length >0 ? pdfUrls.map((url, index) => (
                     <div key={index} style={{ position: "relative", padding: '10px', boxShadow: `rgba(0, 0, 0, 0.24) 0px 3px 8px` }}>
                         <div style={{
                             display: 'inline-block',
@@ -1344,7 +1344,7 @@ const PdfComponent = ({ data }) => {
                         </div>
 
                     </div>
-                ))}
+                )): null}
 
                 {/* Modal */}
 
