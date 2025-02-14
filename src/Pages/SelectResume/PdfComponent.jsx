@@ -1304,74 +1304,97 @@ const PdfComponent = ({ data }) => {
     const handleClose = () => setShow(false);
 
     return (
-        <div className="flex flex-col items-center p-0">
-            <div style={{ display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', gap: "30px", height: '50vh', }}>
-                {pdfUrls.length >0 ? pdfUrls.map((url, index) => (
-                    <div key={index} style={{ position: "relative", padding: '10px', boxShadow: `rgba(0, 0, 0, 0.24) 0px 3px 8px` }}>
-                        <div style={{
-                            display: 'inline-block',
-                            transition: 'transform 0.3s ease-in-out, z-index 0s',
-                            position: 'relative'
-                        }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.transform = 'scale(2.1)';
-                                e.currentTarget.style.zIndex = '1000'; // Increase z-index
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.transform = 'scale(1)';
-                                e.currentTarget.style.zIndex = '1'; // Reset z-index
-                            }}
-                        >
-                            <iframe
-                                src={url}
-                                style={{
-                                    width: "200px",
-                                    height: "281px",
-                                    border: 'none',
-                                    backgroundColor: 'white'
-                                }}
-                            ></iframe>
-                        </div>
+      <div className="flex flex-col items-center p-0">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: "20px",
+          minHeight: "50vh",
+          width: "100%",
+        }}
+      >
+        {pdfUrls.length > 0
+          ? pdfUrls.map((url, index) => (
+              <div
+                key={index}
+                style={{
+                  position: "relative",
+                  padding: "10px",
+                  boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                  borderRadius: "8px",
+                  backgroundColor: "#fff",
+                }}
+              >
+                <div
+                  style={{
+                    display: "inline-block",
+                    transition: "transform 0.3s ease-in-out, z-index 0s",
+                    position: "relative",
+                    transformOrigin: "center",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "scale(2.1)";
+                    e.currentTarget.style.zIndex = "1000";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "scale(1)";
+                    e.currentTarget.style.zIndex = "1";
+                  }}
+                >
+                  <iframe
+                    src={url}
+                    style={{
+                      width: "200px",
+                      height: "281px",
+                      border: "none",
+                      backgroundColor: "white",
+                    }}
+                  ></iframe>
+                </div>
 
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "100%",
+                    marginTop: "10px",
+                  }}
+                >
+                  <Button
+                    variant="success"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={url}
+                    style={{
+                      fontSize: "12px",
+                      padding: "5px 10px",
+                    }}
+                  >
+                    Download
+                  </Button>
+                </div>
+              </div>
+            ))
+          : null}
+      </div>
 
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
-                            {/* <Button variant="dark" onClick={() => handleShow(index)} style={{ marginTop: "10px", fontSize: "12px", padding: "5px 10px" }}>
-                                Edit
-                            </Button> */}
-                            <Button variant="success" target="_blank" rel="noopener noreferrer" href={url} style={{ marginTop: "10px", fontSize: "12px", padding: "5px 10px" }}>
-                                Download
-                            </Button>
-                        </div>
+      <style jsx>{`
+        @media (max-width: 600px) {
+          div[style*="width: 200px"] iframe {
+            width: 140px !important;
+            height: 200px !important;
+          }
 
-                    </div>
-                )): null}
-
-                {/* Modal */}
-
-            </div>
-            <Modal show={show} onHide={handleClose} style={{ marginTop: '100px' }}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Customize PDF View</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                        <Form.Group controlId="bgColor">
-                            <Form.Label>Background Color</Form.Label>
-                            <Form.Control type="color" value={bgColor} name="bgColor" onChange={() => handleColorChange('bg')} />
-                        </Form.Group>
-                        <Form.Group controlId="textColor" className="mt-3">
-                            <Form.Label>Text Color</Form.Label>
-                            <Form.Control type="color" value={textColor} name="textColor" onChange={() => handleColorChange('text')} />
-                        </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </div>
+          div[style*="scale(2.1)"] {
+            transform: scale(1.5) !important;
+          }
+        }
+      `}</style>
+    </div>
     );
 };
 
