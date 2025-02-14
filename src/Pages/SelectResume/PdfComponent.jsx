@@ -1344,15 +1344,16 @@ const PdfComponent = ({ data }) => {
                     e.currentTarget.style.zIndex = "1";
                   }}
                 >
-                  <iframe
-                    src={url}
-                    style={{
-                      width: "200px",
-                      height: "281px",
-                      border: "none",
-                      backgroundColor: "white",
-                    }}
-                  ></iframe>
+                 <iframe
+  src={`https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`}
+  style={{
+    width: "200px",
+    height: "281px",
+    border: "none",
+    backgroundColor: "white",
+  }}
+></iframe>
+
                 </div>
 
                 <div
