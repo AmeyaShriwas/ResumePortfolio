@@ -1,49 +1,22 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
+import PortfolioDetails from "./AddPersonalDetails";
 
-const Portfolio = ({ isMobile, setIsMobile }) => {
-  const [timer, setTimer] = useState("");
+const PortfolioTwo = ({ isMobile, setIsMobile }) => {
 
-  useEffect(() => {
-    const countdown = () => {
-      const today = new Date();
-      const targetDate = new Date();
-      targetDate.setDate(today.getDate() + 4); // 4-day countdown
-      targetDate.setHours(0, 0, 0, 0); // Midnight start
-
-      const timeLeft = targetDate - today;
-
-      if (timeLeft <= 0) {
-        return "00d : 00h : 00m : 00s";
-      }
-
-      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((timeLeft / (1000 * 60)) % 60);
-      const seconds = Math.floor((timeLeft / 1000) % 60);
-
-      return `${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
-    };
-
-    const interval = setInterval(() => {
-      setTimer(countdown());
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
+ 
 
   return (
     <>
       <Header isMobile={isMobile} setIsMobile={setIsMobile} />
-      <div className="portfolio-container">
-        <div className="content">
-          <h2 className="title">🚀 Start Building Your Portfolio</h2>
-          <p className="description">
-            Portfolio Section will be fully functional after the countdown ends. Stay tuned!
-          </p>
-          <h1 className="timer">{timer}</h1>
-        </div>
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <div className="p-4">
+                <span className="p-1" style={{ fontSize: '30px' }}>Start Building Your Portfolio</span>
+            </div>
+            <div>
+             <PortfolioDetails/>
+            </div>
       </div>
       <Footer isMobile={isMobile} setIsMobile={setIsMobile} />
 
@@ -109,4 +82,4 @@ const Portfolio = ({ isMobile, setIsMobile }) => {
   );
 };
 
-export default Portfolio;
+export default PortfolioTwo;

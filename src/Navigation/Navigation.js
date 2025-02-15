@@ -13,6 +13,7 @@ import Login from '../Pages/Authentication/Login'
 import ForgotPassword from '../Pages/Authentication/ForgotPassword'
 import UpdatePassword from '../Pages/Authentication/UpdatePassword'
 import ViewPortfolio from '../Pages/Portfolio/ViewPortfolio'
+import PortfolioTwo from '../Pages/Portfolio/PortfolioTwo'
 
 
 const Navigation = () => {
@@ -32,6 +33,8 @@ const Navigation = () => {
             <Route path='/resumebuild' element={<ResumeBuild isMobile={isMobile} setIsMobile={setIsMobile}/>}/>
             <Route path='/selectResume' element={<SelectResume isMobile={isMobile} setIsMobile={setIsMobile}/>}/>
             <Route path='/portfolio' element={<Portfolio isMobile={isMobile} setIsMobile={setIsMobile}/>}/>
+            <Route path='/portfolioTwo' element={<PortfolioTwo isMobile={isMobile} setIsMobile={setIsMobile}/>}/>
+
             <Route path='/viewPortfolio' element={<ViewPortfolio isMobile={isMobile} setIsMobile={setIsMobile}/>}/>
 
             <Route path='*' element={<ErrorPage/>}/>
