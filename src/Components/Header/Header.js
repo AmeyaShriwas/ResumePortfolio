@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Menu, X, Home, FileText, LogIn } from "lucide-react"; 
+import { Menu, X, Home, FileText, LogIn, User2Icon } from "lucide-react"; 
 import { useDispatch, useSelector } from "react-redux";
 import { UserLogout } from "../../Redux/Slices/AuthSlice";
 
@@ -11,7 +11,9 @@ const Header = ({ isMobile, setIsMobile }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { isLoggedIn } = useSelector((state) => state.user);
+  const { isLoggedIn, data } = useSelector((state) => state.user);
+
+  console.log('data', data)
 
   const handleLogout = () => {
     dispatch(UserLogout());
@@ -25,6 +27,10 @@ const Header = ({ isMobile, setIsMobile }) => {
       name: isLoggedIn ? "LOGOUT" : "LOGIN", 
       icon: <LogIn size={20} />, 
       action: isLoggedIn ? handleLogout : () => navigate("/user/login"),
+    },
+    { 
+      name: isLoggedIn ? `Hi ${data.name}` : null, 
+      icon:isLoggedIn ? <User2Icon size={20} />: null
     }
   ];
 

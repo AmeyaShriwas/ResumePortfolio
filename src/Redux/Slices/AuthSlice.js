@@ -56,6 +56,16 @@ export const updatePassword = createAsyncThunk("auth/updatePassword", async (dat
   }
 });
 
+export const deleteUnverifiedUser = createAsyncThunk("auth/deleteUser", async(data, {rejectWithValue})=> {
+  try{
+    const response = await axios.delete(`${API_URL}/auth/deleteUser`, data);
+    return response.data;
+  }
+  catch(error){
+    return rejectWithValue(error.response?.data?.message || error.message);
+  }
+})
+
 // ✅ Auth Slice
 const AuthSlice = createSlice({
   name: "auth",

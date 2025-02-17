@@ -58,7 +58,7 @@ const PersonalDetails = ({
               formdetail="personal"
               type="text"
               name="fullName"
-              value={personalData.fullName || personalDetails.fullName || ""}
+              value={personalData?.fullName || personalDetails?.fullName || ""}
               onChange={handleDataChange}
               placeholder="John Doe"
             />

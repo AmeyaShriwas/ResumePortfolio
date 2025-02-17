@@ -5,7 +5,7 @@ import Header from '../../Components/Header/Header';
 import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import swal from "sweetalert";
-import { verifyOtp } from '../../Redux/Slices/AuthSlice';
+import { verifyOtp, deleteUnverifiedUser } from '../../Redux/Slices/AuthSlice';
 
 const UserVerifyOtp = ({ isMobile, setIsMobile }) => {
   const navigate = useNavigate();
@@ -21,7 +21,9 @@ const UserVerifyOtp = ({ isMobile, setIsMobile }) => {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
     } else {
+      dispatch(deleteUnverifiedUser(formData.email))
       handleOtpExpire();
+      navigate('/user/login')
     }
   }, [timeLeft]);
 
