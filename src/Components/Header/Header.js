@@ -13,8 +13,6 @@ const Header = ({ isMobile, setIsMobile }) => {
 
   const { isLoggedIn, data } = useSelector((state) => state.user);
 
-  console.log('data', data)
-
   const handleLogout = () => {
     dispatch(UserLogout());
     navigate("/user/login"); // Redirect to login after logout

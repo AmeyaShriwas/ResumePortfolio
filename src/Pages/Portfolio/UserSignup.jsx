@@ -34,6 +34,8 @@ const UserSignup = ({ isMobile, setIsMobile }) => {
         dispatch(userSignup(formData)).then((response)=> {
             if(response.payload.status){
                 swal('Success', response.payload.message)
+                console.log('res', res)
+                localStorage.setItem('email', response.payload.email)
                 navigate('/user/verify-otp')
             }
             else{

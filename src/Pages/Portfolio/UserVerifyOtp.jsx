@@ -10,11 +10,14 @@ import { verifyOtp, deleteUnverifiedUser } from '../../Redux/Slices/AuthSlice';
 const UserVerifyOtp = ({ isMobile, setIsMobile }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isLoggedIn, data } = useSelector((state) => state.user);
+  console.log('data', data)
 
-  const [formData, setFormData] = useState({ email: '', otp: '' });
+  const [formData, setFormData] = useState({ email: data?.email, otp: '' });
   const [errors, setErrors] = useState({});
   const [timeLeft, setTimeLeft] = useState(120); // 2-minute countdown (120 seconds)
   const [isOtpExpired, setIsOtpExpired] = useState(false);
+  
 
   useEffect(() => {
     if (timeLeft > 0) {
