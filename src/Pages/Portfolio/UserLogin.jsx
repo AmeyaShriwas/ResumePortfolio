@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Footer from '../../Components/Footer/Footer';
 import Header from '../../Components/Header/Header';
 import { motion } from 'framer-motion';
+import { userLogin } from '../../Redux/Slices/AuthSlice';
+import { useDispatch } from 'react-redux';
+import swal from "sweetalert";
 
-const Signup = ({ isMobile, setIsMobile }) => {
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+
+const UserLogin = ({ isMobile, setIsMobile }) => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
+  const dispatch = useDispatch()
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -13,11 +20,9 @@ const Signup = ({ isMobile, setIsMobile }) => {
 
   const validateForm = () => {
     let errors = {};
-    if (!formData.name.trim()) errors.name = 'Name is required';
     if (!formData.email.trim()) errors.email = 'Email is required';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) errors.email = 'Invalid email format';
     if (!formData.password.trim()) errors.password = 'Password is required';
-    else if (formData.password.length < 6) errors.password = 'Password must be at least 6 characters';
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -25,9 +30,18 @@ const Signup = ({ isMobile, setIsMobile }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      alert('Form submitted successfully!');
-      setFormData({ name: '', email: '', password: '' });
-      setErrors({});
+        dispatch(userLogin(formData)).then((response)=> {
+            console.log('res', response)
+            if(response.payload.status){
+                swal('Success', response.payload.message)
+                navigate('/portfolioTwo')
+            }
+            else{
+                swal('Error', response.payload.message ? response.payload.message : response.payload)
+            }
+        })
+   
+     
     }
   };
 
@@ -42,22 +56,11 @@ const Signup = ({ isMobile, setIsMobile }) => {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="card p-4 shadow-lg border-0" 
+          className="card p-4 shadow-lg border-0"
           style={{ width: '400px', borderRadius: '15px', background: 'rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(10px)' }}
         >
-          <h3 className="text-center mb-4">Create Your Account</h3>
+          <h3 className="text-center mb-4">Login to Your Account</h3>
           <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label className="form-label">Name</label>
-              <input
-                type="text"
-                name="name"
-                className={`form-control ${errors.name ? 'is-invalid' : ''}`}
-                value={formData.name}
-                onChange={handleChange}
-              />
-              {errors.name && <div className="invalid-feedback">{errors.name}</div>}
-            </div>
             <div className="mb-3">
               <label className="form-label">Email</label>
               <input
@@ -80,17 +83,22 @@ const Signup = ({ isMobile, setIsMobile }) => {
               />
               {errors.password && <div className="invalid-feedback">{errors.password}</div>}
             </div>
-            <motion.button 
-              type="submit" 
-              className="btn btn-primary w-100" 
+            <motion.button
+              type="submit"
+              className="btn btn-primary w-100"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Sign Up
+              Login
             </motion.button>
           </form>
           <div className="text-center mt-3">
-            Already have an account? <a href="/login" className="text-dark">Login now</a>
+            <p className="mb-1">
+              <a href="#" className="text-dark" onClick={() => navigate('/user/forgotPassword')}>Forgot your password?</a>
+            </p>
+            <p>
+              Don't have an account? <a href="#" className="text-dark" onClick={() => navigate('/user/signup')}>Sign up now</a>
+            </p>
           </div>
         </motion.div>
       </div>
@@ -99,4 +107,4 @@ const Signup = ({ isMobile, setIsMobile }) => {
   );
 };
 
-export default Signup;
+export default UserLogin;

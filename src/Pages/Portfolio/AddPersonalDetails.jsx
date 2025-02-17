@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { addPortfolioDetails } from "../../Redux/Slices/PortfolioSlice";
+import { useDispatch } from "react-redux";
+import swal from 'sweetalert'
 
 const PortfolioDetails = () => {
   const [personalData, setPersonalData] = useState({});
   const [projects, setProjects] = useState([
     { projectName: "", projectDescription: "", projectImage: null, techStack: "", liveLink: "", githubLink: "" },
   ]);
+  const dispatch = useDispatch()
 
   const handlePersonalDataChange = (e) => {
     const { name, files, value } = e.target;
@@ -41,17 +45,15 @@ const PortfolioDetails = () => {
       });
     });
 
-    try {
-      const response = await fetch("https://your-api-endpoint.com/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const result = await response.json();
-      console.log("Success:", result);
-    } catch (error) {
-      console.error("Error:", error);
-    }
+     dispatch(addPortfolioDetails(formData)).then((response)=> {
+        if(response.status){
+            swal('Success', response.message)
+        }
+        else{
+            swal('Error', response.message)
+        }
+     })
+ 
   };
 
   return (

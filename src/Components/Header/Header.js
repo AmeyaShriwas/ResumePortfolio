@@ -1,19 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Menu, X, Home, FileText, User, LogIn, UserPlus } from "lucide-react"; 
+import { Menu, X, Home, FileText, LogIn } from "lucide-react"; 
+import { useDispatch, useSelector } from "react-redux";
+import { UserLogout } from "../../Redux/Slices/AuthSlice";
 
 const Header = ({ isMobile, setIsMobile }) => {
   const [headerActive, setHeaderActive] = useState("HOME");
   const [toggleHamburger, setToggleHamburger] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { isLoggedIn } = useSelector((state) => state.user);
+
+  const handleLogout = () => {
+    dispatch(UserLogout());
+    navigate("/login"); // Redirect to login after logout
+  };
 
   const headerData = [
     { name: "HOME", icon: <Home size={20} />, path: "/" },
     { name: "RESUME", icon: <FileText size={20} />, path: "/resumebuild" },
-    { name: "PORTFOLIO", icon: <FileText size={20} />, path: "/portfolio" },
-    // { name: "LOGIN", icon: <LogIn size={20} />, path: "/login" },
-    // { name: "SIGNUP", icon: <UserPlus size={20} />, path: "/signup" },
+    { 
+      name: isLoggedIn ? "LOGOUT" : "LOGIN", 
+      icon: <LogIn size={20} />, 
+      action: isLoggedIn ? handleLogout : () => navigate("/user/login"),
+    }
   ];
 
   useEffect(() => {
@@ -25,7 +37,11 @@ const Header = ({ isMobile, setIsMobile }) => {
 
   const handleActiveHeader = (data) => {
     setHeaderActive(data.name);
-    navigate(data.path);
+    if (data.action) {
+      data.action(); // Perform login/logout action
+    } else {
+      navigate(data.path);
+    }
     setToggleHamburger(false); // Close menu after selection on mobile
   };
 

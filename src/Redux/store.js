@@ -1,24 +1,36 @@
-import { configureStore } from "@reduxjs/toolkit";
-import resumeReducer from './Slices/ResumeSlice'
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import resumeReducer from './Slices/ResumeSlice';
+import userReducer from './Slices/AuthSlice';
 import { persistReducer, persistStore } from "redux-persist";
-import storage from 'redux-persist/lib/storage'
+import storage from 'redux-persist/lib/storage';
 
+// Combine reducers
+const rootReducer = combineReducers({
+    resume: resumeReducer,
+    user: userReducer,
+});
+
+// Persist config
 const persistConfig = {
     key: 'root',
-    storage
-}
+    storage,
+    whitelist: ['resume', 'user'] // Specify which reducers to persist
+};
 
-const persistedResumeReducer = persistReducer(persistConfig, resumeReducer)
+// Wrap the **entire** rootReducer with persistReducer
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
+// Create store
 export const store = configureStore({
-  reducer: persistedResumeReducer,
+  reducer: persistedReducer, // Use persistedReducer instead of rootReducer
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ['persist/PERSIST'],
+        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
         ignoredPaths: ['register'],
       },
     }),
-})
+});
 
-export const persistor = persistStore(store)
+// Persistor for persisting store
+export const persistor = persistStore(store);

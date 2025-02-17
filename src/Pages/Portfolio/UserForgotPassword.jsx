@@ -3,14 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import Footer from '../../Components/Footer/Footer';
 import Header from '../../Components/Header/Header';
 import { motion } from 'framer-motion';
+import { forgotPassword, verifyOtp } from '../../Redux/Slices/AuthSlice';
+import { useDispatch } from 'react-redux';
+import swal from 'sweetalert'
 
-const ForgotPassword = ({ isMobile, setIsMobile }) => {
+const UserForgotPassword = ({ isMobile, setIsMobile }) => {
   const [step, setStep] = useState('email');
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [timer, setTimer] = useState(180);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (step === 'otp' && timer > 0) {
@@ -27,8 +31,15 @@ const ForgotPassword = ({ isMobile, setIsMobile }) => {
     if (!email.trim()) setErrors({ email: 'Email is required' });
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) setErrors({ email: 'Invalid email format' });
     else {
-      setErrors({});
-      setStep('otp');
+      dispatch(forgotPassword(email)).then((response)=> {
+        if(response.payload.status){
+            swal('Success', response.payload.message)
+            setStep('otp')
+        }
+        else{
+            swal('Error', response.payload.message)
+        }
+      })
     }
   };
 
@@ -36,8 +47,18 @@ const ForgotPassword = ({ isMobile, setIsMobile }) => {
     e.preventDefault();
     if (otp.length !== 6) setErrors({ otp: 'OTP must be 6 digits' });
     else {
-      alert('OTP Verified! Redirecting to reset password...');
-      navigate('/resetPassword');
+        dispatch(verifyOtp({email, otp})).then((response)=> {
+          if(response){
+            if(response.payload.status){
+                swal('Success', response.payload.message)
+                navigate('/user/updatePassword');
+            }
+            else{
+                swal('Error', response.payload.message ? response.payload.message : response.payload)
+            }
+          }
+        })
+    
     }
   };
 
@@ -102,7 +123,7 @@ const ForgotPassword = ({ isMobile, setIsMobile }) => {
             </form>
           )}
           <div className="text-center mt-3">
-            Remember your password? <span className="text-dark" style={{ cursor: 'pointer' }} onClick={() => navigate('/login')}>Login now</span>
+            Remember your password? <span className="text-dark" style={{ cursor: 'pointer' }} onClick={() => navigate('/user/login')}>Login now</span>
           </div>
         </motion.div>
       </div>
@@ -111,4 +132,4 @@ const ForgotPassword = ({ isMobile, setIsMobile }) => {
   );
 };
 
-export default ForgotPassword;
+export default UserForgotPassword;
