@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import swal from "sweetalert";
 import { verifyOtp, deleteUnverifiedUser } from '../../Redux/Slices/AuthSlice';
+import { useSelector } from 'react-redux';
 
 const UserVerifyOtp = ({ isMobile, setIsMobile }) => {
   const navigate = useNavigate();
