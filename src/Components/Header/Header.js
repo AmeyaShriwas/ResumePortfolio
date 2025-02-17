@@ -15,7 +15,7 @@ const Header = ({ isMobile, setIsMobile }) => {
 
   const handleLogout = () => {
     dispatch(UserLogout());
-    navigate("/login"); // Redirect to login after logout
+    navigate("/user/login"); // Redirect to login after logout
   };
 
   const headerData = [
