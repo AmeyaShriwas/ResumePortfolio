@@ -14,6 +14,7 @@ import UserUpdatePassword from '../Pages/Portfolio/UserUpdatePassword';
 import UserVerifyOtp from '../Pages/Portfolio/UserVerifyOtp';
 import ErrorPage from '../Pages/404Page/ErrorPage';
 import ProtectedRoute from './ProtectedRotes'; // Import the ProtectedRoute component
+import Plan from '../Pages/ChoosePlan/Plan';
 
 const Navigation = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -32,6 +33,10 @@ const Navigation = () => {
           <Route path="/user/updatePassword" element={<UserUpdatePassword isMobile={isMobile} setIsMobile={setIsMobile} />} />
 
           {/* Protected routes - only accessible if logged in */}
+          <Route
+            path="/plan"
+            element={<ProtectedRoute element={Plan} isMobile={isMobile} setIsMobile={setIsMobile} />}
+          />
           <Route
             path="/resumebuild"
             element={<ProtectedRoute element={ResumeBuild} isMobile={isMobile} setIsMobile={setIsMobile} />}

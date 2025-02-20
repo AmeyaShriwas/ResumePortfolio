@@ -12,6 +12,7 @@ const PersonalDetails = ({
   setActiveForm,
 }) => {
   const personalDetailsGet = useSelector((state) => state.personalDetails);
+  console.log('pre',personalDetailsGet)
 
   const validateAndProceed = () => {
     const requiredFields = ["fullName", "email", "number", "address"];
@@ -71,7 +72,7 @@ const PersonalDetails = ({
               formdetail="personal"
               type="email"
               name="email"
-              value={personalData.email || personalDetails.email || ""}
+              value={personalData?.email || personalDetails?.email || ""}
               onChange={handleDataChange}
               placeholder="example@email.com"
             />
@@ -84,7 +85,7 @@ const PersonalDetails = ({
               formdetail="personal"
               type="number"
               name="number"
-              value={personalData.number || personalDetails.number || ""}
+              value={personalData?.number || personalDetails?.number || ""}
               onChange={handleDataChange}
               placeholder="1234567890"
             />
@@ -97,7 +98,7 @@ const PersonalDetails = ({
               formdetail="personal"
               type="text"
               name="address"
-              value={personalData.address || personalDetails.address || ""}
+              value={personalData?.address || personalDetails?.address || ""}
               onChange={handleDataChange}
               placeholder="123 Main St, City, Country"
             />

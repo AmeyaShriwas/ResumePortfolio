@@ -6,7 +6,6 @@ import swal from 'sweetalert'
 const ProtectedRotes = ({element: Element, ...rest}) => {
     const {isLoggedIn} = useSelector(state=> state.user)
     if(!isLoggedIn){
-        swal('Error', 'Login first')
     }
     return isLoggedIn ? <Element {...rest} /> : <Navigate to="/user/login" />;
 

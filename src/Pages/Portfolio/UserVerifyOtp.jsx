@@ -12,7 +12,6 @@ const UserVerifyOtp = ({ isMobile, setIsMobile }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoggedIn, data } = useSelector((state) => state.user);
-  console.log('data', data)
 
   const [formData, setFormData] = useState({ email: data?.email, otp: '' });
   const [errors, setErrors] = useState({});
@@ -26,7 +25,7 @@ const UserVerifyOtp = ({ isMobile, setIsMobile }) => {
       return () => clearTimeout(timer);
     } else {
       dispatch(deleteUnverifiedUser(formData.email))
-      handleOtpExpire();
+      setIsOtpExpired(true);
       navigate('/user/login')
     }
   }, [timeLeft]);
