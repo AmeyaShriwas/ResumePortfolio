@@ -9,8 +9,7 @@ import useRazorpay from "react-razorpay";
 const Plan = ({ isMobile, setIsMobile }) => {
   const [isPaid, setIsPaid] = useState(false);
   const [amount, setAmount] = useState(1);
-  const [Razorpay] = useRazorpay();
-
+  const Razorpay = useRazorpay();
 
   console.log('isPaid', isPaid)
 
@@ -59,8 +58,8 @@ const Plan = ({ isMobile, setIsMobile }) => {
         },
       };
 
-      const paymentObject = new window.Razorpay(options);
-      paymentObject.open();
+      const rzp = new Razorpay(options);
+      rzp.open();
     } catch (error) {
       console.error("Payment Error:", error);
       alert("Something went wrong");
