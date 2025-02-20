@@ -34,7 +34,7 @@ const UserLogin = ({ isMobile, setIsMobile }) => {
             console.log('res', response)
             if(response.payload.status){
                 swal('Success', response.payload.message)
-                navigate('/portfolioTwo')
+                navigate('/plan')
             }
             else{
                 swal('Error', response.payload.message ? response.payload.message : response.payload)

@@ -2,9 +2,67 @@ import React, { useState } from "react";
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
+import axios from "axios";
+
 
 const Plan = ({ isMobile, setIsMobile }) => {
   const [isPaid, setIsPaid] = useState(false);
+  const [amount, setAmount] = useState(1);
+
+  console.log('isPaid', isPaid)
+
+  const handlePayment = async () => {
+    try {
+      const { data } = await axios.post("https://api.resumeportfolio.ameyashriwas.in/payment/create-order", { amount });
+
+      if (!data.success) {
+        alert("Error creating order");
+        return;
+      }
+
+      const options = {
+        key: "rzp_test_KLoSa0rPrNw5Y2", // Replace with Razorpay Key ID
+        amount: data.order.amount,
+        currency: "INR",
+        name: "Resume Portfolio Builder",
+        description: "Test Transaction",
+        order_id: data.order.id,
+        handler: async (response) => {
+          try {
+            const verifyRes = await axios.post("https://api.resumeportfolio.ameyashriwas.in/payment/verify-payment", {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              amount,
+            });
+
+            if (verifyRes.data.success) {
+              alert("Payment Successful!");
+            } else {
+              alert("Payment Failed!");
+            }
+          } catch (error) {
+            console.error("Verification Error:", error);
+            alert("Payment verification failed");
+          }
+        },
+        prefill: {
+          name: "Test User",
+          email: "test@example.com",
+          contact: "9999999999",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+    } catch (error) {
+      console.error("Payment Error:", error);
+      alert("Something went wrong");
+    }
+  };
 
   return (
     <>
@@ -86,6 +144,7 @@ const Plan = ({ isMobile, setIsMobile }) => {
             </Card>
           </Col>
         </Row>
+        <button style={{backgroundColor:'white', color:'black'}} onClick={handlePayment}>Pay Now</button>
       </Container>
       <Footer isMobile={isMobile} setIsMobile={setIsMobile} />
     </>
