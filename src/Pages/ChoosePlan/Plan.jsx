@@ -21,7 +21,7 @@ const Plan = ({ isMobile, setIsMobile }) => {
       }
 
       const options = {
-        key: "rzp_test_KLoSa0rPrNw5Y2", // Replace with Razorpay Key ID
+        key: "rzp_test_nQ8V25WiDaW3lt", // Replace with Razorpay Key ID
         amount: data.order.amount,
         currency: "INR",
         name: "Resume Portfolio Builder",
