@@ -3,13 +3,11 @@ import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
 import axios from "axios";
-import useRazorpay from "react-razorpay";
 
 
 const Plan = ({ isMobile, setIsMobile }) => {
   const [isPaid, setIsPaid] = useState(false);
   const [amount, setAmount] = useState(1);
-  const Razorpay = useRazorpay();
 
   console.log('isPaid', isPaid)
 
@@ -17,7 +15,7 @@ const Plan = ({ isMobile, setIsMobile }) => {
     try {
       const { data } = await axios.post("https://api.resumeportfolio.ameyashriwas.in/payment/create-order", { amount });
 
-      if (!data.success) {
+      if (!data.status) {
         alert("Error creating order");
         return;
       }
@@ -58,8 +56,8 @@ const Plan = ({ isMobile, setIsMobile }) => {
         },
       };
 
-      const rzp = new Razorpay(options);
-      rzp.open();
+      const rzp1 = new window.Razorpay(options);
+    rzp1.open();
     } catch (error) {
       console.error("Payment Error:", error);
       alert("Something went wrong");
