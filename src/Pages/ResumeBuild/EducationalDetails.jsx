@@ -140,7 +140,7 @@ const EducationalDetails = ({
             </Button>
           
 
-{Object.keys(educationalDetailsGet).length > 0 &&
+{educationalDetailsGet !== null && educationalDetailsGet !== undefined && Object.keys(educationalDetailsGet).length > 0 &&
           Object.values(educationalDetailsGet)[0] !== "" && (
             <Button variant="primary" onClick={moveToNext}>
               Next ➡

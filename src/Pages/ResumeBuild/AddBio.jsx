@@ -64,7 +64,7 @@ const AddBio = ({ bio, setBio, setActiveForm, handleDataChange, handleNextFuncti
                         <Button variant="primary" onClick={validateAndProceed}>
                             Save ➡
                         </Button>
-                        {Object.keys(bioDetails).length > 0 && Object.values(bioDetails)[0] !== '' && (
+                        {bioDetails !== null && bioDetails !== undefined && Object.keys(bioDetails).length > 0 && Object.values(bioDetails)[0] !== '' && (
                             <Button variant="primary" onClick={moveToNext}>
                                 Next →
                             </Button>

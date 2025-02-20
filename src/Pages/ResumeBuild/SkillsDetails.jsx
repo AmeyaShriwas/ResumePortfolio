@@ -77,7 +77,7 @@ const SkillsDetails = ({skillData, setSkillData, skillsDetailsGet, handleDataCha
                 <Button variant="primary" onClick={validateAndProceed}>
                     Save
                 </Button>
-                {Object.keys(skillsDetailsGet).length > 0 &&
+                {skillsDetailsGet !== null && skillsDetailsGet !== undefined && Object.keys(skillsDetailsGet).length > 0 &&
                           Object.values(skillsDetailsGet)[0] !== "" && (
                             <Button variant="primary" onClick={moveToNext}>
                               Next ➡

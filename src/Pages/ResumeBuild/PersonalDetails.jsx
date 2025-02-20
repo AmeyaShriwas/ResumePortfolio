@@ -109,8 +109,8 @@ const PersonalDetails = ({
             <Button variant="primary" onClick={validateAndProceed}>
               Save →
             </Button>
-            {Object.keys(personalDetails).length > 0 &&
-              Object.values(personalDetailsGet)[0] !== "" && (
+            {personalDetailsGet !== null && personalDetailsGet !== undefined && Object?.keys(personalDetails).length > 0 &&
+              Object?.values(personalDetailsGet)[0] !== "" && (
                 <Button variant="primary" onClick={moveToNext}>
                   Next →
                 </Button>

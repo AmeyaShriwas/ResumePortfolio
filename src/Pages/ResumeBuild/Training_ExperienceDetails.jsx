@@ -128,7 +128,7 @@ const Training_ExperienceDetails = ({training_experience, settraining_experience
             <div className="d-flex justify-content-between mt-4">
                 <Button variant="secondary" onClick={() => setActiveForm("educationalForm")}>⬅ Prev</Button>
                 <Button variant="primary" onClick={validateAndProceed}>Save ➡</Button>
-                {Object.keys(trainig_ExperienceDetails).length > 0 &&
+                {trainig_ExperienceDetails !== null && trainig_ExperienceDetails !== undefined && Object.keys(trainig_ExperienceDetails).length > 0 &&
                           Object.values(trainig_ExperienceDetails)[0] !== "" && (
                             <Button variant="primary" onClick={moveToNext}>
                               Next ➡
