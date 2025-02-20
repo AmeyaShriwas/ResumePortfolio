@@ -3,11 +3,14 @@ import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
 import axios from "axios";
+import useRazorpay from "react-razorpay";
 
 
 const Plan = ({ isMobile, setIsMobile }) => {
   const [isPaid, setIsPaid] = useState(false);
   const [amount, setAmount] = useState(1);
+  const [Razorpay] = useRazorpay();
+
 
   console.log('isPaid', isPaid)
 
