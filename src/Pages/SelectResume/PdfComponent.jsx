@@ -66,7 +66,6 @@ useEffect(() => {
       if (!response.data.success) {
         return;
       } else {
-        alert("Plan is there");
         setPaid(true);
       }
     } catch (error) {
@@ -1539,6 +1538,12 @@ useEffect(() => {
         ))
       )}
     </div>
+    <div className="d-flex justify-content-center align-items-center vh-100">
+  <span className="text-center text-danger fw-bold">
+    {!paid ? "Subscribe to our plan for more templates" : null}
+  </span>
+</div>
+
   </div>
   );
 };
