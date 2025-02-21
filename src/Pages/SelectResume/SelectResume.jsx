@@ -5,11 +5,11 @@ import { useSelector } from 'react-redux';
 import PdfGenerator from './PdfComponent';
 
 const SelectResume = ({ isMobile, setIsMobile }) => {
-    const personalDetails = useSelector(state => state.personalDetails);
-    const educationalDetails = useSelector(state => state.educationalDetails);
-    const trainingExperienceDetails = useSelector(state => state.traningExperienceDetails);
-    const skillsDetails = useSelector(state => state.skillDetails);
-    const bioDetails = useSelector(state => state.bio);
+    const personalDetails = useSelector(state => state.resume.personalDetails);
+    const educationalDetails = useSelector(state => state.resume.educationalDetails);
+    const trainingExperienceDetails = useSelector(state => state.resume.traningExperienceDetails);
+    const skillsDetails = useSelector(state => state.resume.skillDetails);
+    const bioDetails = useSelector(state => state.resume.bio);
 
     const [data, setData] = useState({ personal: {}, educational: [], training_expe: [], skill: [], bio: {} });
 
