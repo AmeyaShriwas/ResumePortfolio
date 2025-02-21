@@ -27,11 +27,11 @@ const ResumeBuild = ({ isMobile, setIsMobile }) => {
     const [bio, setBio] = useState({bio:''})
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const personalDetails = useSelector(state => state.personalDetails)
-    const educationalDetailsGet = useSelector(state => state.educationalDetails)
-    const trainig_ExperienceDetails = useSelector(state => state.traningExperienceDetails)
-    const skillsDetailsGet = useSelector(state => state.skillDetails)
-    const bioDetails = useSelector(state => state.bio)
+    const personalDetails = useSelector(state => state.resume.personalDetails)
+    const educationalDetailsGet = useSelector(state => state.resume.educationalDetails)
+    const trainig_ExperienceDetails = useSelector(state => state.resume.traningExperienceDetails)
+    const skillsDetailsGet = useSelector(state => state.resume.skillDetails)
+    const bioDetails = useSelector(state => state.resume.bio)
     const [image, setImage] = useState(null);
 
 

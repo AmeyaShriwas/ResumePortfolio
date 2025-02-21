@@ -11,7 +11,7 @@ const PersonalDetails = ({
   handleNextFuntion,
   setActiveForm,
 }) => {
-  const personalDetailsGet = useSelector((state) => state.personalDetails);
+  const personalDetailsGet = useSelector((state) => state.resume.personalDetails);
   console.log('pre',personalDetailsGet)
 
   const validateAndProceed = () => {
