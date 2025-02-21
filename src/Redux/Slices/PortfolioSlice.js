@@ -8,9 +8,13 @@ const API_URL = process.env.REACT_APP_BASEURL || 'https://api.resumeportfolio.am
 
 export const addPortfolioDetails = createAsyncThunk(
     '/portfolio/add', 
-    async (data, { rejectWithValue }) => {
+    async ({data, token}, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`${API_URL}/portfolio/add`, data);
+            const response = await axios.post(`${API_URL}/portfolio/add`, data, {
+                headers: {
+                    Authorization: `bearer ${token}`
+                }
+            });
             return response.data;
         } catch (error) {
             return rejectWithValue(error.message);

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { addPortfolioDetails } from "../../Redux/Slices/PortfolioSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import swal from 'sweetalert'
 
 const PortfolioDetails = () => {
@@ -10,6 +10,7 @@ const PortfolioDetails = () => {
     { projectName: "", projectDescription: "", projectImage: null, techStack: "", liveLink: "", githubLink: "" },
   ]);
   const dispatch = useDispatch()
+  const {token} = useSelector(state=> state.user)
 
   const handlePersonalDataChange = (e) => {
     const { name, files, value } = e.target;
@@ -54,7 +55,7 @@ const PortfolioDetails = () => {
       console.log(pair[0], pair[1]);
     }
   
-    dispatch(addPortfolioDetails(formData)).then((response) => {
+    dispatch(addPortfolioDetails(formData, token)).then((response) => {
       console.log('res', response)
       if (response.payload.status) {
         swal('Success', response.payload.message);
