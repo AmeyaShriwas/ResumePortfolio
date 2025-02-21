@@ -49,13 +49,13 @@ const PortfolioDetails = () => {
     // Append other project details as JSON string
     const projectsData = projects.map(({ projectImage, ...rest }) => rest); // Exclude images
     formData.append("projects", JSON.stringify(projectsData));
-  
+    formData.append('userId', token)
     // Log FormData
     for (let pair of formData.entries()) {
       console.log(pair[0], pair[1]);
     }
   
-    dispatch(addPortfolioDetails(formData, token)).then((response) => {
+    dispatch(addPortfolioDetails(formData)).then((response) => {
       console.log('res', response)
       if (response.payload.status) {
         swal('Success', response.payload.message);
