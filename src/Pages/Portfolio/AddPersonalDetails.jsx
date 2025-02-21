@@ -28,39 +28,41 @@ const PortfolioDetails = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const formData = new FormData();
-    console.log('personal', personalData)
-    console.log('project', projects)
-
+    console.log('personal', personalData);
+    console.log('project', projects);
+  
     // Append personal data
     Object.entries(personalData).forEach(([key, value]) => {
       formData.append(key, value);
     });
-
-    // Append projects
-    projects.forEach((project, index) => {
-      Object.entries(project).forEach(([key, value]) => {
-        if (value) {
-          formData.append(`projects[${index}][${key}]`, value);
-        }
-      });
+  
+    // Append project images separately under "projectImages"
+    projects.forEach((project) => {
+      if (project.projectImage) {
+        formData.append("projectImages", project.projectImage);
+      }
     });
-
+  
+    // Append other project details as JSON string
+    const projectsData = projects.map(({ projectImage, ...rest }) => rest); // Exclude images
+    formData.append("projects", JSON.stringify(projectsData));
+  
     // Log FormData
-for (let pair of formData.entries()) {
-  console.log(pair[0], pair[1]);
-}
-     dispatch(addPortfolioDetails(formData)).then((response)=> {
-        if(response.status){
-            swal('Success', response.message)
-        }
-        else{
-            swal('Error', response.message)
-        }
-     })
- 
+    for (let pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+  
+    dispatch(addPortfolioDetails(formData)).then((response) => {
+      if (response.status) {
+        swal('Success', response.message);
+      } else {
+        swal('Error', response.message);
+      }
+    });
   };
+  
 
   return (
     <div className="container mt-4">
