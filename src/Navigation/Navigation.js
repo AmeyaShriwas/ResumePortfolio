@@ -34,6 +34,10 @@ const Navigation = () => {
           <Route path="/user/verify-otp" element={<UserVerifyOtp isMobile={isMobile} setIsMobile={setIsMobile} />} />
           <Route path="/user/forgotPassword" element={<UserForgotPassword isMobile={isMobile} setIsMobile={setIsMobile} />} />
           <Route path="/user/updatePassword" element={<UserUpdatePassword isMobile={isMobile} setIsMobile={setIsMobile} />} />
+          <Route
+            path="/viewPortfolio/:id"
+            element={ViewPortfolio} isMobile={isMobile} setIsMobile={setIsMobile} />
+          
 
           {/* Protected routes - only accessible if logged in */}
           <Route
@@ -56,10 +60,7 @@ const Navigation = () => {
             path="/portfolioTwo"
             element={<ProtectedRoute element={PortfolioTwo} isMobile={isMobile} setIsMobile={setIsMobile} />}
           />
-          <Route
-            path="/viewPortfolio/:id"
-            element={<ProtectedRoute element={ViewPortfolio} isMobile={isMobile} setIsMobile={setIsMobile} />}
-          />
+          
            <Route
             path="/privacyPolicy"
             element={<ProtectedRoute element={PrivacuPolicy} isMobile={isMobile} setIsMobile={setIsMobile} />}
