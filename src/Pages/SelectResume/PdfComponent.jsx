@@ -17,6 +17,7 @@ import pdf9 from './../../Assets/img9.png'
 
 import Footer from "../../Components/Footer/Footer";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 const PdfComponent = ({ data, isMobile, setIsMobile }) => {
@@ -31,6 +32,7 @@ const PdfComponent = ({ data, isMobile, setIsMobile }) => {
   const datas = useSelector(state=> state.user)
   console.log('data', datas)
   const [paid, setPaid] = useState(false)
+  const navigate = useNavigate()
 
 
   // const pdfDummu = [
@@ -1538,11 +1540,25 @@ useEffect(() => {
         ))
       )}
     </div>
-    <div className="d-flex justify-content-center align-items-center">
-  <span className="text-center text-danger fw-bold">
-    {!paid ? "Subscribe to our plan for more templates" : null}
-  </span>
+    <div 
+  className="d-flex justify-content-center align-items-center border-bottom pb-2"
+  style={{ marginTop: '30px' }}
+>
+  {!paid && (
+    <span className="text-center text-danger fw-bold">
+      Subscribe to our plan for more templates &nbsp;
+      <a 
+        href="#" 
+        onClick={() => navigate('/plan')} 
+        className="text-primary fw-bold text-decoration-none"
+        style={{ cursor: 'pointer' }}
+      >
+        Upgrade Now
+      </a>
+    </span>
+  )}
 </div>
+
 
   </div>
   );
