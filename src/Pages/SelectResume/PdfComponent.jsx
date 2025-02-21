@@ -53,21 +53,31 @@ const PdfComponent = ({ data, isMobile, setIsMobile }) => {
   useEffect(() => {
     dispatch(addColor(resumeColors))
   }, [])
-const getPlan = async()=> {
-  const getPlan = await axios.get(`https://api.resumeportfolio.ameyashriwas.in/plan/${datas?.data?.id}`)
-   return getPlan
-}
-  useEffect(()=> {
-    const data = getPlan()
-    console.log('data', data)
-    if(!data.success){
-      return
+
+useEffect(() => {
+  const fetchPlan = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.resumeportfolio.ameyashriwas.in/plan/${datas?.data?.id}`
+      );
+
+      console.log("data", response.data);
+
+      if (!response.data.success) {
+        return;
+      } else {
+        alert("Plan is there");
+        setPaid(true);
+      }
+    } catch (error) {
+      console.error("Error fetching plan:", error);
     }
-    else{
-      alert('plan is there')
-      setPaid(true)
-    }
-  }, [datas?.data?.id])
+  };
+
+  if (datas?.data?.id) {
+    fetchPlan();
+  }
+}, [datas?.data?.id]);
 
 
   const generatePDF = (autoDisplay = false) => {
