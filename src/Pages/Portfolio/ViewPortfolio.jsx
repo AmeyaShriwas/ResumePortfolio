@@ -71,7 +71,7 @@ const ViewPortfolio = () => {
       {/* Profile Section */}
       <section className="text-center my-5 p-3">
         <img
-          src={data.profilePhoto}
+          src={`https://api.resumeportfolio.ameyashriwas.in/${data.profilePhoto}`}
           alt="Profile"
           className="rounded-circle mt-3 shadow-lg border border-warning"
           style={{ width: "160px", height: "160px" }}
@@ -101,7 +101,7 @@ const ViewPortfolio = () => {
               <div key={index} className="col-12 col-md-6 col-lg-4 d-flex">
                 <div className="card border-0 shadow-lg rounded-lg w-100 mb-4">
                   <img
-                    src={project.projectImage}
+                    src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
                     className="card-img-top rounded-top"
                     alt={project.projectName}
                     style={{ height: "200px" }}
