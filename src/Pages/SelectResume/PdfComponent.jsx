@@ -30,6 +30,7 @@ const PdfComponent = ({ data, isMobile, setIsMobile }) => {
   const [isLoading, setIsLoading] = useState(true);
   const datas = useSelector(state=> state.user)
   console.log('data', datas)
+  const [paid, setPaid] = useState(false)
 
 
   // const pdfDummu = [
@@ -58,11 +59,13 @@ const getPlan = async()=> {
 }
   useEffect(()=> {
     const data = getPlan()
+    console.log('data', data)
     if(!data.success){
       return
     }
     else{
       alert('plan is there')
+      setPaid(true)
     }
   }, [datas?.data?.id])
 
@@ -1489,7 +1492,8 @@ const getPlan = async()=> {
     <div className="flex flex-col items-center p-0" style={{ height: '100%' }}>
     <div style={{ display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', gap: "30px", height: '100%' }}>
       {isLoading ? <Spinner /> : (
-        pdfUrls?.map((url, index) => (
+      (paid ? pdfUrls : pdfUrls.slice(0, 4))?.map((url, index) => (
+
           <div key={index} style={{  padding: '10px', boxShadow: `rgba(0, 0, 0, 0.24) 0px 3px 8px` }}>
             <div
               style={{
