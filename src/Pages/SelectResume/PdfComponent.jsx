@@ -40,7 +40,7 @@ const PdfComponent = ({ data, isMobile, setIsMobile }) => {
   // ]
 
   const pdfDummu = [
-    pdf1, pdf2, pdf3, pdf4, pdf5, pdf6, pdf7, pdf8
+    pdf1, pdf2, pdf3, pdf4, pdf5, pdf6, pdf7, pdf8, pdf9
   ]
   // console.log('pdfD', pdfDummu)
 
@@ -1288,7 +1288,7 @@ useEffect(() => {
         height: 297mm;
         margin: 0 auto;
         padding: 15mm;
-        background: #F5F5F5;
+        background: white;
         color: black;
         box-sizing: border-box;
       }
