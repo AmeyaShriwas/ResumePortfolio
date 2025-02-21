@@ -8,20 +8,25 @@ import axios from "axios";
 const Plan = ({ isMobile, setIsMobile }) => {
   const [isPaid, setIsPaid] = useState(false);
   const [amount, setAmount] = useState(1);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   console.log('isPaid', isPaid)
 
   const handlePayment = async () => {
+    if (isProcessing) return; // Prevent multiple clicks
+    setIsProcessing(true);
+  
     try {
       const { data } = await axios.post("https://api.resumeportfolio.ameyashriwas.in/payment/create-order", { amount });
-     console.log('data', data)
+      
       if (!data.success) {
         alert("Error creating order");
+        setIsProcessing(false);
         return;
       }
-
+  
       const options = {
-        key: "rzp_test_nQ8V25WiDaW3lt", // Replace with Razorpay Key ID
+        key: "rzp_test_nQ8V25WiDaW3lt",
         amount: data.order.amount,
         currency: "INR",
         name: "Resume Portfolio Builder",
@@ -29,40 +34,26 @@ const Plan = ({ isMobile, setIsMobile }) => {
         order_id: data.order.id,
         handler: async (response) => {
           try {
-            const verifyRes = await axios.post("https://api.resumeportfolio.ameyashriwas.in/payment/verify-payment", {
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-              amount,
-            });
-            console.log('verify res', verifyRes)
-
-            if (verifyRes.data.success) {
-              alert("Payment Successful!");
-            } else {
-              console.log('failed')
-              alert("Payment Failed!");
-            }
+            await axios.post("https://api.resumeportfolio.ameyashriwas.in/payment/verify", response);
+            alert("Payment Successful");
           } catch (error) {
-            console.error("Verification Error:", error);
-            alert("Payment verification failed");
+            alert("Payment Verification Failed");
           }
         },
         prefill: {
-          name: "Test User",
-          email: "test@example.com",
-          contact: "9999999999",
-        },
-        theme: {
-          color: "#3399cc",
-        },
+          email: "user@example.com",
+          contact: "9999999999"
+        }
       };
-
-      const rzp1 = new window.Razorpay(options);
-    rzp1.open();
+  
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+      
     } catch (error) {
-      console.error("Payment Error:", error);
-      alert("Something went wrong");
+      console.error("Payment error:", error);
+      alert("Payment initiation failed");
+    } finally {
+      setIsProcessing(false);
     }
   };
 
