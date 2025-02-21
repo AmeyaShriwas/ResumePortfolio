@@ -16,6 +16,7 @@ import pdf8 from './../../Assets/img8.png'
 import pdf9 from './../../Assets/img9.png'
 
 import Footer from "../../Components/Footer/Footer";
+import axios from "axios";
 
 
 const PdfComponent = ({ data, isMobile, setIsMobile }) => {
@@ -27,15 +28,16 @@ const PdfComponent = ({ data, isMobile, setIsMobile }) => {
   const dispatch = useDispatch()
   const colorsGet = useSelector(state => state.color)
   const [isLoading, setIsLoading] = useState(true);
+  const datas = useSelector(state=> state.user)
+  console.log('data', datas)
 
-  console.log('data', data)
 
   // const pdfDummu = [
   //   pdf1, pdf2, pdf3, pdf4, pdf5, pdf6, pdf7, pdf8
   // ]
 
   const pdfDummu = [
-    pdf1, pdf2, pdf3, pdf4, pdf5, pdf6, pdf7, pdf8, pdf9
+    pdf1, pdf2, pdf3, pdf4, pdf5, pdf6, pdf7, pdf8
   ]
   // console.log('pdfD', pdfDummu)
 
@@ -50,6 +52,19 @@ const PdfComponent = ({ data, isMobile, setIsMobile }) => {
   useEffect(() => {
     dispatch(addColor(resumeColors))
   }, [])
+const getPlan = async()=> {
+  const getPlan = await axios.get(`https://api.resumeportfolio.ameyashriwas.in/plan/${datas?.data?.id}`)
+   return getPlan
+}
+  useEffect(()=> {
+    const data = getPlan()
+    if(!data.success){
+      return
+    }
+    else{
+      alert('plan is there')
+    }
+  }, [datas?.data?.id])
 
 
   const generatePDF = (autoDisplay = false) => {
@@ -1126,7 +1141,7 @@ const PdfComponent = ({ data, isMobile, setIsMobile }) => {
         width: 210mm;
         height: 297mm;
         margin: 0 auto;
-        padding: 15mm;
+        padding: 0mm;
         background: white;
         color: black;
         box-sizing: border-box;
