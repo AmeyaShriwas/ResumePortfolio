@@ -13,6 +13,7 @@ const ViewPortfolio = () => {
       const response = await axios.get(
         `https://api.resumeportfolio.ameyashriwas.in/portfolio/${id}`
       );
+      console.log('res', response)
       setData(response.data.data);
     } catch (error) {
       console.error("Error fetching portfolio data", error);

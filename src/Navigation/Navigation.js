@@ -36,7 +36,7 @@ const Navigation = () => {
           <Route path="/user/updatePassword" element={<UserUpdatePassword isMobile={isMobile} setIsMobile={setIsMobile} />} />
           <Route
             path="/viewPortfolio/:id"
-            element={ViewPortfolio} isMobile={isMobile} setIsMobile={setIsMobile} />
+            element={<ViewPortfolio isMobile={isMobile} setIsMobile={setIsMobile}/>}  />
           
 
           {/* Protected routes - only accessible if logged in */}
