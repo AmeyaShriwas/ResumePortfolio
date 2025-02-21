@@ -35,8 +35,10 @@ const Plan = ({ isMobile, setIsMobile }) => {
         handler: async (response) => {
           try {
             await axios.post("https://api.resumeportfolio.ameyashriwas.in/payment/verify", response);
+            console.log('res', response)
             alert("Payment Successful");
           } catch (error) {
+            console.log('error', error)
             alert("Payment Verification Failed");
           }
         },
