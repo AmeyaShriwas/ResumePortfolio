@@ -13,6 +13,8 @@ import pdf5 from './../../Assets/img5.png'
 import pdf6 from './../../Assets/img6.png'
 import pdf7 from './../../Assets/img7.png'
 import pdf8 from './../../Assets/img8.png'
+import pdf9 from './../../Assets/img9.png'
+
 import Footer from "../../Components/Footer/Footer";
 
 
@@ -33,7 +35,7 @@ const PdfComponent = ({ data, isMobile, setIsMobile }) => {
   // ]
 
   const pdfDummu = [
-    pdf1, pdf2, pdf3, pdf4, pdf5, pdf6, pdf7, pdf8
+    pdf1, pdf2, pdf3, pdf4, pdf5, pdf6, pdf7, pdf8, pdf9
   ]
   // console.log('pdfD', pdfDummu)
 
@@ -1243,6 +1245,144 @@ const PdfComponent = ({ data, isMobile, setIsMobile }) => {
             <div class="description">${exp.description}</div>
           </div>
         `).join("")}
+      </div>
+    </div>
+  </body>
+</html>
+`,
+`<html>
+  <body>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        width: 210mm;
+        height: 297mm;
+        margin: 0 auto;
+        padding: 15mm;
+        background: #F5F5F5;
+        color: black;
+        box-sizing: border-box;
+      }
+      .resume-container {
+        display: flex;
+        flex-direction: row;
+        border: 1px solid #ddd;
+        height: 100%;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .sidebar {
+        width: 30%;
+        background: #F5F5F5;
+        padding: 25px;
+        text-align: center;
+        border-right: 2px solid #ddd;
+      }
+      .profile-img {
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0 auto 15px;
+        border: 2px solid #ddd;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .profile-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .name {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .contact-info {
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+      .main-content {
+        width: 70%;
+        padding: 25px;
+      }
+      .section-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        padding-bottom: 5px;
+        border-bottom: 2px solid #ddd;
+      }
+      .education-item, .experience-item {
+        margin-bottom: 15px;
+      }
+      .date-range {
+        font-size: 14px;
+        font-weight: bold;
+        color: #555;
+      }
+      .job-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 5px;
+      }
+      .description {
+        font-size: 14px;
+        color: #333;
+        margin-top: 5px;
+      }
+      .skill-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      .skill-badge {
+        background: white;
+        color: black;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-size: 12px;
+        border: 1px solid #ddd;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+    <div class="resume-container">
+      <div class="sidebar">
+        <div class="profile-img">
+          <img src="${data.personal.photo || ''}" alt="Profile Picture" />
+        </div>
+        <div class="name">${data.personal.fullName || "Your Name"}</div>
+        <div class="contact-info">
+          📧 ${data.personal.email || ""} <br>
+          📞 ${data.personal.number || ""} <br>
+          📍 ${data.personal.address || ""}
+        </div>
+        <div class="section-title">Skills</div>
+        <div class="skill-container">
+          ${data.skill.map((s) => `<div class="skill-badge">${s.skill}</div>`).join("")}
+        </div>
+      </div>
+      <div class="main-content">
+        <div class="section-title">About Me</div>
+        <div class="description">${data.bio.bio || "Your Bio Here"}</div>
+        <div class="section-title">Education</div>
+        ${data.educational.map((edu) => 
+          `<div class="education-item">
+            <div class="date-range">${edu.from} - ${edu.to}</div>
+            <div class="job-title">${edu.university_school} - ${edu.degree_class}</div>
+          </div>`
+        ).join("")}
+        <div class="section-title">Experience & Training</div>
+        ${data.training_expe.map((exp) => 
+          `<div class="experience-item">
+            <div class="date-range">${exp.from} - ${exp.to}</div>
+            <div class="job-title">${exp.training_company} - ${exp.course_job}</div>
+            <div class="description">${exp.description}</div>
+          </div>`
+        ).join("")}
       </div>
     </div>
   </body>
