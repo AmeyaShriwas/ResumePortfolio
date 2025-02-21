@@ -5,7 +5,6 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 const ViewPortfolio = () => {
-  const datas = useSelector((state) => state.user);
   const [data, setData] = useState(null);
   const {id} = useParams()
 
