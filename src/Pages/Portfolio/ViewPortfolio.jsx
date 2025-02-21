@@ -22,7 +22,7 @@ const ViewPortfolio = () => {
 
   useEffect(() => {
     fetchData();
-  }, [datas]);
+  }, [id]);
 
   if (!data) {
     return <div className="text-center text-light py-5">Loading...</div>;
