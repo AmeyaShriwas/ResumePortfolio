@@ -35,6 +35,7 @@ const Plan = ({ isMobile, setIsMobile }) => {
               razorpay_signature: response.razorpay_signature,
               amount,
             });
+            console.log('verify res', verifyRes)
 
             if (verifyRes.data.success) {
               alert("Payment Successful!");
