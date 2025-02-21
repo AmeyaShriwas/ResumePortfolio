@@ -14,7 +14,7 @@ const Plan = ({ isMobile, setIsMobile }) => {
   const handlePayment = async () => {
     try {
       const { data } = await axios.post("https://api.resumeportfolio.ameyashriwas.in/payment/create-order", { amount });
-
+     console.log('data', data)
       if (!data.status) {
         alert("Error creating order");
         return;
