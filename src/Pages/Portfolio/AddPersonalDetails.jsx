@@ -47,6 +47,10 @@ const PortfolioDetails = () => {
       });
     });
 
+    // Log FormData
+for (let pair of formData.entries()) {
+  console.log(pair[0], pair[1]);
+}
      dispatch(addPortfolioDetails(formData)).then((response)=> {
         if(response.status){
             swal('Success', response.message)
