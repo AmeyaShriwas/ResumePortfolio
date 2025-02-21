@@ -55,10 +55,11 @@ const PortfolioDetails = () => {
     }
   
     dispatch(addPortfolioDetails(formData)).then((response) => {
-      if (response.status) {
-        swal('Success', response.message);
+      console.log('res', response)
+      if (response.payload.status) {
+        swal('Success', response.payload.message);
       } else {
-        swal('Error', response.message);
+        swal('Error', response.payload.message);
       }
     });
   };
