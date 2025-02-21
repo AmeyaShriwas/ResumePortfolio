@@ -20,14 +20,31 @@ const Header = ({ isMobile, setIsMobile }) => {
 
   const headerData = [
     { name: "HOME", icon: <Home size={20} />, path: "/" },
-    { name: "RESUME", icon: <FileText size={20} />, path: "/resumebuild" },
+    { 
+      name: isLoggedIn ? "RESUME" : null, 
+      icon:isLoggedIn ? <FileText size={20} />: null,
+      path: "/resumebuild"
+      
+    },
+    { 
+      name: isLoggedIn ? "PORTFOLIO" : null, 
+      icon:isLoggedIn ? <FileText size={20} />: null,
+      path: "/portfolioTwo"
+      
+    },
+    { 
+      name: isLoggedIn ? "PLAN" : null, 
+      icon:isLoggedIn ? <FileText size={20} />: null,
+      path: "/plan"
+      
+    },
     { 
       name: isLoggedIn ? "LOGOUT" : "LOGIN", 
       icon: <LogIn size={20} />, 
       action: isLoggedIn ? handleLogout : () => navigate("/user/login"),
     },
     { 
-      name: isLoggedIn ? `Hi ${data.name}` : null, 
+      name: isLoggedIn ? `Hi ${data.name.split(" ")[0]}` : null, 
       icon:isLoggedIn ? <User2Icon size={20} />: null
     }
   ];

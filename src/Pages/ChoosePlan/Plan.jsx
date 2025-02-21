@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
@@ -9,7 +9,14 @@ import swal from 'sweetalert'
 const Plan = ({ isMobile, setIsMobile }) => {
   const [selectedPlan, setSelectedPlan] = useState("free");
   const [isProcessing, setIsProcessing] = useState(false);
-  const {token} = useSelector(state=> state.user)
+  const {token, data} = useSelector(state=> state.user)
+  console.log('data', data.plan)
+ 
+  useEffect(()=> {
+      if(data?.plan !== undefined && data?.plan !== null){
+        setSelectedPlan(data?.plan?.planName)
+      }
+  }, [data])
 
   const handlePayment = async (amount, planName) => {
     if (isProcessing) return;
@@ -123,11 +130,17 @@ const Plan = ({ isMobile, setIsMobile }) => {
                   </Card.Text>
                   {plan.amount > 0 && (
                     <Button className="mt-3" variant="dark" onClick={() => handlePayment(plan.amount, plan.id)}>
-                      💰 Select Plan
+                      💰 {data?.plan !== undefined && data?.plan !== null && selectedPlan === plan.id ? 'Selected Plan':'Select Plan'}
                     </Button>
                   )}
                 </Card.Body>
               </Card>
+              <span>
+  {data?.plan && selectedPlan === plan.id
+    ? `Ends in ${new Date(data.plan.endDate).toLocaleDateString()}`
+    : null}
+</span>
+
             </Col>
           ))}
         </Row>
