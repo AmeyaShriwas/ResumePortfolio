@@ -15,6 +15,9 @@ import UserVerifyOtp from '../Pages/Portfolio/UserVerifyOtp';
 import ErrorPage from '../Pages/404Page/ErrorPage';
 import ProtectedRoute from './ProtectedRotes'; // Import the ProtectedRoute component
 import Plan from '../Pages/ChoosePlan/Plan';
+import PrivacuPolicy from '../Pages/ImpPages/PrivacuPolicy';
+import TermsAndCondition from '../Pages/ImpPages/TermsAndCondition';
+import RefundPolicy from '../Pages/ImpPages/RefundPolicy';
 
 const Navigation = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -56,6 +59,18 @@ const Navigation = () => {
           <Route
             path="/viewPortfolio"
             element={<ProtectedRoute element={ViewPortfolio} isMobile={isMobile} setIsMobile={setIsMobile} />}
+          />
+           <Route
+            path="/privacyPolicy"
+            element={<ProtectedRoute element={PrivacuPolicy} isMobile={isMobile} setIsMobile={setIsMobile} />}
+          />
+           <Route
+            path="/termsandcondition"
+            element={<ProtectedRoute element={TermsAndCondition} isMobile={isMobile} setIsMobile={setIsMobile} />}
+          />
+           <Route
+            path="/refundPolicy"
+            element={<ProtectedRoute element={RefundPolicy} isMobile={isMobile} setIsMobile={setIsMobile} />}
           />
 
           {/* Fallback route for unmatched paths */}
