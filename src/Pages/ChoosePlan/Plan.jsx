@@ -1,26 +1,35 @@
 import React, { useState } from "react";
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
-import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import axios from "axios";
-
+import { useSelector } from "react-redux";
+import swal from 'sweetalert'
 
 const Plan = ({ isMobile, setIsMobile }) => {
-  const [isPaid, setIsPaid] = useState(false);
-  const [amount, setAmount] = useState(1);
+  const [selectedPlan, setSelectedPlan] = useState("free");
   const [isProcessing, setIsProcessing] = useState(false);
+  const {token} = useSelector(state=> state.user)
 
-  console.log('isPaid', isPaid)
-
-  const handlePayment = async () => {
-    if (isProcessing) return; // Prevent multiple clicks
+  const handlePayment = async (amount, planName) => {
+    if (isProcessing) return;
     setIsProcessing(true);
+    setSelectedPlan(planName);
   
     try {
-      const { data } = await axios.post("https://api.resumeportfolio.ameyashriwas.in/payment/create-order", { amount });
-      
+      const { data } = await axios.post(
+        "https://api.resumeportfolio.ameyashriwas.in/payment/create-order",
+        { amount, planName },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+  
       if (!data.success) {
-        alert("Error creating order");
+        // alert("Error creating order");
+        swal('Error','Error creating order')
         setIsProcessing(false);
         return;
       }
@@ -30,116 +39,98 @@ const Plan = ({ isMobile, setIsMobile }) => {
         amount: data.order.amount,
         currency: "INR",
         name: "Resume Portfolio Builder",
-        description: "Test Transaction",
+        description: `Payment for ${planName} Plan`,
         order_id: data.order.id,
         handler: async (response) => {
           try {
-            await axios.post("https://api.resumeportfolio.ameyashriwas.in/payment/verify-payment", response);
-            console.log('res', response)
-            alert("Payment Successful");
+            await axios.post(
+              "https://api.resumeportfolio.ameyashriwas.in/payment/verify-payment",
+              { ...response, planName },
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+            // alert("Payment Successful");
+            swal('Success','Payment Successful')
+
           } catch (error) {
-            console.log('error', error)
-            alert("Payment Verification Failed");
+            // alert("Payment Verification Failed");
+            swal('Error','Payment Verification Failed')
+
           }
-        },
-        prefill: {
-          email: "user@example.com",
-          contact: "9999999999"
         }
       };
   
       const razorpay = new window.Razorpay(options);
       razorpay.open();
-      
     } catch (error) {
-      console.error("Payment error:", error);
-      alert("Payment initiation failed");
+      // alert("Payment initiation failed");
+      swal('Error','Payment initiation failed')
+
     } finally {
       setIsProcessing(false);
     }
   };
+  
+  const plans = [
+    {
+      id: "free",
+      name: "Free Plan",
+      amount: 0,
+      features: ["✅ Unlimited resumes", "❌ No portfolio customization", "❌ No live portfolio"],
+    },
+    {
+      id: "rs1",
+      name: "Rs 1 Plan",
+      amount: 1,
+      features: ["✅ 10 free resumes", "✅ 1-month live portfolio"],
+    },
+    {
+      id: "rs2",
+      name: "Rs 2 Plan",
+      amount: 2,
+      features: ["✅ Unlimited resumes", "✅ 6-month live portfolio"],
+    },
+  ];
 
   return (
     <>
       <Header isMobile={isMobile} setIsMobile={setIsMobile} />
-      <Container
-        fluid
-        className="d-flex flex-column justify-content-center align-items-center py-5"
-        style={{
-          minHeight: "80vh",
-          background: "white",
-        }}
-      >
-        <h2 className="text-center mb-4 fw-bold" style={{ color: "#2d6a4f" }}>
-          Choose Your Plan
-        </h2>
+      <Container fluid className="d-flex flex-column justify-content-center align-items-center py-5" style={{ minHeight: "80vh", background: "white" }}>
+        <h2 className="text-center mb-4 fw-bold" style={{ color: "#2d6a4f" }}>Choose Your Plan</h2>
 
-        {/* Toggle Switch */}
-        <div className="d-flex align-items-center mb-4 shadow-sm px-3 py-2 rounded" style={{ background: "#ffffff" }}>
-          <Form.Check
-            type="switch"
-            id="plan-switch"
-            label={
-              <span className="fw-semibold" style={{ color: isPaid ? "#155724" : "#6c757d" }}>
-                {isPaid ? "Paid Plan Selected" : "Free Plan Selected"}
-              </span>
-            }
-            checked={isPaid}
-            onChange={() => setIsPaid(!isPaid)}
-            className="fs-6"
-          />
-        </div>
-
-        {/* Plans Section */}
-        <Row className="justify-content-center w-100" style={{ maxWidth: "800px" }}>
-          {/* Free Plan */}
-          <Col sm={6} className="mb-3">
-            <Card
-              className={`text-center p-3 shadow-sm border-2 ${!isPaid ? "border-success" : "border-light"}`}
-              style={{
-                background: !isPaid ? "#e9f5db" : "#ffffff",
-                transition: "0.3s",
-                borderRadius: "12px",
-              }}
-            >
-              <Card.Body>
-                <Card.Title className="fw-bold fs-5 text-success">Free Plan</Card.Title>
-                <Card.Text className="fs-6 text-muted">
-                  ✅ Unlimited resumes <br />
-                  ❌ No portfolio customization <br />
-                  ❌ No live portfolio <br />
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-
-          {/* Paid Plan */}
-          <Col sm={6} className="mb-3">
-            <Card
-              className={`text-center p-3 shadow-sm border-2 ${isPaid ? "border-success" : "border-light"}`}
-              style={{
-                background: isPaid ? "#e9f5db" : "#ffffff",
-                transition: "0.3s",
-                borderRadius: "12px",
-              }}
-            >
-              <Card.Body>
-                <Card.Title className="fw-bold fs-5 text-success">Paid Plan - Rs 1 (One-time)</Card.Title>
-                <Card.Text className="fs-6 text-muted">
-                  ✅ Unlimited resumes <br />
-                  ✅ Portfolio customization <br />
-                  ✅ Live portfolio <br />
-                  ✅ Showcase projects <br />
-                  ✅ Add links <br />
-                </Card.Text>
-                <Button variant="success" className="mt-3 px-4 py-2 fs-6 fw-bold">
-                  Get Started
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
+        <Row className="justify-content-center w-100" style={{ maxWidth: "900px" }}>
+          {plans.map((plan) => (
+            <Col sm={4} className="mb-3" key={plan.id}>
+              <Card
+                className={`text-center p-3 shadow-sm border-2 ${
+                  selectedPlan === plan.id ? "border-success" : "border-light"
+                }`}
+                style={{
+                  background: selectedPlan === plan.id ? "#e9f5db" : "#ffffff",
+                  transition: "0.3s",
+                  borderRadius: "12px",
+                }}
+              >
+                <Card.Body>
+                  <Card.Title className="fw-bold fs-5 text-success">{plan.name}</Card.Title>
+                  <Card.Text className="fs-6 text-muted">
+                    {plan.features.map((feature, index) => (
+                      <div key={index}>{feature}</div>
+                    ))}
+                  </Card.Text>
+                  {plan.amount > 0 && (
+                    <Button className="mt-3" variant="dark" onClick={() => handlePayment(plan.amount, plan.id)}>
+                      💰 Select Plan
+                    </Button>
+                  )}
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
         </Row>
-        <button style={{backgroundColor:'white', color:'black'}} onClick={handlePayment}>Pay Now</button>
       </Container>
       <Footer isMobile={isMobile} setIsMobile={setIsMobile} />
     </>
