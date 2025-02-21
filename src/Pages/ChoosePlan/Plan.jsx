@@ -40,6 +40,7 @@ const Plan = ({ isMobile, setIsMobile }) => {
             if (verifyRes.data.success) {
               alert("Payment Successful!");
             } else {
+              console.log('failed')
               alert("Payment Failed!");
             }
           } catch (error) {
