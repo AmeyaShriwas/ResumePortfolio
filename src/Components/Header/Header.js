@@ -39,6 +39,12 @@ const Header = ({ isMobile, setIsMobile }) => {
       
     },
     { 
+      name: isLoggedIn ? "MORE" : null, 
+      icon:isLoggedIn ? <FileText size={20} />: null,
+      path: "/plan"
+      
+    },
+    { 
       name: isLoggedIn ? "LOGOUT" : "LOGIN", 
       icon: <LogIn size={20} />, 
       action: isLoggedIn ? handleLogout : () => navigate("/user/login"),

@@ -30,6 +30,8 @@ const PortfolioDetails = () => {
     e.preventDefault();
 
     const formData = new FormData();
+    console.log('personal', personalData)
+    console.log('project', projects)
 
     // Append personal data
     Object.entries(personalData).forEach(([key, value]) => {
@@ -89,13 +91,8 @@ const PortfolioDetails = () => {
 
         <h3 className="text-center mt-5 mb-4">Skills & Tech Stack</h3>
         <Form.Group className="mb-3">
-          <Form.Label>Programming Languages</Form.Label>
-          <Form.Control type="text" placeholder="JavaScript, TypeScript, Python" name="languages" onChange={handlePersonalDataChange} />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label>Frontend Skills</Form.Label>
-          <Form.Control type="text" placeholder="React, React Native, Next.js, Tailwind" name="frontend" onChange={handlePersonalDataChange} />
+          <Form.Label>Skill & Tech</Form.Label>
+          <Form.Control type="text" placeholder="JavaScript, TypeScript, Python" name="skills" onChange={handlePersonalDataChange} />
         </Form.Group>
 
         <h3 className="text-center mt-5 mb-4">Projects</h3>
@@ -104,6 +101,11 @@ const PortfolioDetails = () => {
             <Form.Group className="col-md-6 mb-3">
               <Form.Label>Project Name</Form.Label>
               <Form.Control type="text" placeholder="Project One" value={item.projectName} name="projectName" onChange={(e) => handleProjectDataChange(index, e)} />
+            </Form.Group>
+
+            <Form.Group className="col-md-6 mb-3">
+              <Form.Label>Project Description</Form.Label>
+              <Form.Control as='textarea' placeholder="Project Description" value={item.projectDescription} name="projectDescription" onChange={(e) => handleProjectDataChange(index, e)} />
             </Form.Group>
 
             <Form.Group className="col-md-6 mb-3">
