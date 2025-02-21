@@ -1538,7 +1538,7 @@ useEffect(() => {
         ))
       )}
     </div>
-    <div className="d-flex justify-content-center align-items-center vh-100">
+    <div className="d-flex justify-content-center align-items-center">
   <span className="text-center text-danger fw-bold">
     {!paid ? "Subscribe to our plan for more templates" : null}
   </span>
