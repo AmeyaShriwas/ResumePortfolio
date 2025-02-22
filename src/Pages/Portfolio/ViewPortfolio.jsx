@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { FaLinkedin, FaEnvelope, FaEye, FaGithub, FaFileAlt } from "react-icons/fa";
+import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import axios from "axios";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+
 const ViewPortfolio = () => {
   const [data, setData] = useState(null);
-  const {id} = useParams()
+  const { id } = useParams();
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        `https://api.resumeportfolio.ameyashriwas.in/portfolio/${id}`
-      );
-      console.log('res', response)
+      const response = await axios.get(`https://api.resumeportfolio.ameyashriwas.in/portfolio/${id}`);
       setData(response.data.data);
     } catch (error) {
       console.error("Error fetching portfolio data", error);
@@ -29,113 +28,71 @@ const ViewPortfolio = () => {
   }
 
   return (
-    <div style={{ backgroundColor: "#3d5a80", minHeight: "100vh" }}>
+    <div style={{ background: "linear-gradient(135deg, #3d5a80, #293241)", minHeight: "100vh", color: "#fff" }}>
       {/* Navbar */}
-      <nav
-        className="navbar navbar-expand-lg navbar-dark p-3 shadow"
-        style={{ backgroundColor: "#293241", position: "sticky", top: 0, zIndex: 1000 }}
-      >
-        <a className="navbar-brand h2 font-weight-bold text-light">{data.name}</a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
-          <div className="navbar-nav d-flex flex-lg-row flex-column text-center">
-            {data.resume && (
-              <a
-                href={data.resume}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-outline-light mt-2 mx-2 px-4 py-2 shadow"
-              >
-                Resume
-              </a>
-            )}
-            {data.email && (
-              <a
-                href={`mailto:${data.email}`}
-                className="btn btn-outline-light mt-2 mx-2 px-4 py-2 shadow"
-              >
-                Contact
-              </a>
-            )}
-          </div>
-        </div>
+      <nav className="navbar navbar-expand-lg navbar-dark p-3 shadow" style={{ backgroundColor: "#222" }}>
+        <span className="navbar-brand h2 font-weight-bold">{data.name}</span>
       </nav>
 
       {/* Profile Section */}
-      <section className="text-center my-5 p-3">
-        <img
-          src={`https://api.resumeportfolio.ameyashriwas.in/${data.profilePhoto.replace(/^\/+/, '')}`}
+      <section className="text-center my-5">
+        <motion.img
+          src={`https://api.resumeportfolio.ameyashriwas.in/${data.profilePhoto.replace(/^\/+/, "")}`}
           alt="Profile"
-          className="rounded-circle mt-3 shadow-lg border border-warning"
+          className="rounded-circle border border-warning shadow-lg"
           style={{ width: "160px", height: "160px" }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
         />
-        <h1 className="display-4 font-weight-bold text-light mt-3">{data.name}</h1>
-        {data.bio && <p className="text-light px-3">{data.bio}</p>}
-        <div className="mt-4">
+        <h1 className="mt-3 display-5 font-weight-bold">{data.name}</h1>
+        {data.bio && <p className="px-3">{data.bio}</p>}
+        <div className="mt-3">
           {data.linkedin && (
-            <a
-              href={data.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline-light mt-2 mx-2 px-4 py-2 shadow"
-            >
-              LinkedIn
+            <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-outline-light mx-2">
+              <FaLinkedin size={20} /> LinkedIn
+            </a>
+          )}
+          {data.email && (
+            <a href={`mailto:${data.email}`} className="btn btn-outline-light mx-2">
+              <FaEnvelope size={20} /> Contact
             </a>
           )}
         </div>
       </section>
 
       {/* Projects Section */}
-      <section className="py-5" style={{ backgroundColor: "#3d5a80" }}>
-        <h2 className="text-center mb-5 font-weight-bold text-uppercase text-light">Projects</h2>
-        <div className="container">
-          <div className="row">
-            {data.projects.map((project, index) => (
-              <div key={index} className="col-12 col-md-6 col-lg-4 d-flex">
-                <div className="card border-0 shadow-lg rounded-lg w-100 mb-4">
-                  <img
-                    src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage.replace(/^\/+/, '')}`}
-                    className="card-img-top rounded-top"
-                    alt={project.projectName}
-                    style={{ height: "200px" }}
-                  />
-                  <div className="card-body text-center">
-                    <h5 className="card-title font-weight-bold text-dark">{project.projectName}</h5>
-                    <p className="card-text text-muted">{project.projectDescription}</p>
-                    <div className="d-flex justify-content-center">
-                      {project.liveLink && (
-                        <a
-                          href={project.liveLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="btn btn-primary btn-sm mx-2 px-4 py-2"
-                        >
-                          View
-                        </a>
-                      )}
-                      {project.githubLink && (
-                        <a
-                          href={project.githubLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="btn btn-dark btn-sm mx-2 px-4 py-2"
-                        >
-                          GitHub
-                        </a>
-                      )}
-                    </div>
+      <section className="container py-5">
+        <h2 className="text-center mb-4 font-weight-bold text-uppercase">Projects</h2>
+        <div className="row">
+          {data.projects.map((project, index) => (
+            <motion.div key={index} className="col-12 col-md-6 col-lg-4 d-flex" whileHover={{ scale: 1.05 }}>
+              <div className="card border-0 shadow-lg rounded-lg w-100 mb-4">
+                <img
+                  src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage.replace(/^\/+/, "")}`}
+                  className="card-img-top rounded-top"
+                  alt={project.projectName}
+                  style={{ height: "200px" }}
+                />
+                <div className="card-body text-center">
+                  <h5 className="card-title font-weight-bold text-dark">{project.projectName}</h5>
+                  <p className="card-text text-muted">{project.projectDescription}</p>
+                  <div className="d-flex justify-content-center">
+                    {project.liveLink && (
+                      <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="btn btn-primary mx-2">
+                        <FaEye /> View
+                      </a>
+                    )}
+                    {project.githubLink && (
+                      <a href={project.githubLink} target="_blank" rel="noopener noreferrer" className="btn btn-dark mx-2">
+                        <FaGithub /> GitHub
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            </motion.div>
+          ))}
         </div>
       </section>
 
