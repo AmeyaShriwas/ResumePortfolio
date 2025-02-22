@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { FaLinkedin, FaEnvelope, FaEye, FaGithub, FaFileAlt } from "react-icons/fa";
+import { FaLinkedin, FaEnvelope, FaEye, FaGithub, FaFileAlt, FaUser } from "react-icons/fa";
 import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 const ViewPortfolio = () => {
   const [data, setData] = useState(null);
+  const [showSidebar, setShowSidebar] = useState(false);
   const { id } = useParams();
 
   const fetchData = async () => {
@@ -32,7 +33,27 @@ const ViewPortfolio = () => {
       {/* Navbar */}
       <nav className="navbar navbar-expand-lg navbar-dark p-3 shadow" style={{ backgroundColor: "#222" }}>
         <span className="navbar-brand h2 font-weight-bold">{data.name}</span>
+        <button className="btn btn-outline-light ms-auto" onClick={() => setShowSidebar(true)}>
+          <FaUser /> Login
+        </button>
       </nav>
+
+      {/* Sidebar */}
+      <div className={`sidebar bg-dark text-light p-4 position-fixed top-0 end-0 vh-100 shadow-lg ${showSidebar ? "d-block" : "d-none"}`} style={{ width: "300px" }}>
+        <button className="btn-close btn-close-white position-absolute top-2 end-2" onClick={() => setShowSidebar(false)}></button>
+        <h4 className="text-center mb-4">Login</h4>
+        <form>
+          <div className="mb-3">
+            <label className="form-label">Email</label>
+            <input type="email" className="form-control" placeholder="Enter email" />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Password</label>
+            <input type="password" className="form-control" placeholder="Enter password" />
+          </div>
+          <button type="submit" className="btn btn-primary w-100">Login</button>
+        </form>
+      </div>
 
       {/* Profile Section */}
       <section className="text-center my-5">
@@ -47,18 +68,6 @@ const ViewPortfolio = () => {
         />
         <h1 className="mt-3 display-5 font-weight-bold">{data.name}</h1>
         {data.bio && <p className="px-3">{data.bio}</p>}
-        <div className="mt-3">
-          {data.linkedin && (
-            <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-outline-light mx-2">
-              <FaLinkedin size={20} /> LinkedIn
-            </a>
-          )}
-          {data.email && (
-            <a href={`mailto:${data.email}`} className="btn btn-outline-light mx-2">
-              <FaEnvelope size={20} /> Contact
-            </a>
-          )}
-        </div>
       </section>
 
       {/* Projects Section */}
