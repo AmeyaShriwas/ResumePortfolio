@@ -19,6 +19,7 @@ const UpdatePortfolioPage = () => {
       const response = await axios.get(
         `https://api.resumeportfolio.ameyashriwas.in/portfolio/${id}`
       );
+      console.log('res', response)
       setData(response.data.data);
       setFormData(response.data.data);
     } catch (error) {
