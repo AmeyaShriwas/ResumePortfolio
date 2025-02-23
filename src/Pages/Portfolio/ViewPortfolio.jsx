@@ -139,14 +139,14 @@ const ViewPortfolio = () => {
       <AnimatePresence>
         {showSidebar && (
           <motion.div
-            className="position-fixed top-0 start-0 vh-100 bg-dark text-light p-4 shadow-lg"
+            className="position-fixed top-0 start-0 vh-100 bg-light text-dark p-4 shadow-lg"
             style={{ width: "25%" }}
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ duration: 0.5 }}
           >
-            <button className="btn-close btn-close-white position-absolute top-2 end-2" onClick={() => setShowSidebar(false)}></button>
+            <button className="btn-close btn-close-dark position-absolute top-2 end-2" onClick={() => setShowSidebar(false)}></button>
             <h4 className="text-center mb-4">Login</h4>
             <form>
               <div className="mb-3">
