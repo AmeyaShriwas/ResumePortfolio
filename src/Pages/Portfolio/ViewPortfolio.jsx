@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { FaLinkedin, FaEnvelope, FaFileAlt, FaUser } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
@@ -76,14 +76,24 @@ const ViewPortfolio = () => {
           <div className="tab-content mt-4">
             <div className="tab-pane fade show active" id="projects">
               <h4>Projects</h4>
-              <ul className="list-group">
+              <div className="row">
                 {data.projects.map((project, index) => (
-                  <motion.li key={index} className="list-group-item border-0 shadow-sm mb-2" whileHover={{ scale: 1.05 }}>
-                    <h6 className="mb-1">{project.projectName}</h6>
-                    <p className="text-muted small">{project.projectDescription}</p>
-                  </motion.li>
+                  <motion.div key={index} className="col-md-6 mb-3" whileHover={{ scale: 1.05 }}>
+                    <div className="card shadow-sm border-0">
+                      <img
+                        src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
+                        className="card-img-top"
+                        alt={project.projectName}
+                        style={{ height: "200px", objectFit: "cover" }}
+                      />
+                      <div className="card-body">
+                        <h6 className="card-title">{project.projectName}</h6>
+                        <p className="card-text text-muted small">{project.projectDescription}</p>
+                      </div>
+                    </div>
+                  </motion.div>
                 ))}
-              </ul>
+              </div>
             </div>
             <div className="tab-pane fade" id="skills">
               <h4>Skills</h4>
@@ -107,21 +117,32 @@ const ViewPortfolio = () => {
       </footer>
 
       {/* Sidebar Login */}
-      <div className={`position-fixed top-0 start-0 vh-100 bg-dark text-light p-4 shadow-lg ${showSidebar ? "d-block" : "d-none"}`} style={{ width: "30%" }}>
-        <button className="btn-close btn-close-white position-absolute top-2 end-2" onClick={() => setShowSidebar(false)}></button>
-        <h4 className="text-center mb-4">Login</h4>
-        <form>
-          <div className="mb-3">
-            <label className="form-label">Email</label>
-            <input type="email" className="form-control" placeholder="Enter email" />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Password</label>
-            <input type="password" className="form-control" placeholder="Enter password" />
-          </div>
-          <button type="submit" className="btn btn-primary w-100">Login</button>
-        </form>
-      </div>
+      <AnimatePresence>
+        {showSidebar && (
+          <motion.div
+            className="position-fixed top-0 start-0 vh-100 bg-dark text-light p-4 shadow-lg"
+            style={{ width: "25%" }}
+            initial={{ x: "-100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "-100%" }}
+            transition={{ duration: 0.5 }}
+          >
+            <button className="btn-close btn-close-white position-absolute top-2 end-2" onClick={() => setShowSidebar(false)}></button>
+            <h4 className="text-center mb-4">Login</h4>
+            <form>
+              <div className="mb-3">
+                <label className="form-label">Email</label>
+                <input type="email" className="form-control" placeholder="Enter email" />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Password</label>
+                <input type="password" className="form-control" placeholder="Enter password" />
+              </div>
+              <button type="submit" className="btn btn-primary w-100">Login</button>
+            </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
