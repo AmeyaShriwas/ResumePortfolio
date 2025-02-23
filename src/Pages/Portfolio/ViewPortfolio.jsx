@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { FaLinkedin, FaEnvelope, FaGithub, FaFileAlt, FaUser } from "react-icons/fa";
+import { FaLinkedin, FaEnvelope, FaFileAlt, FaUser } from "react-icons/fa";
 import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import "./ViewPortfolio.css";
 
 const ViewPortfolio = () => {
   const [data, setData] = useState(null);
@@ -30,79 +29,72 @@ const ViewPortfolio = () => {
   }
 
   return (
-    <div className="portfolio-container">
+    <div style={{ background: "#F5F5F5", minHeight: "100vh", width: "100%" }}>
       {/* Header */}
-      <header className="sticky-top bg-dark text-light p-3 d-flex justify-content-between align-items-center shadow">
-        <h2 className="m-0">{data.name}'s Portfolio</h2>
+      <header className="d-flex justify-content-between align-items-center bg-dark text-light p-3">
+        <h4 className="m-0">{data.name}'s Portfolio</h4>
         <button className="btn btn-outline-light" onClick={() => setShowSidebar(true)}>
           <FaUser /> Login
         </button>
       </header>
 
-      <div className="d-flex" style={{ minHeight: "100vh" }}>
+      <div style={{ display: "flex" }}>
         {/* Left Section */}
-        <div className="left-section">
+        <div style={{ width: "25%", background: "white", padding: "20px", display: "flex", flexDirection: "column", alignItems: "center" }}>
           <motion.img
             src={`https://api.resumeportfolio.ameyashriwas.in/${data.profilePhoto.replace(/^\/+/, "")}`}
             alt="Profile"
-            className="profile-img"
+            className="rounded-circle border border-warning shadow-lg"
+            style={{ width: "140px", height: "140px" }}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
           />
-          <h4 className="mt-3">{data.name}</h4>
-          {data.bio && <p className="text-center px-2">{data.bio}</p>}
-          <div className="social-links">
-            <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+          <h5 className="mt-3 font-weight-bold">{data.name}</h5>
+          {data.bio && <p className="px-3 text-center">{data.bio}</p>}
+          <div className="d-flex flex-column gap-2 mt-3 w-100">
+            <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-primary w-100">
               <FaLinkedin /> LinkedIn
             </a>
-            <a href={`mailto:${data.email}`} className="btn btn-dark">
+            <a href={`mailto:${data.email}`} className="btn btn-dark w-100">
               <FaEnvelope /> Contact
             </a>
-            <a href={data.resume} className="btn btn-secondary" download>
-              <FaFileAlt /> Resume
+            <a href={data.resume} className="btn btn-secondary w-100" download>
+              <FaFileAlt /> Download Resume
             </a>
           </div>
         </div>
 
         {/* Right Section */}
-        <div className="right-section">
+        <div style={{ width: "75%", padding: "20px" }}>
           <nav className="nav nav-tabs">
             <a className="nav-link active" data-bs-toggle="tab" href="#projects">Projects</a>
             <a className="nav-link" data-bs-toggle="tab" href="#skills">Skills</a>
             <a className="nav-link" data-bs-toggle="tab" href="#about">About Me</a>
             <a className="nav-link" data-bs-toggle="tab" href="#experience">Experience</a>
           </nav>
-
-          <div className="tab-content mt-3">
+          <div className="tab-content mt-4">
             <div className="tab-pane fade show active" id="projects">
-              <h3>Projects</h3>
-              <div className="row">
+              <h4>Projects</h4>
+              <ul className="list-group">
                 {data.projects.map((project, index) => (
-                  <motion.div key={index} className="col-md-4 project-card" whileHover={{ scale: 1.05 }}>
-                    <div className="card shadow">
-                      <img src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage.replace(/^\/+/, "")}`} className="card-img-top small-img" alt={project.projectName} />
-                      <div className="card-body text-center">
-                        <h5 className="card-title text-dark">{project.projectName}</h5>
-                        <p className="card-text text-muted">{project.projectDescription}</p>
-                        <a href={project.projectLink} className="btn btn-sm btn-primary">View</a>
-                        <a href={project.gitHub} className="btn btn-sm btn-dark ms-2">GitHub</a>
-                      </div>
-                    </div>
-                  </motion.div>
+                  <motion.li key={index} className="list-group-item border-0 shadow-sm mb-2" whileHover={{ scale: 1.05 }}>
+                    <h6 className="mb-1">{project.projectName}</h6>
+                    <p className="text-muted small">{project.projectDescription}</p>
+                  </motion.li>
                 ))}
-              </div>
+              </ul>
             </div>
             <div className="tab-pane fade" id="skills">
-              <h3>Skills</h3>
+              <h4>Skills</h4>
               <p>{data.skills}</p>
             </div>
             <div className="tab-pane fade" id="about">
-              <h3>About Me</h3>
+              <h4>About Me</h4>
               <p>{data.aboutMe}</p>
             </div>
             <div className="tab-pane fade" id="experience">
-              <h3>Experience</h3>
+              <h4>Experience</h4>
               <p>{data.experience}</p>
             </div>
           </div>
@@ -110,9 +102,26 @@ const ViewPortfolio = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-dark text-light text-center p-3 mt-4">
-        <p>&copy; 2024 {data.name}. All rights reserved.</p>
+      <footer className="bg-dark text-light text-center p-3 mt-3">
+        <small>&copy; {new Date().getFullYear()} {data.name}. All Rights Reserved.</small>
       </footer>
+
+      {/* Sidebar Login */}
+      <div className={`position-fixed top-0 start-0 vh-100 bg-dark text-light p-4 shadow-lg ${showSidebar ? "d-block" : "d-none"}`} style={{ width: "30%" }}>
+        <button className="btn-close btn-close-white position-absolute top-2 end-2" onClick={() => setShowSidebar(false)}></button>
+        <h4 className="text-center mb-4">Login</h4>
+        <form>
+          <div className="mb-3">
+            <label className="form-label">Email</label>
+            <input type="email" className="form-control" placeholder="Enter email" />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Password</label>
+            <input type="password" className="form-control" placeholder="Enter password" />
+          </div>
+          <button type="submit" className="btn btn-primary w-100">Login</button>
+        </form>
+      </div>
     </div>
   );
 };
