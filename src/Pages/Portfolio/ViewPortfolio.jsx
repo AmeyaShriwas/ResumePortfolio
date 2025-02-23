@@ -40,7 +40,7 @@ const ViewPortfolio = () => {
         </button>
       </header>
 
-      <div className="d-flex flex-column flex-md-row">
+      <div className="d-flex flex-column flex-md-row border">
         {/* Left Section */}
         <div className="col-md-3 bg-white p-4 text-center">
           <motion.img
