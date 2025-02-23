@@ -13,7 +13,9 @@ const ViewPortfolio = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`https://api.resumeportfolio.ameyashriwas.in/portfolio/${id}`);
+      const response = await axios.get(
+        `https://api.resumeportfolio.ameyashriwas.in/portfolio/${id}`
+      );
       setData(response.data.data);
     } catch (error) {
       console.error("Error fetching portfolio data", error);
@@ -29,7 +31,7 @@ const ViewPortfolio = () => {
   }
 
   return (
-    <div style={{ background: "#F5F5F5", minHeight: "100vh", width: "100%" }}>
+    <div className="container-fluid p-0" style={{ background: "#F5F5F5", minHeight: "100vh" }}>
       {/* Header */}
       <header className="d-flex justify-content-between align-items-center bg-dark text-light p-3">
         <h4 className="m-0">{data.name}'s Portfolio</h4>
@@ -38,9 +40,9 @@ const ViewPortfolio = () => {
         </button>
       </header>
 
-      <div style={{ display: "flex" }}>
+      <div className="d-flex flex-column flex-md-row">
         {/* Left Section */}
-        <div style={{ width: "25%", background: "white", padding: "20px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div className="col-md-3 bg-white p-4 text-center">
           <motion.img
             src={`https://api.resumeportfolio.ameyashriwas.in/${data.profilePhoto.replace(/^\/+/, "")}`}
             alt="Profile"
@@ -51,41 +53,52 @@ const ViewPortfolio = () => {
             transition={{ duration: 0.5 }}
           />
           <h5 className="mt-3 font-weight-bold">{data.name}</h5>
-          {data.bio && <p className="px-3 text-center">{data.bio}</p>}
-          <div className="d-flex flex-column gap-2 mt-3 w-100">
-            <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-primary w-100">
+          {data.bio && <p className="px-3">{data.bio}</p>}
+          <div className="d-flex flex-column gap-2 mt-3">
+            <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
               <FaLinkedin /> LinkedIn
             </a>
-            <a href={`mailto:${data.email}`} className="btn btn-dark w-100">
+            <a href={`mailto:${data.email}`} className="btn btn-dark">
               <FaEnvelope /> Contact
             </a>
-            <a href={data.resume} className="btn btn-secondary w-100" download>
+            <a href={data.resume} className="btn btn-secondary" download>
               <FaFileAlt /> Download Resume
             </a>
           </div>
         </div>
 
         {/* Right Section */}
-        <div style={{ width: "75%", padding: "20px" }}>
+        <div className="col-md-9 p-4">
           <nav className="nav nav-tabs">
-            <a className="nav-link active" data-bs-toggle="tab" href="#projects">Projects</a>
-            <a className="nav-link" data-bs-toggle="tab" href="#skills">Skills</a>
-            <a className="nav-link" data-bs-toggle="tab" href="#about">About Me</a>
-            <a className="nav-link" data-bs-toggle="tab" href="#experience">Experience</a>
+            <a className="nav-link active" data-bs-toggle="tab" href="#projects">
+              Projects
+            </a>
+            <a className="nav-link" data-bs-toggle="tab" href="#skills">
+              Skills
+            </a>
+            <a className="nav-link" data-bs-toggle="tab" href="#about">
+              About Me
+            </a>
+            <a className="nav-link" data-bs-toggle="tab" href="#experience">
+              Experience
+            </a>
           </nav>
+
           <div className="tab-content mt-4">
+            {/* Projects Section */}
             <div className="tab-pane fade show active" id="projects">
               <h4>Projects</h4>
               <div className="row">
                 {data.projects.map((project, index) => (
-                  <motion.div key={index} className="col-md-6 mb-3" whileHover={{ scale: 1.05 }}>
+                  <motion.div key={index} className="col-12 col-sm-6 col-md-4 mb-3" whileHover={{ scale: 1.05 }}>
                     <div className="card shadow-sm border-0">
-                      <img
-                        src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
-                        className="card-img-top"
-                        alt={project.projectName}
-                        style={{ height: "200px", objectFit: "cover" }}
-                      />
+                      <div className="square-container">
+                        <img
+                          src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
+                          className="card-img-top"
+                          alt={project.projectName}
+                        />
+                      </div>
                       <div className="card-body">
                         <h6 className="card-title">{project.projectName}</h6>
                         <p className="card-text text-muted small">{project.projectDescription}</p>
@@ -95,14 +108,20 @@ const ViewPortfolio = () => {
                 ))}
               </div>
             </div>
+
+            {/* Skills Section */}
             <div className="tab-pane fade" id="skills">
               <h4>Skills</h4>
               <p>{data.skills}</p>
             </div>
+
+            {/* About Me Section */}
             <div className="tab-pane fade" id="about">
               <h4>About Me</h4>
               <p>{data.aboutMe}</p>
             </div>
+
+            {/* Experience Section */}
             <div className="tab-pane fade" id="experience">
               <h4>Experience</h4>
               <p>{data.experience}</p>
@@ -143,6 +162,42 @@ const ViewPortfolio = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Styles */}
+      <style>
+        {`
+          .square-container {
+            width: 100%;
+            padding-top: 100%;
+            position: relative;
+            overflow: hidden;
+          }
+          
+          .square-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+          
+          @media (max-width: 768px) {
+            .col-md-3 {
+              width: 100%;
+              text-align: center;
+            }
+            
+            .col-md-9 {
+              width: 100%;
+            }
+
+            .position-fixed {
+              width: 100% !important;
+            }
+          }
+        `}
+      </style>
     </div>
   );
 };
