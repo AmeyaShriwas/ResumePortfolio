@@ -40,9 +40,9 @@ const ViewPortfolio = () => {
         </button>
       </header>
 
-      <div className="d-flex flex-column flex-md-row border">
+      <div className="d-flex flex-column flex-md-row">
         {/* Left Section */}
-        <div className="col-md-3 bg-white p-4 text-center">
+        <div className="col-md-3 bg-white p-4 text-center border">
           <motion.img
             src={`https://api.resumeportfolio.ameyashriwas.in/${data.profilePhoto.replace(/^\/+/, "")}`}
             alt="Profile"
