@@ -18,6 +18,7 @@ import Plan from '../Pages/ChoosePlan/Plan';
 import PrivacuPolicy from '../Pages/ImpPages/PrivacuPolicy';
 import TermsAndCondition from '../Pages/ImpPages/TermsAndCondition';
 import RefundPolicy from '../Pages/ImpPages/RefundPolicy';
+import UpdatePortfolioPage from '../Pages/Portfolio/UpdatePortfolio';
 
 const Navigation = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -37,6 +38,7 @@ const Navigation = () => {
           <Route
             path="/viewPortfolio/:id"
             element={<ViewPortfolio isMobile={isMobile} setIsMobile={setIsMobile}/>}  />
+            <Route path='/updatePortfolio/:id' element={UpdatePortfolioPage} isMobile={isMobile} setIsMobile={setIsMobile}/>
           
 
           {/* Protected routes - only accessible if logged in */}
