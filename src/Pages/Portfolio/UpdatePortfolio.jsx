@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaLinkedin, FaEnvelope, FaFileAlt, FaUser, FaEdit } from "react-icons/fa";
 import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -22,6 +22,7 @@ const UpdatePortfolioPage = () => {
     email: data?.email || "",
   });
 
+  const naviagate = useNavigate()
 
   
   const fetchData = async () => {
@@ -115,7 +116,7 @@ const UpdatePortfolioPage = () => {
       {/* Header */}
       <header className="d-flex justify-content-between align-items-center bg-dark text-light p-3">
         <h4 className="m-0">{data.name}'s Portfolio</h4>
-        <button className="btn btn-outline-light">
+        <button className="btn btn-outline-light" onClick={()=> navigate('/user/login')}>
           <FaUser /> Logout
         </button>
       </header>
