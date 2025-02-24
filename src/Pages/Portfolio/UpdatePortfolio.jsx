@@ -49,7 +49,7 @@ const UpdatePortfolioPage = () => {
       if(editField === 'profilePhoto'){
         console.log('updated data', data)
        
-
+        const formData = new FormData()
         formData.append("name", portfolioData.name);
         formData.append("bio", portfolioData.bio);
         formData.append("linkedin", portfolioData.linkedin);
