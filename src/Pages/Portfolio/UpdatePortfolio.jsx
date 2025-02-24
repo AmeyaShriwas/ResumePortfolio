@@ -1,149 +1,89 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { FaSave, FaUpload } from "react-icons/fa";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "./Portfolio.css";
 
 const UpdatePortfolioPage = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    bio: "",
-    linkedin: "",
-    email: "",
-    phone: "",
-    skills: "",
-    profilePhoto: null,
-    resume: null,
-    projects: [],
-  });
   const { id } = useParams();
+  const [portfolio, setPortfolio] = useState({
+    name: "",
+    description: "",
+    projects: [],
+    images: [],
+  });
 
   useEffect(() => {
-    fetchData();
+    // Fetch portfolio data
+    fetch(`/api/portfolios/${id}`)
+      .then((res) => res.json())
+      .then((data) => setPortfolio(data))
+      .catch((err) => console.error("Error fetching portfolio:", err));
   }, [id]);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        `https://api.resumeportfolio.ameyashriwas.in/portfolio/${id}`
-      );
-      setFormData(response.data.data);
-    } catch (error) {
-      console.error("Error fetching portfolio data", error);
-    }
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setPortfolio((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFileChange = (e) => {
-    const { name } = e.target;
-    const file = e.target.files[0];
-    setFormData({ ...formData, [name]: file });
+  const handleProjectChange = (index, field, value) => {
+    const updatedProjects = [...portfolio.projects];
+    updatedProjects[index][field] = value;
+    setPortfolio((prev) => ({ ...prev, projects: updatedProjects }));
   };
 
-  const handleProjectChange = (index, e) => {
-    const { name, value } = e.target;
-    const updatedProjects = [...formData.projects];
-    updatedProjects[index][name] = value;
-    setFormData({ ...formData, projects: updatedProjects });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Submit updated data
+    fetch(`/api/portfolios/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(portfolio),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log("Portfolio updated:", data))
+      .catch((err) => console.error("Error updating portfolio:", err));
   };
-
-  const handleSave = async () => {
-    const updatedData = new FormData();
-    for (const key in formData) {
-      if (key === "projects") {
-        updatedData.append(key, JSON.stringify(formData[key]));
-      } else {
-        updatedData.append(key, formData[key]);
-      }
-    }
-    try {
-      await axios.put(
-        `https://api.resumeportfolio.ameyashriwas.in/portfolio/${id}`,
-        updatedData,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
-      alert("Portfolio updated successfully!");
-      fetchData();
-    } catch (error) {
-      console.error("Error updating portfolio", error);
-    }
-  };
-
-  if (!formData.name) {
-    return <div className="text-center text-dark py-5">Loading...</div>;
-  }
 
   return (
-    <div className="container py-5">
-      <h2 className="text-center mb-4">Update Portfolio</h2>
-      <div className="row">
-        <div className="col-md-6 mx-auto">
-          <div className="mb-3">
-            <label className="form-label">Profile Picture</label>
-            <input type="file" name="profilePhoto" className="form-control" onChange={handleFileChange} />
+    <div className="portfolio-container">
+      <div className="portfolio-content">
+        <h2 className="portfolio-title">Update Portfolio</h2>
+        <form className="portfolio-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Name:</label>
+            <input type="text" name="name" value={portfolio.name} onChange={handleChange} className="input-field" />
           </div>
-          <div className="mb-3">
-            <label className="form-label">Name</label>
-            <input type="text" name="name" className="form-control" value={formData.name} onChange={handleChange} />
+
+          <div className="form-group">
+            <label>Description:</label>
+            <textarea name="description" value={portfolio.description} onChange={handleChange} className="textarea-field"></textarea>
           </div>
-          <div className="mb-3">
-            <label className="form-label">Bio</label>
-            <textarea name="bio" className="form-control" value={formData.bio} onChange={handleChange} />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">LinkedIn</label>
-            <input type="text" name="linkedin" className="form-control" value={formData.linkedin} onChange={handleChange} />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Email</label>
-            <input type="email" name="email" className="form-control" value={formData.email} onChange={handleChange} />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Phone</label>
-            <input type="text" name="phone" className="form-control" value={formData.phone} onChange={handleChange} />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Skills</label>
-            <input type="text" name="skills" className="form-control" value={formData.skills} onChange={handleChange} />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Resume (PDF)</label>
-            <input type="file" name="resume" className="form-control" onChange={handleFileChange} />
-          </div>
-          <h4 className="mt-4">Projects</h4>
-          {formData.projects.map((project, index) => (
-            <div key={index} className="border p-3 my-3">
-              <div className="mb-3">
-                <label className="form-label">Project Name</label>
-                <input type="text" name="projectName" className="form-control" value={project.projectName} onChange={(e) => handleProjectChange(index, e)} />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Project Description</label>
-                <textarea name="projectDescription" className="form-control" value={project.projectDescription} onChange={(e) => handleProjectChange(index, e)} />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Tech Stack</label>
-                <input type="text" name="techStack" className="form-control" value={project.techStack} onChange={(e) => handleProjectChange(index, e)} />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Live Link</label>
-                <input type="text" name="liveLink" className="form-control" value={project.liveLink} onChange={(e) => handleProjectChange(index, e)} />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">GitHub Link</label>
-                <input type="text" name="githubLink" className="form-control" value={project.githubLink} onChange={(e) => handleProjectChange(index, e)} />
-              </div>
+
+          <h3 className="portfolio-section-title">Projects</h3>
+          {portfolio.projects.map((project, index) => (
+            <div key={index} className="project-item">
+              <input
+                type="text"
+                value={project.name}
+                onChange={(e) => handleProjectChange(index, "name", e.target.value)}
+                className="input-field"
+              />
+              <textarea
+                value={project.description}
+                onChange={(e) => handleProjectChange(index, "description", e.target.value)}
+                className="textarea-field"
+              ></textarea>
             </div>
           ))}
-          <button className="btn btn-success w-100" onClick={handleSave}>
-            <FaSave /> Save Changes
-          </button>
-        </div>
+
+          <h3 className="portfolio-section-title">Images</h3>
+          <div className="portfolio-images">
+            {portfolio.images.map((img, index) => (
+              <img key={index} src={img} alt={`Portfolio ${index}`} className="portfolio-image" />
+            ))}
+          </div>
+
+          <button type="submit" className="update-button">Update Portfolio</button>
+        </form>
       </div>
     </div>
   );
