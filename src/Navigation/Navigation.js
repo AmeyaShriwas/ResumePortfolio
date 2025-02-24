@@ -38,7 +38,8 @@ const Navigation = () => {
           <Route
             path="/viewPortfolio/:id"
             element={<ViewPortfolio isMobile={isMobile} setIsMobile={setIsMobile}/>}  />
-            <Route path='/updatePortfolio/:id' element={<UpdatePortfolioPage/>}/>
+
+            <Route path='/updatePortfolio/:id' element={<ProtectedRoute element={UpdatePortfolioPage}/>}/>
           
 
           {/* Protected routes - only accessible if logged in */}
