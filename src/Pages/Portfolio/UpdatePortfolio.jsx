@@ -56,9 +56,7 @@ const UpdatePortfolioPage = () => {
         }
       
         try {
-            const response = await axios.put(`https://api.resumeportfolio.ameyashriwas.in/portfolio/updateProfilePhoto/${data.id}`, formData, {
-               
-            });
+            const response = await axios.post(`https://api.resumeportfolio.ameyashriwas.in/portfolio/updateProfilePhoto/${data.id}`, formData);
             console.log('res updated',response.data);
         } catch (error) {
             console.error("Error updating portfolio:", error);
