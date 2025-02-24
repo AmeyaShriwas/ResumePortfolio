@@ -15,6 +15,7 @@ const UpdatePortfolioPage = () => {
   const [editField, setEditField] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [imageFile, setImageFile] = useState(null);
+  const [personalDetails, setPersonalDetails] = useState({})
 
   const fetchData = async () => {
     try {
@@ -40,9 +41,17 @@ const UpdatePortfolioPage = () => {
     if (field === "profilePhoto") {
       setImageFile(null);
     } else {
-      setInputValue(data[field]);
+      
     }
   };
+
+  const handlePersonalDetailsChange = (e)=> {
+    const {name, value} = e.target
+     setPersonalDetails((prev)=> ({
+         ...prev,
+       [name]: value
+     }))
+  }
 
   const handleSave = async () => {
     try {
@@ -207,12 +216,17 @@ const UpdatePortfolioPage = () => {
               <Form.Label>Upload Image</Form.Label>
               <Form.Control type="file" onChange={(e) => setImageFile(e.target.files[0])} />
             </Form.Group>
-          ) : (
+          ) :
+          editField === "personalDetails" ? 
+           (
             <Form.Group>
-              <Form.Label>Update {editField}</Form.Label>
-              <Form.Control type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+              <Form.Label>Update Personal Details</Form.Label>
+              <Form.Control name="name" type="text" value={data.name} onChange={handlePersonalDetailsChange} />
+              <Form.Control name="bio" type="text" value={data.bio} onChange={handlePersonalDetailsChange} />
+              <Form.Control name="linkedin" type="text" value={data.linkedin} onChange={handlePersonalDetailsChange} />
+              <Form.Control name="email" type="email" value={data.email} onChange={handlePersonalDetailsChange} />
             </Form.Group>
-          )}
+          ):  null}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>Cancel</Button>
