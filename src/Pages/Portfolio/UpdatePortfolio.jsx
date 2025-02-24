@@ -208,7 +208,7 @@ const UpdatePortfolioPage = () => {
       </div>
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit {editField}</Modal.Title>
+          <Modal.Title>Edit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {editField === "profilePhoto" ? (
@@ -217,7 +217,7 @@ const UpdatePortfolioPage = () => {
               <Form.Control type="file" onChange={(e) => setImageFile(e.target.files[0])} />
             </Form.Group>
           ) :
-          editField === "personalDetails" ? 
+        
            (
             <Form.Group>
               <Form.Label>Update Personal Details</Form.Label>
@@ -226,7 +226,7 @@ const UpdatePortfolioPage = () => {
               <Form.Control name="linkedin" type="text" value={data.linkedin} onChange={handlePersonalDetailsChange} />
               <Form.Control name="email" type="email" value={data.email} onChange={handlePersonalDetailsChange} />
             </Form.Group>
-          ):  null}
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>Cancel</Button>
