@@ -43,7 +43,7 @@ setLoginData((prev)=> ({
 
   }
 
-  const handleLoginSubmit = async()=> {
+  const handleLoginSubmit = async(e)=> {
     e.preventDefault()
     dispatch(userLogin(loginData)).then((response)=> {
       console.log('res', response)
