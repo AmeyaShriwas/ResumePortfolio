@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { Modal, Button, Form } from "react-bootstrap";
+import { UserLogout } from "../../Redux/Slices/AuthSlice";
+import { useDispatch } from "react-redux";
 
 
 const UpdatePortfolioPage = () => {
@@ -23,6 +25,7 @@ const UpdatePortfolioPage = () => {
   });
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   
   const fetchData = async () => {
@@ -46,6 +49,13 @@ const UpdatePortfolioPage = () => {
     }
   };
 
+  const handelLogout = ()=> {
+    const id = data.id
+    dispatch(UserLogout())
+    navigate(`/viewPortfolio/${id}`)
+
+
+  }
 
 
   useEffect(() => {
@@ -116,7 +126,7 @@ const UpdatePortfolioPage = () => {
       {/* Header */}
       <header className="d-flex justify-content-between align-items-center bg-dark text-light p-3">
         <h4 className="m-0">{data.name}'s Portfolio</h4>
-        <button className="btn btn-outline-light" onClick={()=> navigate('/user/login')}>
+        <button className="btn btn-outline-light" onClick={()=> handelLogout()}>
           <FaUser /> Logout
         </button>
       </header>
