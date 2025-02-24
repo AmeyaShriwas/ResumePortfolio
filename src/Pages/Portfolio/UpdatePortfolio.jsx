@@ -77,7 +77,7 @@ const UpdatePortfolioPage = () => {
             console.error("Error updating portfolio:", error);
         }
       }
-      else if(editField === 'personalDetails'){
+      else{
         const formData = new FormData()
         formData.append('name', personalDetails.name)
         formData.append('bio', personalDetails.bio)
@@ -241,36 +241,48 @@ const UpdatePortfolioPage = () => {
         
            (
             <Form.Group>
-              <Form.Label>Update Personal Details</Form.Label>
-              <Form.Group>
-  <Form.Label>Update Personal Details</Form.Label>
-  <Form.Control 
-    name="name" 
-    type="text" 
-    value={personalDetails?.name} 
-    onChange={handlePersonalDetailsChange} 
-  />
-  <Form.Control 
-    name="bio" 
-    as="textarea" 
-    value={personalDetails?.bio} 
-    onChange={handlePersonalDetailsChange} 
-  />
-  <Form.Control 
-    name="linkedin" 
-    type="text" 
-    value={personalDetails?.linkedin} 
-    onChange={handlePersonalDetailsChange} 
-  />
-  <Form.Control 
-    name="email" 
-    type="email" 
-    value={personalDetails?.email} 
-    onChange={handlePersonalDetailsChange} 
-  />
-</Form.Group>
-
+            <Form.Label>Update Personal Details</Form.Label>
+            <Form.Group>
+              <Form.Label>Name</Form.Label>
+              <Form.Control 
+                name="name" 
+                type="text" 
+                value={personalDetails?.name} 
+                onChange={handlePersonalDetailsChange} 
+              />
             </Form.Group>
+          
+            <Form.Group>
+              <Form.Label>Bio</Form.Label>
+              <Form.Control 
+                name="bio" 
+                as="textarea" 
+                value={personalDetails?.bio} 
+                onChange={handlePersonalDetailsChange} 
+              />
+            </Form.Group>
+          
+            <Form.Group>
+              <Form.Label>LinkedIn</Form.Label>
+              <Form.Control 
+                name="linkedin" 
+                type="text" 
+                value={personalDetails?.linkedin} 
+                onChange={handlePersonalDetailsChange} 
+              />
+            </Form.Group>
+          
+            <Form.Group>
+              <Form.Label>Email</Form.Label>
+              <Form.Control 
+                name="email" 
+                type="email" 
+                value={personalDetails?.email} 
+                onChange={handlePersonalDetailsChange} 
+              />
+            </Form.Group>
+          </Form.Group>
+          
           )}
         </Modal.Body>
         <Modal.Footer>
