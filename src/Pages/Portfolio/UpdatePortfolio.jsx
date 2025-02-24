@@ -21,6 +21,8 @@ const UpdatePortfolioPage = () => {
     linkedin: data?.linkedin || "",
     email: data?.email || "",
   });
+
+
   
   const fetchData = async () => {
     try {
@@ -29,6 +31,15 @@ const UpdatePortfolioPage = () => {
       );
       console.log('res', response)
       setData(response.data.data);
+      const personal = {
+        
+          name: response.data.data?.name,
+          bio: response.data.data?.bio,
+          linkedin: response.data.data?.linkedin,
+          email: response.data.data?.email,
+        
+      }
+      setPersonalDetails(personal)
     } catch (error) {
       console.error("Error fetching portfolio data", error);
     }
