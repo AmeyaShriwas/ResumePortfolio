@@ -6,8 +6,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 const UpdatePortfolioPage = () => {
-  const [data, setData] = useState(null);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    name: "",
+    bio: "",
+    linkedin: "",
+    email: "",
+    phone: "",
+    skills: "",
+    profilePhoto: null,
+    resume: null,
+    projects: [],
+  });
   const { id } = useParams();
 
   useEffect(() => {
@@ -19,8 +28,6 @@ const UpdatePortfolioPage = () => {
       const response = await axios.get(
         `https://api.resumeportfolio.ameyashriwas.in/portfolio/${id}`
       );
-      console.log('res', response)
-      setData(response.data.data);
       setFormData(response.data.data);
     } catch (error) {
       console.error("Error fetching portfolio data", error);
@@ -38,10 +45,21 @@ const UpdatePortfolioPage = () => {
     setFormData({ ...formData, [name]: file });
   };
 
+  const handleProjectChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedProjects = [...formData.projects];
+    updatedProjects[index][name] = value;
+    setFormData({ ...formData, projects: updatedProjects });
+  };
+
   const handleSave = async () => {
     const updatedData = new FormData();
     for (const key in formData) {
-      updatedData.append(key, formData[key]);
+      if (key === "projects") {
+        updatedData.append(key, JSON.stringify(formData[key]));
+      } else {
+        updatedData.append(key, formData[key]);
+      }
     }
     try {
       await axios.put(
@@ -56,7 +74,7 @@ const UpdatePortfolioPage = () => {
     }
   };
 
-  if (!data) {
+  if (!formData.name) {
     return <div className="text-center text-dark py-5">Loading...</div>;
   }
 
@@ -82,9 +100,46 @@ const UpdatePortfolioPage = () => {
             <input type="text" name="linkedin" className="form-control" value={formData.linkedin} onChange={handleChange} />
           </div>
           <div className="mb-3">
+            <label className="form-label">Email</label>
+            <input type="email" name="email" className="form-control" value={formData.email} onChange={handleChange} />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Phone</label>
+            <input type="text" name="phone" className="form-control" value={formData.phone} onChange={handleChange} />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Skills</label>
+            <input type="text" name="skills" className="form-control" value={formData.skills} onChange={handleChange} />
+          </div>
+          <div className="mb-3">
             <label className="form-label">Resume (PDF)</label>
             <input type="file" name="resume" className="form-control" onChange={handleFileChange} />
           </div>
+          <h4 className="mt-4">Projects</h4>
+          {formData.projects.map((project, index) => (
+            <div key={index} className="border p-3 my-3">
+              <div className="mb-3">
+                <label className="form-label">Project Name</label>
+                <input type="text" name="projectName" className="form-control" value={project.projectName} onChange={(e) => handleProjectChange(index, e)} />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Project Description</label>
+                <textarea name="projectDescription" className="form-control" value={project.projectDescription} onChange={(e) => handleProjectChange(index, e)} />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Tech Stack</label>
+                <input type="text" name="techStack" className="form-control" value={project.techStack} onChange={(e) => handleProjectChange(index, e)} />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Live Link</label>
+                <input type="text" name="liveLink" className="form-control" value={project.liveLink} onChange={(e) => handleProjectChange(index, e)} />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">GitHub Link</label>
+                <input type="text" name="githubLink" className="form-control" value={project.githubLink} onChange={(e) => handleProjectChange(index, e)} />
+              </div>
+            </div>
+          ))}
           <button className="btn btn-success w-100" onClick={handleSave}>
             <FaSave /> Save Changes
           </button>
