@@ -182,11 +182,11 @@ setLoginData((prev)=> ({
             <form>
               <div className="mb-3">
                 <label className="form-label">Email</label>
-                <input type="email" onChange={handleLoginChange} className="form-control" placeholder="Enter email" />
+                <input type="email" name='email' onChange={handleLoginChange} className="form-control" placeholder="Enter email" />
               </div>
               <div className="mb-3">
                 <label className="form-label">Password</label>
-                <input type="password" onChange={handleLoginChange} className="form-control" placeholder="Enter password" />
+                <input type="password" name="password" onChange={handleLoginChange} className="form-control" placeholder="Enter password" />
               </div>
               <button type="submit" onClick={handleLoginSubmit} className="btn btn-primary w-100">Login</button>
             </form>
