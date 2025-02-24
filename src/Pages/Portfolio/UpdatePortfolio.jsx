@@ -15,8 +15,13 @@ const UpdatePortfolioPage = () => {
   const [editField, setEditField] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [imageFile, setImageFile] = useState(null);
-  const [personalDetails, setPersonalDetails] = useState({})
-
+  const [personalDetails, setPersonalDetails] = useState({
+    name: data.name || "",
+    bio: data.bio || "",
+    linkedin: data.linkedin || "",
+    email: data.email || "",
+  });
+  
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -71,6 +76,22 @@ const UpdatePortfolioPage = () => {
         } catch (error) {
             console.error("Error updating portfolio:", error);
         }
+      }
+      else if(editField === 'personalDetails'){
+        const formData = new FormData()
+        formData.append('name', personalDetails.name)
+        formData.append('bio', personalDetails.bio)
+        formData.append('linkedin', personalDetails.linkedin)
+        formData.append('email',personalDetails.email)
+
+        try {
+          const response = await axios.post(`https://api.resumeportfolio.ameyashriwas.in/portfolio/updatePersonalDetails/${data.id}`, formData);
+          console.log('res updated',response.data);
+          setData(response?.data?.data)
+      } catch (error) {
+          console.error("Error updating portfolio:", error);
+      }
+
       }
     
       setShowModal(false);
@@ -221,10 +242,34 @@ const UpdatePortfolioPage = () => {
            (
             <Form.Group>
               <Form.Label>Update Personal Details</Form.Label>
-              <Form.Control name="name" type="text" value={data.name} onChange={handlePersonalDetailsChange} />
-              <Form.Control name="bio" type="text" value={data.bio} onChange={handlePersonalDetailsChange} />
-              <Form.Control name="linkedin" type="text" value={data.linkedin} onChange={handlePersonalDetailsChange} />
-              <Form.Control name="email" type="email" value={data.email} onChange={handlePersonalDetailsChange} />
+              <Form.Group>
+  <Form.Label>Update Personal Details</Form.Label>
+  <Form.Control 
+    name="name" 
+    type="text" 
+    value={personalDetails.name} 
+    onChange={handlePersonalDetailsChange} 
+  />
+  <Form.Control 
+    name="bio" 
+    as="textarea" 
+    value={personalDetails.bio} 
+    onChange={handlePersonalDetailsChange} 
+  />
+  <Form.Control 
+    name="linkedin" 
+    type="text" 
+    value={personalDetails.linkedin} 
+    onChange={handlePersonalDetailsChange} 
+  />
+  <Form.Control 
+    name="email" 
+    type="email" 
+    value={personalDetails.email} 
+    onChange={handlePersonalDetailsChange} 
+  />
+</Form.Group>
+
             </Form.Group>
           )}
         </Modal.Body>
