@@ -1,90 +1,129 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useParams } from "react-router-dom";
-import "./Portfolio.css";
+import { FaSave, FaUpload, FaUser, FaLinkedin, FaEnvelope, FaFileAlt } from "react-icons/fa";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 const UpdatePortfolioPage = () => {
-  const { id } = useParams();
-  const [portfolio, setPortfolio] = useState({
+  const [formData, setFormData] = useState({
     name: "",
-    description: "",
+    bio: "",
+    linkedin: "",
+    email: "",
+    phone: "",
+    skills: "",
+    profilePhoto: null,
+    resume: null,
     projects: [],
-    images: [],
   });
+  const { id } = useParams();
 
   useEffect(() => {
-    // Fetch portfolio data
-    fetch(`/api/portfolios/${id}`)
-      .then((res) => res.json())
-      .then((data) => setPortfolio(data))
-      .catch((err) => console.error("Error fetching portfolio:", err));
+    fetchData();
   }, [id]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.resumeportfolio.ameyashriwas.in/portfolio/${id}`
+      );
+      setFormData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching portfolio data", error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setPortfolio((prev) => ({ ...prev, [name]: value }));
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleProjectChange = (index, field, value) => {
-    const updatedProjects = [...portfolio.projects];
-    updatedProjects[index][field] = value;
-    setPortfolio((prev) => ({ ...prev, projects: updatedProjects }));
+  const handleFileChange = (e) => {
+    const { name } = e.target;
+    const file = e.target.files[0];
+    setFormData({ ...formData, [name]: file });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Submit updated data
-    fetch(`/api/portfolios/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(portfolio),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log("Portfolio updated:", data))
-      .catch((err) => console.error("Error updating portfolio:", err));
+  const handleSave = async () => {
+    const updatedData = new FormData();
+    for (const key in formData) {
+      if (key === "projects") {
+        updatedData.append(key, JSON.stringify(formData[key]));
+      } else {
+        updatedData.append(key, formData[key]);
+      }
+    }
+    try {
+      await axios.put(
+        `https://api.resumeportfolio.ameyashriwas.in/portfolio/${id}`,
+        updatedData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+      alert("Portfolio updated successfully!");
+      fetchData();
+    } catch (error) {
+      console.error("Error updating portfolio", error);
+    }
   };
+
+  if (!formData.name) {
+    return <div className="text-center text-dark py-5">Loading...</div>;
+  }
 
   return (
-    <div className="portfolio-container">
-      <div className="portfolio-content">
-        <h2 className="portfolio-title">Update Portfolio</h2>
-        <form className="portfolio-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Name:</label>
-            <input type="text" name="name" value={portfolio.name} onChange={handleChange} className="input-field" />
+    <div className="container-fluid p-0" style={{ background: "white", minHeight: "100vh" }}>
+      {/* Header */}
+      <header className="d-flex justify-content-between align-items-center bg-dark text-light p-3">
+        <h4 className="m-0">{formData.name}'s Portfolio</h4>
+        <button className="btn btn-outline-light">
+          <FaUser /> Login
+        </button>
+      </header>
+
+      <div className="container py-5">
+        <div className="row">
+          <div className="col-md-3 text-center border p-4">
+            <img
+              src={`https://api.resumeportfolio.ameyashriwas.in/${formData.profilePhoto?.replace(/^\/+/, "")}`}
+              alt="Profile"
+              className="rounded-circle border border-warning shadow-lg"
+              style={{ width: "140px", height: "140px" }}
+            />
+            <h5 className="mt-3">{formData.name}</h5>
+            {formData.bio && <p>{formData.bio}</p>}
+            <a href={formData.linkedin} target="_blank" className="btn btn-primary m-2">
+              <FaLinkedin /> LinkedIn
+            </a>
+            <a href={`mailto:${formData.email}`} className="btn btn-dark m-2">
+              <FaEnvelope /> Contact
+            </a>
+            <a href={formData.resume} className="btn btn-secondary m-2" download>
+              <FaFileAlt /> Download Resume
+            </a>
           </div>
 
-          <div className="form-group">
-            <label>Description:</label>
-            <textarea name="description" value={portfolio.description} onChange={handleChange} className="textarea-field"></textarea>
-          </div>
-
-          <h3 className="portfolio-section-title">Projects</h3>
-          {portfolio.projects.map((project, index) => (
-            <div key={index} className="project-item">
-              <input
-                type="text"
-                value={project.name}
-                onChange={(e) => handleProjectChange(index, "name", e.target.value)}
-                className="input-field"
-              />
-              <textarea
-                value={project.description}
-                onChange={(e) => handleProjectChange(index, "description", e.target.value)}
-                className="textarea-field"
-              ></textarea>
+          <div className="col-md-9">
+            <h2 className="text-center mb-4">Update Portfolio</h2>
+            <div className="mb-3">
+              <label className="form-label">Profile Picture</label>
+              <input type="file" name="profilePhoto" className="form-control" onChange={handleFileChange} />
             </div>
-          ))}
-
-          <h3 className="portfolio-section-title">Images</h3>
-          <div className="portfolio-images">
-            {portfolio.images.map((img, index) => (
-              <img key={index} src={img} alt={`Portfolio ${index}`} className="portfolio-image" />
-            ))}
+            <div className="mb-3">
+              <label className="form-label">Name</label>
+              <input type="text" name="name" className="form-control" value={formData.name} onChange={handleChange} />
+            </div>
+            <button className="btn btn-success w-100" onClick={handleSave}>
+              <FaSave /> Save Changes
+            </button>
           </div>
-
-          <button type="submit" className="update-button">Update Portfolio</button>
-        </form>
+        </div>
       </div>
+
+      {/* Footer */}
+      <footer className="bg-dark text-light text-center py-3">
+        &copy; {new Date().getFullYear()} {formData.name}'s Portfolio
+      </footer>
     </div>
   );
 };
