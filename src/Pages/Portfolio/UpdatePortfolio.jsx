@@ -51,7 +51,6 @@ const UpdatePortfolioPage = () => {
 
   const handelLogout = ()=> {
     const id = data.id
-    dispatch(UserLogout())
     navigate(`/viewPortfolio/${id}`)
 
 
