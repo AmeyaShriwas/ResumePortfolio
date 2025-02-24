@@ -44,6 +44,7 @@ setLoginData((prev)=> ({
   }
 
   const handleLoginSubmit = async()=> {
+    e.preventDefault()
     dispatch(userLogin(loginData)).then((response)=> {
       console.log('res', response)
       if(response.payload.status){
