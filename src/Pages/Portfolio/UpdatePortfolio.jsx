@@ -78,14 +78,9 @@ const UpdatePortfolioPage = () => {
         }
       }
       else{
-        const formData = new FormData()
-        formData.append('name', personalDetails.name)
-        formData.append('bio', personalDetails.bio)
-        formData.append('linkedin', personalDetails.linkedin)
-        formData.append('email',personalDetails.email)
-
+      
         try {
-          const response = await axios.post(`https://api.resumeportfolio.ameyashriwas.in/portfolio/updatePersonalDetails/${data.id}`, formData);
+          const response = await axios.post(`https://api.resumeportfolio.ameyashriwas.in/portfolio/updatePersonalDetails/${data.id}`, personalDetails);
           console.log('res updated',response.data);
           setData(response?.data?.data)
       } catch (error) {
