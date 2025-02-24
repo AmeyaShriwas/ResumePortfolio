@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaLinkedin, FaEnvelope, FaFileAlt, FaUser } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import { userLogin, UserLogin } from "../../Redux/Slices/AuthSlice";
+import { useDispatch } from "react-redux";
+import swal from "sweetalert";
+
 
 const ViewPortfolio = () => {
   const [data, setData] = useState(null);
   const [showSidebar, setShowSidebar] = useState(false);
   const { id } = useParams();
+  const [loginData, setLoginData] = useState({})
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const fetchData = async () => {
     try {
@@ -26,6 +33,28 @@ const ViewPortfolio = () => {
   useEffect(() => {
     fetchData();
   }, [id]);
+
+  const handleLoginChange = (e)=> {
+const {name, value} = e.target
+setLoginData((prev)=> ({
+   ...prev,
+   [name]: value
+}))
+
+  }
+
+  const handleLoginSubmit = async()=> {
+    dispatch(userLogin(loginData)).then((response)=> {
+      console.log('res', response)
+      if(response.payload.status){
+          swal('Success', response.payload.message)
+          navigate(`/updatePortfolio/${data.id}`)
+      }
+      else{
+          swal('Error', response.payload.message ? response.payload.message : response.payload)
+      }
+    })
+  }
 
   if (!data) {
     return <div className="text-center text-dark py-5">Loading...</div>;
@@ -152,13 +181,13 @@ const ViewPortfolio = () => {
             <form>
               <div className="mb-3">
                 <label className="form-label">Email</label>
-                <input type="email" className="form-control" placeholder="Enter email" />
+                <input type="email" onChange={handleLoginChange} className="form-control" placeholder="Enter email" />
               </div>
               <div className="mb-3">
                 <label className="form-label">Password</label>
-                <input type="password" className="form-control" placeholder="Enter password" />
+                <input type="password" onChange={handleLoginChange} className="form-control" placeholder="Enter password" />
               </div>
-              <button type="submit" className="btn btn-primary w-100">Login</button>
+              <button type="submit" onClick={handleLoginSubmit} className="btn btn-primary w-100">Login</button>
             </form>
           </motion.div>
         )}
