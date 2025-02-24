@@ -22,7 +22,7 @@ const UpdatePortfolioPage = () => {
     email: data?.email || "",
   });
 
-  const naviagate = useNavigate()
+  const navigate = useNavigate()
 
   
   const fetchData = async () => {
