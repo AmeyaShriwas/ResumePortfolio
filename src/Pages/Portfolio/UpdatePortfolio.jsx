@@ -50,30 +50,11 @@ const UpdatePortfolioPage = () => {
         console.log('updated data', data)
        
         const formData = new FormData()
-        formData.append("name", portfolioData.name);
-        formData.append("bio", portfolioData.bio);
-        formData.append("linkedin", portfolioData.linkedin);
-        formData.append("skills", portfolioData.skills);
-        formData.append("email", portfolioData.email);
-        formData.append("phone", portfolioData.phone);
-        
-        if (portfolioData.profilePhoto) {
+     
+        if (imageFile) {
             formData.append("profilePhoto", imageFile);
         }
-        if (portfolioData.resume) {
-            formData.append("resume", portfolioData.resume);
-        }
-        
-        // Convert projects array to JSON and append
-        formData.append("projects", JSON.stringify(portfolioData.projects));
-    
-        // Append project images (if available)
-        portfolioData.projects.forEach((project, index) => {
-            if (project.projectImage) {
-                formData.append("projectImages", project.projectImage);
-            }
-        });
-    
+      
         try {
             const response = await axios.put(`https://api.resumeportfolio.ameyashriwas.in/portfolio/${data.id}`, formData, {
                
