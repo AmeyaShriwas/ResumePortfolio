@@ -16,10 +16,10 @@ const UpdatePortfolioPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [personalDetails, setPersonalDetails] = useState({
-    name: data.name || "",
-    bio: data.bio || "",
-    linkedin: data.linkedin || "",
-    email: data.email || "",
+    name: data?.name || "",
+    bio: data?.bio || "",
+    linkedin: data?.linkedin || "",
+    email: data?.email || "",
   });
   
   const fetchData = async () => {
@@ -247,25 +247,25 @@ const UpdatePortfolioPage = () => {
   <Form.Control 
     name="name" 
     type="text" 
-    value={personalDetails.name} 
+    value={personalDetails?.name} 
     onChange={handlePersonalDetailsChange} 
   />
   <Form.Control 
     name="bio" 
     as="textarea" 
-    value={personalDetails.bio} 
+    value={personalDetails?.bio} 
     onChange={handlePersonalDetailsChange} 
   />
   <Form.Control 
     name="linkedin" 
     type="text" 
-    value={personalDetails.linkedin} 
+    value={personalDetails?.linkedin} 
     onChange={handlePersonalDetailsChange} 
   />
   <Form.Control 
     name="email" 
     type="email" 
-    value={personalDetails.email} 
+    value={personalDetails?.email} 
     onChange={handlePersonalDetailsChange} 
   />
 </Form.Group>
