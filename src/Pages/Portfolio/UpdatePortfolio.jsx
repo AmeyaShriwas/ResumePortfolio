@@ -5,10 +5,16 @@ import { FaLinkedin, FaEnvelope, FaFileAlt, FaUser, FaEdit } from "react-icons/f
 import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import { Modal, Button, Form } from "react-bootstrap";
+
 
 const UpdatePortfolioPage = () => {
   const [data, setData] = useState(null);
   const { id } = useParams();
+  const [showModal, setShowModal] = useState(false);
+  const [editField, setEditField] = useState(null);
+  const [inputValue, setInputValue] = useState("");
+  const [imageFile, setImageFile] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -24,6 +30,38 @@ const UpdatePortfolioPage = () => {
   useEffect(() => {
     fetchData();
   }, [id]);
+
+  const handleOpenModal = (field) => {
+    setEditField(field);
+    setShowModal(true);
+    if (field === "profilePhoto") {
+      setImageFile(null);
+    } else {
+      setInputValue(data[field]);
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      let updatedData = { ...data };
+      if (editField === "profilePhoto") {
+        const formData = new FormData();
+        formData.append("profilePhoto", imageFile);
+        const uploadResponse = await axios.post(
+          `https://api.resumeportfolio.ameyashriwas.in/upload`,
+          formData
+        );
+        updatedData.profilePhoto = uploadResponse.data.filePath;
+      } else {
+        updatedData[editField] = inputValue;
+      }
+      await axios.put(`https://api.resumeportfolio.ameyashriwas.in/portfolio/${id}`, updatedData);
+      setData(updatedData);
+      setShowModal(false);
+    } catch (error) {
+      console.error("Error updating data", error);
+    }
+  };
 
   if (!data) {
     return <div className="text-center text-dark py-5">Loading...</div>;
@@ -52,27 +90,27 @@ const UpdatePortfolioPage = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
             />
-            <button className="btn btn-sm btn-warning position-absolute bottom-0 end-0">
+            <button className="btn btn-sm btn-warning position-absolute bottom-0 end-0" onClick={handleOpenModel}>
               <FaEdit />
             </button>
           </motion.div>
           <h5 className="mt-3 font-weight-bold d-flex justify-content-center align-items-center gap-2">
-            {data.name} <FaEdit className="text-warning cursor-pointer" />
+            {data.name} <FaEdit onClick={handleOpenModel} className="text-warning cursor-pointer" />
           </h5>
           {data.bio && (
             <p className="px-3 d-flex justify-content-center align-items-center gap-2">
-              {data.bio} <FaEdit className="text-warning cursor-pointer" />
+              {data.bio} <FaEdit onClick={handleOpenModel} className="text-warning cursor-pointer" />
             </p>
           )}
           <div className="d-flex flex-column gap-2 mt-3">
             <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-primary d-flex justify-content-between">
-              <FaLinkedin /> LinkedIn <FaEdit />
+              <FaLinkedin /> LinkedIn <FaEdit  onClick={handleOpenModel}/>
             </a>
             <a href={`mailto:${data.email}`} className="btn btn-dark d-flex justify-content-between">
-              <FaEnvelope /> Contact <FaEdit />
+              <FaEnvelope /> Contact <FaEdit onClick={handleOpenModel} />
             </a>
             <a href={data.resume} className="btn btn-secondary d-flex justify-content-between" download>
-              <FaFileAlt /> Download Resume <FaEdit />
+              <FaFileAlt /> Download Resume <FaEdit onClick={handleOpenModel} />
             </a>
           </div>
         </div>
@@ -110,14 +148,14 @@ const UpdatePortfolioPage = () => {
                         />
                       </div>
                       <button className="btn btn-sm btn-warning position-absolute top-0 end-0 m-2">
-                        <FaEdit />
+                        <FaEdit onClick={handleOpenModel} />
                       </button>
                       <div className="card-body">
                         <h6 className="card-title d-flex justify-content-between">
-                          {project.projectName} <FaEdit className="text-warning cursor-pointer" />
+                          {project.projectName} <FaEdit onClick={handleOpenModel} className="text-warning cursor-pointer" />
                         </h6>
                         <p className="card-text text-muted small d-flex justify-content-between">
-                          {project.projectDescription} <FaEdit className="text-warning cursor-pointer" />
+                          {project.projectDescription} <FaEdit onClick={handleOpenModel} className="text-warning cursor-pointer" />
                         </p>
                       </div>
                     </div>
@@ -130,7 +168,7 @@ const UpdatePortfolioPage = () => {
             <div className="tab-pane fade" id="skills">
               <h4>Skills</h4>
               <p className="d-flex justify-content-between">
-                {data.skills} <FaEdit className="text-warning cursor-pointer" />
+                {data.skills} <FaEdit onClick={handleOpenModel} className="text-warning cursor-pointer" />
               </p>
             </div>
 
@@ -138,7 +176,7 @@ const UpdatePortfolioPage = () => {
             <div className="tab-pane fade" id="about">
               <h4>About Me</h4>
               <p className="d-flex justify-content-between">
-                {data.aboutMe} <FaEdit className="text-warning cursor-pointer" />
+                {data.aboutMe} <FaEdit onClick={handleOpenModel} className="text-warning cursor-pointer" />
               </p>
             </div>
 
@@ -146,12 +184,34 @@ const UpdatePortfolioPage = () => {
             <div className="tab-pane fade" id="experience">
               <h4>Experience</h4>
               <p className="d-flex justify-content-between">
-                {data.experience} <FaEdit className="text-warning cursor-pointer" />
+                {data.experience} <FaEdit onClick={handleOpenModel} className="text-warning cursor-pointer" />
               </p>
             </div>
           </div>
         </div>
       </div>
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit {editField}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {editField === "profilePhoto" ? (
+            <Form.Group>
+              <Form.Label>Upload Image</Form.Label>
+              <Form.Control type="file" onChange={(e) => setImageFile(e.target.files[0])} />
+            </Form.Group>
+          ) : (
+            <Form.Group>
+              <Form.Label>Update {editField}</Form.Label>
+              <Form.Control type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+            </Form.Group>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>Cancel</Button>
+          <Button variant="primary" onClick={handleSave}>Save Changes</Button>
+        </Modal.Footer>
+      </Modal>
 
       {/* Footer */}
       <footer className="bg-dark text-light text-center p-3 mt-3">
