@@ -31,7 +31,7 @@ const UpdatePortfolioPage = () => {
     fetchData();
   }, [id]);
 
-  const handleOpenModal = (field) => {
+  const handleOpenModel = (field) => {
     setEditField(field);
     setShowModal(true);
     if (field === "profilePhoto") {
@@ -90,27 +90,27 @@ const UpdatePortfolioPage = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
             />
-            <button className="btn btn-sm btn-warning position-absolute bottom-0 end-0" onClick={handleOpenModel}>
+            <button className="btn btn-sm btn-warning position-absolute bottom-0 end-0" onClick={()=>handleOpenModel('profilePhoto')}>
               <FaEdit />
             </button>
           </motion.div>
           <h5 className="mt-3 font-weight-bold d-flex justify-content-center align-items-center gap-2">
-            {data.name} <FaEdit onClick={handleOpenModel} className="text-warning cursor-pointer" />
+            {data.name} <FaEdit onClick={()=>handleOpenModel('name')} className="text-warning cursor-pointer" />
           </h5>
           {data.bio && (
             <p className="px-3 d-flex justify-content-center align-items-center gap-2">
-              {data.bio} <FaEdit onClick={handleOpenModel} className="text-warning cursor-pointer" />
+              {data.bio} <FaEdit onClick={()=>handleOpenModel('bio')} className="text-warning cursor-pointer" />
             </p>
           )}
           <div className="d-flex flex-column gap-2 mt-3">
             <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-primary d-flex justify-content-between">
-              <FaLinkedin /> LinkedIn <FaEdit  onClick={handleOpenModel}/>
+              <FaLinkedin /> LinkedIn <FaEdit  onClick={()=>handleOpenModel('linkedin')}/>
             </a>
             <a href={`mailto:${data.email}`} className="btn btn-dark d-flex justify-content-between">
-              <FaEnvelope /> Contact <FaEdit onClick={handleOpenModel} />
+              <FaEnvelope /> Contact <FaEdit  onClick={()=>handleOpenModel('email')} />
             </a>
             <a href={data.resume} className="btn btn-secondary d-flex justify-content-between" download>
-              <FaFileAlt /> Download Resume <FaEdit onClick={handleOpenModel} />
+              <FaFileAlt /> Download Resume <FaEdit onClick={()=>handleOpenModel('resume')} />
             </a>
           </div>
         </div>
@@ -148,14 +148,14 @@ const UpdatePortfolioPage = () => {
                         />
                       </div>
                       <button className="btn btn-sm btn-warning position-absolute top-0 end-0 m-2">
-                        <FaEdit onClick={handleOpenModel} />
+                        <FaEdit onClick={()=>handleOpenModel('resume')} />
                       </button>
                       <div className="card-body">
                         <h6 className="card-title d-flex justify-content-between">
-                          {project.projectName} <FaEdit onClick={handleOpenModel} className="text-warning cursor-pointer" />
+                          {project.projectName} <FaEdit onClick={()=>handleOpenModel('resume')} className="text-warning cursor-pointer" />
                         </h6>
                         <p className="card-text text-muted small d-flex justify-content-between">
-                          {project.projectDescription} <FaEdit onClick={handleOpenModel} className="text-warning cursor-pointer" />
+                          {project.projectDescription} <FaEdit onClick={()=>handleOpenModel('resume')} className="text-warning cursor-pointer" />
                         </p>
                       </div>
                     </div>
@@ -168,7 +168,7 @@ const UpdatePortfolioPage = () => {
             <div className="tab-pane fade" id="skills">
               <h4>Skills</h4>
               <p className="d-flex justify-content-between">
-                {data.skills} <FaEdit onClick={handleOpenModel} className="text-warning cursor-pointer" />
+                {data.skills} <FaEdit onClick={()=>handleOpenModel('resume')} className="text-warning cursor-pointer" />
               </p>
             </div>
 
@@ -176,7 +176,7 @@ const UpdatePortfolioPage = () => {
             <div className="tab-pane fade" id="about">
               <h4>About Me</h4>
               <p className="d-flex justify-content-between">
-                {data.aboutMe} <FaEdit onClick={handleOpenModel} className="text-warning cursor-pointer" />
+                {data.aboutMe} <FaEdit onClick={()=>handleOpenModel('resume')} className="text-warning cursor-pointer" />
               </p>
             </div>
 
@@ -184,7 +184,7 @@ const UpdatePortfolioPage = () => {
             <div className="tab-pane fade" id="experience">
               <h4>Experience</h4>
               <p className="d-flex justify-content-between">
-                {data.experience} <FaEdit onClick={handleOpenModel} className="text-warning cursor-pointer" />
+                {data.experience} <FaEdit onClick={()=>handleOpenModel('resume')} className="text-warning cursor-pointer" />
               </p>
             </div>
           </div>
