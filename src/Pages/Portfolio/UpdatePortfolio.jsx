@@ -1,73 +1,31 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { FaSave, FaUpload, FaUser, FaLinkedin, FaEnvelope, FaFileAlt } from "react-icons/fa";
+import { FaLinkedin, FaEnvelope, FaFileAlt, FaUser, FaEdit } from "react-icons/fa";
+import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 const UpdatePortfolioPage = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    bio: "",
-    linkedin: "",
-    email: "",
-    phone: "",
-    skills: "",
-    profilePhoto: null,
-    resume: null,
-    projects: [],
-  });
+  const [data, setData] = useState(null);
   const { id } = useParams();
-
-  useEffect(() => {
-    fetchData();
-  }, [id]);
 
   const fetchData = async () => {
     try {
       const response = await axios.get(
         `https://api.resumeportfolio.ameyashriwas.in/portfolio/${id}`
       );
-      setFormData(response.data.data);
+      setData(response.data.data);
     } catch (error) {
       console.error("Error fetching portfolio data", error);
     }
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  useEffect(() => {
+    fetchData();
+  }, [id]);
 
-  const handleFileChange = (e) => {
-    const { name } = e.target;
-    const file = e.target.files[0];
-    setFormData({ ...formData, [name]: file });
-  };
-
-  const handleSave = async () => {
-    const updatedData = new FormData();
-    for (const key in formData) {
-      if (key === "projects") {
-        updatedData.append(key, JSON.stringify(formData[key]));
-      } else {
-        updatedData.append(key, formData[key]);
-      }
-    }
-    try {
-      await axios.put(
-        `https://api.resumeportfolio.ameyashriwas.in/portfolio/${id}`,
-        updatedData,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
-      alert("Portfolio updated successfully!");
-      fetchData();
-    } catch (error) {
-      console.error("Error updating portfolio", error);
-    }
-  };
-
-  if (!formData.name) {
+  if (!data) {
     return <div className="text-center text-dark py-5">Loading...</div>;
   }
 
@@ -75,55 +33,179 @@ const UpdatePortfolioPage = () => {
     <div className="container-fluid p-0" style={{ background: "white", minHeight: "100vh" }}>
       {/* Header */}
       <header className="d-flex justify-content-between align-items-center bg-dark text-light p-3">
-        <h4 className="m-0">{formData.name}'s Portfolio</h4>
+        <h4 className="m-0">{data.name}'s Portfolio</h4>
         <button className="btn btn-outline-light">
-          <FaUser /> Login
+          <FaUser /> Logout
         </button>
       </header>
 
-      <div className="container py-5">
-        <div className="row">
-          <div className="col-md-3 text-center border p-4">
-            <img
-              src={`https://api.resumeportfolio.ameyashriwas.in/${formData.profilePhoto?.replace(/^\/+/, "")}`}
+      <div className="d-flex flex-column flex-md-row">
+        {/* Left Section */}
+        <div className="col-md-3 bg-white p-4 text-center border">
+          <motion.div className="position-relative d-inline-block">
+            <motion.img
+              src={`https://api.resumeportfolio.ameyashriwas.in/${data.profilePhoto.replace(/^\/+/, "")}`}
               alt="Profile"
               className="rounded-circle border border-warning shadow-lg"
               style={{ width: "140px", height: "140px" }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
             />
-            <h5 className="mt-3">{formData.name}</h5>
-            {formData.bio && <p>{formData.bio}</p>}
-            <a href={formData.linkedin} target="_blank" className="btn btn-primary m-2">
-              <FaLinkedin /> LinkedIn
+            <button className="btn btn-sm btn-warning position-absolute bottom-0 end-0">
+              <FaEdit />
+            </button>
+          </motion.div>
+          <h5 className="mt-3 font-weight-bold d-flex justify-content-center align-items-center gap-2">
+            {data.name} <FaEdit className="text-warning cursor-pointer" />
+          </h5>
+          {data.bio && (
+            <p className="px-3 d-flex justify-content-center align-items-center gap-2">
+              {data.bio} <FaEdit className="text-warning cursor-pointer" />
+            </p>
+          )}
+          <div className="d-flex flex-column gap-2 mt-3">
+            <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-primary d-flex justify-content-between">
+              <FaLinkedin /> LinkedIn <FaEdit />
             </a>
-            <a href={`mailto:${formData.email}`} className="btn btn-dark m-2">
-              <FaEnvelope /> Contact
+            <a href={`mailto:${data.email}`} className="btn btn-dark d-flex justify-content-between">
+              <FaEnvelope /> Contact <FaEdit />
             </a>
-            <a href={formData.resume} className="btn btn-secondary m-2" download>
-              <FaFileAlt /> Download Resume
+            <a href={data.resume} className="btn btn-secondary d-flex justify-content-between" download>
+              <FaFileAlt /> Download Resume <FaEdit />
             </a>
           </div>
+        </div>
 
-          <div className="col-md-9">
-            <h2 className="text-center mb-4">Update Portfolio</h2>
-            <div className="mb-3">
-              <label className="form-label">Profile Picture</label>
-              <input type="file" name="profilePhoto" className="form-control" onChange={handleFileChange} />
+        {/* Right Section */}
+        <div className="col-md-9 p-4">
+          <nav className="nav nav-tabs">
+            <a className="nav-link active" data-bs-toggle="tab" href="#projects">
+              Projects
+            </a>
+            <a className="nav-link" data-bs-toggle="tab" href="#skills">
+              Skills
+            </a>
+            <a className="nav-link" data-bs-toggle="tab" href="#about">
+              About Me
+            </a>
+            <a className="nav-link" data-bs-toggle="tab" href="#experience">
+              Experience
+            </a>
+          </nav>
+
+          <div className="tab-content mt-4">
+            {/* Projects Section */}
+            <div className="tab-pane fade show active" id="projects">
+              <h4>Projects</h4>
+              <div className="row">
+                {data.projects.map((project, index) => (
+                  <motion.div key={index} className="col-12 col-sm-6 col-md-4 mb-3" whileHover={{ scale: 1.05 }}>
+                    <div className="card shadow-sm border-0 position-relative">
+                      <div className="square-container">
+                        <img
+                          src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
+                          className="card-img-top"
+                          alt={project.projectName}
+                        />
+                      </div>
+                      <button className="btn btn-sm btn-warning position-absolute top-0 end-0 m-2">
+                        <FaEdit />
+                      </button>
+                      <div className="card-body">
+                        <h6 className="card-title d-flex justify-content-between">
+                          {project.projectName} <FaEdit className="text-warning cursor-pointer" />
+                        </h6>
+                        <p className="card-text text-muted small d-flex justify-content-between">
+                          {project.projectDescription} <FaEdit className="text-warning cursor-pointer" />
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
-            <div className="mb-3">
-              <label className="form-label">Name</label>
-              <input type="text" name="name" className="form-control" value={formData.name} onChange={handleChange} />
+
+            {/* Skills Section */}
+            <div className="tab-pane fade" id="skills">
+              <h4>Skills</h4>
+              <p className="d-flex justify-content-between">
+                {data.skills} <FaEdit className="text-warning cursor-pointer" />
+              </p>
             </div>
-            <button className="btn btn-success w-100" onClick={handleSave}>
-              <FaSave /> Save Changes
-            </button>
+
+            {/* About Me Section */}
+            <div className="tab-pane fade" id="about">
+              <h4>About Me</h4>
+              <p className="d-flex justify-content-between">
+                {data.aboutMe} <FaEdit className="text-warning cursor-pointer" />
+              </p>
+            </div>
+
+            {/* Experience Section */}
+            <div className="tab-pane fade" id="experience">
+              <h4>Experience</h4>
+              <p className="d-flex justify-content-between">
+                {data.experience} <FaEdit className="text-warning cursor-pointer" />
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Footer */}
-      <footer className="bg-dark text-light text-center py-3">
-        &copy; {new Date().getFullYear()} {formData.name}'s Portfolio
+      <footer className="bg-dark text-light text-center p-3 mt-3">
+        <small>&copy; {new Date().getFullYear()} {data.name}. All Rights Reserved.</small>
       </footer>
+
+      {/* Styles */}
+      <style>
+        {`
+          .square-container {
+            width: 100%;
+            padding-top: 100%;
+            position: relative;
+            overflow: hidden;
+          }
+          
+          .square-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+          
+          .position-relative {
+            position: relative;
+          }
+
+          .btn-warning {
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .cursor-pointer {
+            cursor: pointer;
+          }
+
+          @media (max-width: 768px) {
+            .col-md-3 {
+              width: 100%;
+              text-align: center;
+            }
+            
+            .col-md-9 {
+              width: 100%;
+            }
+          }
+        `}
+      </style>
     </div>
   );
 };
