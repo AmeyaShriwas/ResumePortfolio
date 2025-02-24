@@ -21,11 +21,14 @@ const UpdatePortfolioPage = () => {
       const response = await axios.get(
         `https://api.resumeportfolio.ameyashriwas.in/portfolio/${id}`
       );
+      console.log('res', response)
       setData(response.data.data);
     } catch (error) {
       console.error("Error fetching portfolio data", error);
     }
   };
+
+
 
   useEffect(() => {
     fetchData();
@@ -43,20 +46,44 @@ const UpdatePortfolioPage = () => {
 
   const handleSave = async () => {
     try {
-      let updatedData = { ...data };
-      if (editField === "profilePhoto") {
-        const formData = new FormData();
-        formData.append("profilePhoto", imageFile);
-        const uploadResponse = await axios.post(
-          `https://api.resumeportfolio.ameyashriwas.in/upload`,
-          formData
-        );
-        updatedData.profilePhoto = uploadResponse.data.filePath;
-      } else {
-        updatedData[editField] = inputValue;
+      if(editField === 'profilePhoto'){
+        console.log('updated data', data)
+       
+
+        formData.append("name", portfolioData.name);
+        formData.append("bio", portfolioData.bio);
+        formData.append("linkedin", portfolioData.linkedin);
+        formData.append("skills", portfolioData.skills);
+        formData.append("email", portfolioData.email);
+        formData.append("phone", portfolioData.phone);
+        
+        if (portfolioData.profilePhoto) {
+            formData.append("profilePhoto", imageFile);
+        }
+        if (portfolioData.resume) {
+            formData.append("resume", portfolioData.resume);
+        }
+        
+        // Convert projects array to JSON and append
+        formData.append("projects", JSON.stringify(portfolioData.projects));
+    
+        // Append project images (if available)
+        portfolioData.projects.forEach((project, index) => {
+            if (project.projectImage) {
+                formData.append("projectImages", project.projectImage);
+            }
+        });
+    
+        try {
+            const response = await axios.put(`https://api.resumeportfolio.ameyashriwas.in/portfolio/${data.id}`, formData, {
+               
+            });
+            console.log('res updated',response.data);
+        } catch (error) {
+            console.error("Error updating portfolio:", error);
+        }
       }
-      await axios.put(`https://api.resumeportfolio.ameyashriwas.in/portfolio/${id}`, updatedData);
-      setData(updatedData);
+    
       setShowModal(false);
     } catch (error) {
       console.error("Error updating data", error);
@@ -148,14 +175,14 @@ const UpdatePortfolioPage = () => {
                         />
                       </div>
                       <button className="btn btn-sm btn-warning position-absolute top-0 end-0 m-2">
-                        <FaEdit onClick={()=>handleOpenModel('resume')} />
+                        <FaEdit onClick={()=>handleOpenModel('projectImage')} />
                       </button>
                       <div className="card-body">
                         <h6 className="card-title d-flex justify-content-between">
-                          {project.projectName} <FaEdit onClick={()=>handleOpenModel('resume')} className="text-warning cursor-pointer" />
+                          {project.projectName} <FaEdit onClick={()=>handleOpenModel('projectName')} className="text-warning cursor-pointer" />
                         </h6>
                         <p className="card-text text-muted small d-flex justify-content-between">
-                          {project.projectDescription} <FaEdit onClick={()=>handleOpenModel('resume')} className="text-warning cursor-pointer" />
+                          {project.projectDescription} <FaEdit onClick={()=>handleOpenModel('projectDescription')} className="text-warning cursor-pointer" />
                         </p>
                       </div>
                     </div>
@@ -168,7 +195,7 @@ const UpdatePortfolioPage = () => {
             <div className="tab-pane fade" id="skills">
               <h4>Skills</h4>
               <p className="d-flex justify-content-between">
-                {data.skills} <FaEdit onClick={()=>handleOpenModel('resume')} className="text-warning cursor-pointer" />
+                {data.skills} <FaEdit onClick={()=>handleOpenModel('skills')} className="text-warning cursor-pointer" />
               </p>
             </div>
 
@@ -176,7 +203,7 @@ const UpdatePortfolioPage = () => {
             <div className="tab-pane fade" id="about">
               <h4>About Me</h4>
               <p className="d-flex justify-content-between">
-                {data.aboutMe} <FaEdit onClick={()=>handleOpenModel('resume')} className="text-warning cursor-pointer" />
+                {data.aboutMe} <FaEdit onClick={()=>handleOpenModel('aboutMe')} className="text-warning cursor-pointer" />
               </p>
             </div>
 
@@ -184,7 +211,7 @@ const UpdatePortfolioPage = () => {
             <div className="tab-pane fade" id="experience">
               <h4>Experience</h4>
               <p className="d-flex justify-content-between">
-                {data.experience} <FaEdit onClick={()=>handleOpenModel('resume')} className="text-warning cursor-pointer" />
+                {data.experience} <FaEdit onClick={()=>handleOpenModel('experience')} className="text-warning cursor-pointer" />
               </p>
             </div>
           </div>
