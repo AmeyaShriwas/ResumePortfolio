@@ -147,7 +147,7 @@ const ViewPortfolio = () => {
             className="project-card"
             style={{
               flex: "0 0 auto",
-              width: "350px",
+              width: "300px",
               border:'1px solid grey'
             }}
           >
