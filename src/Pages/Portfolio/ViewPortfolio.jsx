@@ -153,7 +153,7 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                   overflow: "hidden",
                 }}
               >
-                <div className="card shadow-sm border-0" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+                <div className="card shadow-sm border-0" style={{ display: "flex", flexDirection: "column" }}>
                   {/* Image section (50% height) */}
                   <div className="square-container" style={{ height: "50%", overflow: "hidden" }}>
                     <img
@@ -165,7 +165,7 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                   </div>
               
                   {/* Content section (50% height) */}
-                  <div className="card-body" style={{ height: "50%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                  <div className="card-body" style={{display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                     <h6 className="card-title text-dark"  style={{ color: "black" }}>{project.projectName}</h6>
               
                     {/* Show full description when not mobile */}
