@@ -143,33 +143,45 @@ const ViewPortfolio = () => {
       >
         {data.projects.concat(data.projects).map((project, index) => (
           <div
-            key={index}
-            className="project-card"
-            style={{
-              flex: "0 0 auto",
-              width: "300px",
-              border:'1px solid grey'
-            }}
-          >
-            <div className="card shadow-sm border-0">
-              <div className="square-container">
-                <img
-                  src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
-                  className="card-img-top"
-                  alt={project.projectName}
-                />
-              </div>
-              <div className="card-body">
-                <h6 className="card-title text-dark">{project.projectName}</h6>
-                <p className="card-text text-muted small" style={{ display: 'flex', flexWrap: 'wrap' }}>
-  {project.projectDescription.length > 100 
-    ? project.projectDescription.slice(0, 100) + '...' 
-    : project.projectDescription}
-</p>
-
-              </div>
+          key={index}
+          className="project-card"
+          style={{
+            flex: "0 0 auto",
+            width: "300px",
+            border: "1px solid grey",
+            overflow: "hidden",
+          }}
+        >
+          <div className="card shadow-sm border-0" style={{ height: "400px", display: "flex", flexDirection: "column" }}>
+            {/* Image section (50% height) */}
+            <div className="square-container" style={{ height: "50%", overflow: "hidden" }}>
+              <img
+                src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
+                className="card-img-top"
+                alt={project.projectName}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }} // Ensures full image display
+              />
+            </div>
+        
+            {/* Content section (50% height) */}
+            <div className="card-body" style={{ height: "50%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <h6 className="card-title text-dark">{project.projectName}</h6>
+        
+              <p
+                className="card-text text-muted small"
+                style={{
+                  overflow: "hidden",
+                  display: "-webkit-box",
+                  WebkitBoxOrient: "vertical",
+                  WebkitLineClamp: 3, // Limits description to 3 lines
+                }}
+              >
+                {project.projectDescription.length > 100 ? project.projectDescriptoin.slice(0, 100): project.projectDescriptoin }
+              </p>
             </div>
           </div>
+        </div>
+        
         ))}
       </motion.div>
     </div>
