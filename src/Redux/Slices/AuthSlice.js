@@ -102,22 +102,22 @@ const AuthSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // ✅ Signup Reducers
-      .addCase(userSignup.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(userSignup.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.data = action.payload;
-        state.token = action.payload.token;
-        state.isLoggedIn = true;
-        state.message = "Signup successful!";
-      })
-      .addCase(userSignup.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
+      // // ✅ Signup Reducers
+      // .addCase(userSignup.pending, (state) => {
+      //   state.isLoading = true;
+      //   state.error = null;
+      // })
+      // .addCase(userSignup.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   state.data = action.payload;
+      //   state.token = action.payload.token;
+      //   state.isLoggedIn = true;
+      //   state.message = "Signup successful!";
+      // })
+      // .addCase(userSignup.rejected, (state, action) => {
+      //   state.isLoading = false;
+      //   state.error = action.payload;
+      // })
 
       // ✅ Login Reducers
       .addCase(userLogin.pending, (state) => {
