@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Menu, X, Home, FileText, LogIn, User2Icon } from "lucide-react"; 
 import { useDispatch, useSelector } from "react-redux";
 import { UserLogout } from "../../Redux/Slices/AuthSlice";
+import axios from "axios";
 
 const Header = ({ isMobile, setIsMobile }) => {
   const [headerActive, setHeaderActive] = useState("HOME");
