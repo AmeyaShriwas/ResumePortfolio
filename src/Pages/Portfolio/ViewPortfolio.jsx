@@ -149,7 +149,7 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                   flex: "0 0 auto",
                   border: "1px solid grey",
                   overflow: "hidden",
-                  height: "auto",
+                  height: isMobile ? "500px" : "500px",
                   width: isMobile ? "330px" : "500px", // Adjusted width for smaller size
                 }}
               >
@@ -170,8 +170,8 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                       className="card-img-top"
                       alt={project.projectName}
                       style={{
-                        width: "100%",
-                        height: "100%",
+                        height: isMobile ? "400px" : "500px",
+                        width: isMobile ? "330px" : "500px", // Adjusted width for smaller size
                         objectFit: "cover", // Ensures full image display
                       }}
                     />
