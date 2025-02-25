@@ -155,12 +155,12 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
               >
                 <div className="card shadow-sm border-0" style={{ display: "flex", flexDirection: "column" }}>
                   {/* Image section (50% height) */}
-                  <div className="square-container" style={{ height: "50%", overflow: "hidden" }}>
+                  <div className="square-container" style={{ overflow: "hidden" }}>
                     <img
                       src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
                       className="card-img-top"
                       alt={project.projectName}
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }} // Ensures full image display
+                      style={{ width: "100%"}} // Ensures full image display
                     />
                   </div>
               
