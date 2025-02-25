@@ -118,7 +118,7 @@ const ViewPortfolio = () => {
           <div className="tab-content mt-4">
             {/* Projects Section */}
             <div className="tab-pane fade show active" id="projects">
-              <h4 className="text-dark">Projects</h4>
+              <h4 className="text-dark" style={{marginBottom:'20px'}}>Projects</h4>
               <div
       className="scroll-container"
       style={{
