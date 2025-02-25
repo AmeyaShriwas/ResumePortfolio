@@ -47,7 +47,7 @@ const Home = ({ isMobile, setIsMobile }) => {
             >✍️ Create a Resume Now</motion.button>
             <motion.button
               className="btn portfolio-btn"
-              onClick={() => navigate("/portfolio")}
+              onClick={() => navigate("/portfolioTwo")}
               whileHover={{ scale: 1.1 }}
             >🌟 Create a Portfolio Now</motion.button>
           </div>
