@@ -62,7 +62,7 @@ setLoginData((prev)=> ({
   }
 
   return (
-    <div className="container-fluid p-0" style={{ background: "#D3DEDC", minHeight: "100vh" }}>
+    <div className="container-fluid p-0" style={{ background: "#F3F1F5", minHeight: "100vh" }}>
   {/* Header */}
   <header style={{ backgroundColor: "#92A9BD", color: "black" }} className="d-flex justify-content-between border align-items-center p-3">
     <h4 className="m-0">{data.name}'s Portfolio</h4>
