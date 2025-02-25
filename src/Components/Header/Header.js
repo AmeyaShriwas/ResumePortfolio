@@ -66,7 +66,7 @@ const Header = ({ isMobile, setIsMobile }) => {
       action: isLoggedIn ? handleLogout : () => navigate("/user/login"),
     },
     { 
-      name: isLoggedIn ? `Hi ${data.name.split(" ")[0]}` : null, 
+      name: isLoggedIn ? `Hi ${data?.name?.split(" ")[0]}` : null, 
       icon: isLoggedIn ? <User2Icon size={20} /> : null
     }
   ].filter(item => item.name !== null || item.icon !== null);
