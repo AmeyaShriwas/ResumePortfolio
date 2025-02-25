@@ -149,7 +149,7 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                   flex: "0 0 auto",
                   border: "1px solid grey",
                   overflow: "hidden",
-                  height: isMobile ? "500px" : "300px",
+                  height: isMobile ? "500px" : "400px",
                   width: isMobile ? "330px" : "500px", // Adjusted width for smaller size
                 }}
               >
