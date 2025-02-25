@@ -142,18 +142,18 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                   }}
                 >
                   {data.projects.concat(data.projects).map((project, index) => (
-                    <div
-                      key={index}
-                      className="project-card"
-                      style={{
-                        flex: "0 0 auto",
-                        width: "320px",
-                        border: "1px solid grey",
-                        overflow: "hidden",
-                        height:'300px',
-                        width: `${isMobile}? 300px: 600px`
-                      }}
-                    >
+                   <div
+                   key={index}
+                   className="project-card"
+                   style={{
+                     flex: "0 0 auto",
+                     border: "1px solid grey",
+                     overflow: "hidden",
+                     height: "300px",
+                     width: isMobile ? "300px" : "600px", // Corrected ternary operator
+                   }}
+                 >
+                 
                       <div className="card shadow-sm border-0" style={{ height: "400px", display: "flex", flexDirection: "column" }}>
                         {/* Image section (50% height) */}
                         <div className="square-container" style={{ height: "50%", overflow: "hidden", }} >
