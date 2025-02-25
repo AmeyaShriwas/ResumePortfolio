@@ -147,7 +147,7 @@ const ViewPortfolio = () => {
             className="project-card"
             style={{
               flex: "0 0 auto",
-              width: "auto",
+              width: "350px",
               border:'1px solid grey'
             }}
           >
@@ -177,7 +177,7 @@ const ViewPortfolio = () => {
               <h4 className="text-dark">Skills</h4>
               <p className="text-dark" style={{display:'flex', gap:'15px'}}>{data.skills.split(",").map((data)=> {
                 return (
-                  <p className="text-dark" style={{backgroundColor:'grey', padding: '10px', margin:'10px'}}>{data}</p>
+                  <p className="text-light" style={{backgroundColor:'grey', padding: '10px', margin:'10px', borderRadius:'10px'}}>{data}</p>
                 )
               })}</p>
             </div>
