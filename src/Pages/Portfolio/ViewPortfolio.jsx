@@ -147,7 +147,7 @@ const ViewPortfolio = () => {
             className="project-card"
             style={{
               flex: "0 0 auto",
-              width: "550px",
+              width: "350px",
               border:'1px solid grey'
             }}
           >
@@ -161,9 +161,12 @@ const ViewPortfolio = () => {
               </div>
               <div className="card-body">
                 <h6 className="card-title text-dark">{project.projectName}</h6>
-                <p className="card-text text-muted small" style={{display:'flex', flexWrap:'wrap'}}>
-                  {project.projectDescription.slice(1, 100)}
-                </p>
+                <p className="card-text text-muted small" style={{ display: 'flex', flexWrap: 'wrap' }}>
+  {project.projectDescription.length > 100 
+    ? project.projectDescription.slice(0, 100) + '...' 
+    : project.projectDescription}
+</p>
+
               </div>
             </div>
           </div>
