@@ -142,73 +142,77 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                   }}
                 >
                   {data.projects.concat(data.projects).map((project, index) => (
-                <div
-                key={index}
-                className="project-card"
-                style={{
-                  flex: "0 0 auto",
-                  border: "1px solid grey",
-                  overflow: "hidden",
-                  height: isMobile ? "500px" : "400px",
-                  width: isMobile ? "330px" : "500px", // Adjusted width for smaller size
-                }}
-              >
-                <div
-                  className="card shadow-sm border-0"
-                  style={{ height: "auto", display: "flex", flexDirection: "column" }}
-                >
-                  {/* Image section (50% height) */}
-                  <div
-                    className="square-container"
-                    style={{
-                      height: "50%",
-                      overflow: "hidden",
-                    }}
-                  >
-                    <img
-                      src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
-                      className="card-img-top"
-                      alt={project.projectName}
-                      style={{
-                        height: isMobile ? "400px" : "300px",
-                        width: isMobile ? "330px" : "500px", // Adjusted width for smaller size
-                        objectFit: "cover", // Ensures full image display
-                      }}
-                    />
-                  </div>
-                  {/* Content section (50% height) */}
-                  <div
-                  
-                    style={{
-                      height: "auto",
-                      color:'black',
-
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                      padding: "8px", // Reduced padding for smaller size
-                    }}
-                  >
-                    <h6 className="card-title text-dark" style={{ marginBottom: "8px" }}>
-                      {project.projectName}
-                    </h6>
-              
-                    <p
-                   
-                      style={{
-                        overflow: "hidden",
-                        color:'black',
-                        display: "-webkit-box",
-                        WebkitBoxOrient: "vertical",
-                        WebkitLineClamp: 3, // Limits description to 3 lines
-                        textOverflow: "ellipsis", // Ensure text doesn't overflow
-                      }}
-                    >
-                      {project.projectDescription}
-                    </p>
-                  </div>
-                </div>
-              </div>
+               <div
+               key={index}
+               className="project-card"
+               style={{
+                 flex: "0 0 auto",
+                 border: "1px solid grey",
+                 overflow: "hidden",
+                 width: isMobile ? "330px" : "500px", // Adjusted width for smaller size
+               }}
+             >
+               <div
+                 className="card shadow-sm border-0"
+                 style={{
+                   display: "flex",
+                   flexDirection: "column",
+                   height: "auto", // Removed fixed height
+                 }}
+               >
+                 {/* Image section (flexible height based on content) */}
+                 <div
+                   className="square-container"
+                   style={{
+                     width: "100%",
+                     paddingTop: "56.25%", // Aspect ratio (16:9)
+                     position: "relative",
+                     overflow: "hidden",
+                   }}
+                 >
+                   <img
+                     src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
+                     className="card-img-top"
+                     alt={project.projectName}
+                     style={{
+                       position: "absolute",
+                       top: "0",
+                       left: "0",
+                       width: "100%",
+                       height: "100%",
+                       objectFit: "cover",
+                     }}
+                   />
+                 </div>
+             
+                 {/* Content section */}
+                 <div
+                   style={{
+                     display: "flex",
+                     flexDirection: "column",
+                     padding: "12px",
+                   }}
+                 >
+                   <h6 className="card-title text-dark" style={{ marginBottom: "8px" }}>
+                     {project.projectName}
+                   </h6>
+             
+                   <p
+                     style={{
+                       overflow: "hidden",
+                       color: "black",
+                       display: "-webkit-box",
+                       WebkitBoxOrient: "vertical",
+                       WebkitLineClamp: 3, // Limits description to 3 lines
+                       textOverflow: "ellipsis", // Ensure text doesn't overflow
+                     }}
+                   >
+                     {project.projectDescription}
+                   </p>
+                 </div>
+               </div>
+             </div>
+             
               
                   ))}
                 </motion.div>
