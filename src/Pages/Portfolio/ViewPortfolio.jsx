@@ -147,7 +147,8 @@ const ViewPortfolio = () => {
             className="project-card"
             style={{
               flex: "0 0 auto",
-              width: "300px",
+              width: "auto",
+              border:'1px solid grey'
             }}
           >
             <div className="card shadow-sm border-0">
@@ -174,7 +175,11 @@ const ViewPortfolio = () => {
             {/* Skills Section */}
             <div className="tab-pane fade" id="skills">
               <h4 className="text-dark">Skills</h4>
-              <p className="text-dark">{data.skills}</p>
+              <p className="text-dark" style={{display:'flex', gap:'15px'}}>{data.skills.split(",").map((data)=> {
+                return (
+                  <p className="text-dark" style={{backgroundColor:'grey', padding: '10px', margin:'10px'}}>{data}</p>
+                )
+              })}</p>
             </div>
 
             {/* About Me Section */}

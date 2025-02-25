@@ -11,6 +11,7 @@ import pdf5 from "./../../Assets/img5.png";
 import pdf6 from "./../../Assets/img6.png";
 import pdf7 from "./../../Assets/img7.png";
 import pdf8 from "./../../Assets/img8.png";
+import portfolioImg from './../../Assets/portfolio.png'
 
 const Home = ({ isMobile, setIsMobile }) => {
   const navigate = useNavigate();
@@ -72,6 +73,13 @@ const Home = ({ isMobile, setIsMobile }) => {
         </motion.div>
       </div>
 
+      <div className="templates-sections">
+        <h2 className="templates-title">View Our Portfolio</h2>
+       
+          <img src={portfolioImg} alt="Template 1" className="template-images" />
+        
+      </div>
+
       <Footer isMobile={isMobile} />
 
       <style jsx>{`
@@ -123,7 +131,17 @@ const Home = ({ isMobile, setIsMobile }) => {
         }
         .templates-section {
           text-align: center;
-          margin-top: 50px;
+          margin-top: 10px;
+          overflow: hidden;
+          padding: 20px;
+        }
+        .templates-sections {
+        display: flex;
+        flex-direction:column;
+        width: 100%;
+        algn-items: center;
+           text-align: center;
+          margin-top: 20px;
           overflow: hidden;
           padding: 20px;
         }
@@ -138,6 +156,13 @@ const Home = ({ isMobile, setIsMobile }) => {
         }
         .template-image {
           width: 300px;
+          height: auto;
+          margin-right: 20px;
+          border-radius: 10px;
+          box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+        }
+            .template-images {
+          width: 100%;
           height: auto;
           margin-right: 20px;
           border-radius: 10px;
