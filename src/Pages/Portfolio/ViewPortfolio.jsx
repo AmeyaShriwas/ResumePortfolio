@@ -64,9 +64,9 @@ setLoginData((prev)=> ({
   return (
     <div className="container-fluid p-0" style={{ background: "white", minHeight: "100vh" }}>
       {/* Header */}
-      <header style={{backgroundColor:'white', color:'black'}} className="d-flex justify-content-between border align-items-center  p-3">
+      <header style={{backgroundColor:'DA0037', color:'white'}} className="d-flex justify-content-between border align-items-center  p-3">
         <h4 className="m-0">{data.name}'s Portfolio</h4>
-        <button className="btn " style={{backgroundColor:'black', color:'white'}} onClick={() => setShowSidebar(true)}>
+        <button className="btn " style={{backgroundColor:'white', color:'DA0037'}} onClick={() => setShowSidebar(true)}>
           <FaUser /> Login
         </button>
       </header>
@@ -77,7 +77,7 @@ setLoginData((prev)=> ({
           <motion.img
             src={`https://api.resumeportfolio.ameyashriwas.in/${data.profilePhoto.replace(/^\/+/, "")}`}
             alt="Profile"
-            className="rounded-circle border border-warning shadow-lg"
+            className="rounded-circle"
             style={{ width: "140px", height: "140px" }}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -162,7 +162,7 @@ setLoginData((prev)=> ({
       </div>
 
       {/* Footer */}
-      <footer className=" text-center p-3 mt-3 border" style={{backgroundColor:'white', color:'black'}}>
+      <footer className=" text-center p-3 mt-3 border" style={{backgroundColor:'DA0037', color:'white'}}>
         <small>&copy; {new Date().getFullYear()} {data.name}. All Rights Reserved.</small>
       </footer>
 
