@@ -119,25 +119,57 @@ setLoginData((prev)=> ({
         {/* Projects Section */}
         <div className="tab-pane fade show active" id="projects">
           <h4 className="text-dark">Projects</h4>
-          <div className="row">
-            {data.projects.map((project, index) => (
-              <motion.div key={index} className="col-12 col-sm-6 col-md-4 mb-3" whileHover={{ scale: 1.05 }}>
-                <div className="card shadow-sm border-0">
-                  <div className="square-container">
-                    <img
-                      src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
-                      className="card-img-top"
-                      alt={project.projectName}
-                    />
-                  </div>
-                  <div className="card-body">
-                    <h6 className="card-title text-dark">{project.projectName}</h6>
-                    <p className="card-text text-muted small">{project.projectDescription}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+          <div
+      className="scroll-container"
+      style={{
+        width: "100%",
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        position: "relative",
+      }}
+    >
+      <motion.div
+        className="scroll-content"
+        style={{
+          display: "flex",
+          gap: "16px",
+          minWidth: "200%",
+        }}
+        animate={{ x: ["0%", "-100%"] }}
+        transition={{
+          ease: "linear",
+          duration: 15,
+          repeat: Infinity,
+        }}
+      >
+        {data.projects.concat(data.projects).map((project, index) => (
+          <div
+            key={index}
+            className="project-card"
+            style={{
+              flex: "0 0 auto",
+              width: "300px",
+            }}
+          >
+            <div className="card shadow-sm border-0">
+              <div className="square-container">
+                <img
+                  src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
+                  className="card-img-top"
+                  alt={project.projectName}
+                />
+              </div>
+              <div className="card-body">
+                <h6 className="card-title text-dark">{project.projectName}</h6>
+                <p className="card-text text-muted small">
+                  {project.projectDescription}
+                </p>
+              </div>
+            </div>
           </div>
+        ))}
+      </motion.div>
+    </div>
         </div>
 
         {/* Skills Section */}
