@@ -62,18 +62,18 @@ setLoginData((prev)=> ({
   }
 
   return (
-    <div className="container-fluid p-0" style={{ background: "#ECEBDE", minHeight: "100vh" }}>
+    <div className="container-fluid p-0" style={{ background: "#D3DEDC", minHeight: "100vh" }}>
   {/* Header */}
-  <header style={{ backgroundColor: "#C1BAA1", color: "#A59D84" }} className="d-flex justify-content-between border align-items-center p-3">
+  <header style={{ backgroundColor: "#92A9BD", color: "black" }} className="d-flex justify-content-between border align-items-center p-3">
     <h4 className="m-0">{data.name}'s Portfolio</h4>
-    <button className="btn" style={{ backgroundColor: "#8D8DAA", color: "#ECEBDE" }} onClick={() => setShowSidebar(true)}>
+    <button className="btn" style={{ backgroundColor: "#7C99AC", color: "white" }} onClick={() => setShowSidebar(true)}>
       <FaUser /> Login
     </button>
   </header>
 
   <div className="d-flex flex-column flex-md-row">
     {/* Left Section */}
-    <div className="col-md-3 bg-white p-4 text-center border" style={{ backgroundColor: "#D7D3BF", color: "#A59D84" }}>
+    <div className="col-md-3 bg-white p-4 text-center border">
       <motion.img
         src={`https://api.resumeportfolio.ameyashriwas.in/${data.profilePhoto.replace(/^\/+/, "")}`}
         alt="Profile"
@@ -83,16 +83,16 @@ setLoginData((prev)=> ({
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
       />
-      <h5 className="mt-3 font-weight-bold">{data.name}</h5>
-      {data.bio && <p className="px-3">{data.bio}</p>}
+      <h5 className="mt-3 font-weight-bold text-dark">{data.name}</h5>
+      {data.bio && <p className="px-3 text-dark">{data.bio}</p>}
       <div className="d-flex flex-column gap-2 mt-3">
-        <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn" style={{ backgroundColor: "#8D8DAA", color: "#ECEBDE" }}>
+        <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn" style={{ backgroundColor: "#7C99AC", color: "white" }}>
           <FaLinkedin /> LinkedIn
         </a>
-        <a href={`mailto:${data.email}`} className="btn" style={{ backgroundColor: "#A59D84", color: "#ECEBDE" }}>
+        <a href={`mailto:${data.email}`} className="btn btn-dark">
           <FaEnvelope /> Contact
         </a>
-        <a href={data.resume} className="btn" style={{ backgroundColor: "#C1BAA1", color: "#A59D84" }} download>
+        <a href={data.resume} className="btn btn-secondary" download>
           <FaFileAlt /> Download Resume
         </a>
       </div>
@@ -101,16 +101,16 @@ setLoginData((prev)=> ({
     {/* Right Section */}
     <div className="col-md-9 p-4">
       <nav className="nav nav-tabs">
-        <a className="nav-link active" data-bs-toggle="tab" href="#projects" style={{ color: "#A59D84" }}>
+        <a className="nav-link active text-dark" data-bs-toggle="tab" href="#projects">
           Projects
         </a>
-        <a className="nav-link" data-bs-toggle="tab" href="#skills" style={{ color: "#A59D84" }}>
+        <a className="nav-link text-dark" data-bs-toggle="tab" href="#skills">
           Skills
         </a>
-        <a className="nav-link" data-bs-toggle="tab" href="#about" style={{ color: "#A59D84" }}>
+        <a className="nav-link text-dark" data-bs-toggle="tab" href="#about">
           About Me
         </a>
-        <a className="nav-link" data-bs-toggle="tab" href="#experience" style={{ color: "#A59D84" }}>
+        <a className="nav-link text-dark" data-bs-toggle="tab" href="#experience">
           Experience
         </a>
       </nav>
@@ -118,11 +118,11 @@ setLoginData((prev)=> ({
       <div className="tab-content mt-4">
         {/* Projects Section */}
         <div className="tab-pane fade show active" id="projects">
-          <h4 style={{ color: "#A59D84" }}>Projects</h4>
+          <h4 className="text-dark">Projects</h4>
           <div className="row">
             {data.projects.map((project, index) => (
               <motion.div key={index} className="col-12 col-sm-6 col-md-4 mb-3" whileHover={{ scale: 1.05 }}>
-                <div className="card shadow-sm border-0" style={{ backgroundColor: "#D7D3BF" }}>
+                <div className="card shadow-sm border-0">
                   <div className="square-container">
                     <img
                       src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
@@ -131,7 +131,7 @@ setLoginData((prev)=> ({
                     />
                   </div>
                   <div className="card-body">
-                    <h6 className="card-title" style={{ color: "#A59D84" }}>{project.projectName}</h6>
+                    <h6 className="card-title text-dark">{project.projectName}</h6>
                     <p className="card-text text-muted small">{project.projectDescription}</p>
                   </div>
                 </div>
@@ -142,27 +142,27 @@ setLoginData((prev)=> ({
 
         {/* Skills Section */}
         <div className="tab-pane fade" id="skills">
-          <h4 style={{ color: "#A59D84" }}>Skills</h4>
-          <p>{data.skills}</p>
+          <h4 className="text-dark">Skills</h4>
+          <p className="text-dark">{data.skills}</p>
         </div>
 
         {/* About Me Section */}
         <div className="tab-pane fade" id="about">
-          <h4 style={{ color: "#A59D84" }}>About Me</h4>
-          <p>{data.aboutMe}</p>
+          <h4 className="text-dark">About Me</h4>
+          <p className="text-dark">{data.aboutMe}</p>
         </div>
 
         {/* Experience Section */}
         <div className="tab-pane fade" id="experience">
-          <h4 style={{ color: "#A59D84" }}>Experience</h4>
-          <p>{data.experience}</p>
+          <h4 className="text-dark">Experience</h4>
+          <p className="text-dark">{data.experience}</p>
         </div>
       </div>
     </div>
   </div>
 
   {/* Footer */}
-  <footer className="text-center p-3 mt-3 border" style={{ backgroundColor: "#C1BAA1", color: "#A59D84" }}>
+  <footer className="text-center p-3 mt-3 border" style={{ backgroundColor: "#92A9BD", color: "black" }}>
     <small>&copy; {new Date().getFullYear()} {data.name}. All Rights Reserved.</small>
   </footer>
 
@@ -171,26 +171,24 @@ setLoginData((prev)=> ({
     {showSidebar && (
       <motion.div
         className="position-fixed top-0 start-0 vh-100 text-dark p-4 shadow-lg"
-        style={{ width: "25%", backgroundColor: "#D7D3BF" }}
+        style={{ width: "25%", backgroundColor: "white" }}
         initial={{ x: "-100%" }}
         animate={{ x: 0 }}
         exit={{ x: "-100%" }}
         transition={{ duration: 0.5 }}
       >
         <button className="btn-close btn-close-dark position-absolute top-2 end-2" onClick={() => setShowSidebar(false)}></button>
-        <h4 className="text-center mb-4" style={{ color: "#A59D84" }}>Login</h4>
+        <h4 className="text-center mb-4 text-dark">Login</h4>
         <form>
           <div className="mb-3">
-            <label className="form-label" style={{ color: "#A59D84" }}>Email</label>
+            <label className="form-label text-dark">Email</label>
             <input type="email" name="email" onChange={handleLoginChange} className="form-control" placeholder="Enter email" />
           </div>
           <div className="mb-3">
-            <label className="form-label" style={{ color: "#A59D84" }}>Password</label>
+            <label className="form-label text-dark">Password</label>
             <input type="password" name="password" onChange={handleLoginChange} className="form-control" placeholder="Enter password" />
           </div>
-          <button type="submit" onClick={handleLoginSubmit} className="btn w-100" style={{ backgroundColor: "#8D8DAA", color: "#ECEBDE" }}>
-            Login
-          </button>
+          <button type="submit" onClick={handleLoginSubmit} className="btn w-100" style={{ backgroundColor: "#7C99AC", color: "white" }}>Login</button>
         </form>
       </motion.div>
     )}
@@ -205,7 +203,7 @@ setLoginData((prev)=> ({
         position: relative;
         overflow: hidden;
       }
-      
+
       .square-container img {
         position: absolute;
         top: 0;
@@ -214,13 +212,13 @@ setLoginData((prev)=> ({
         height: 100%;
         object-fit: cover;
       }
-      
+
       @media (max-width: 768px) {
         .col-md-3 {
           width: 100%;
           text-align: center;
         }
-        
+
         .col-md-9 {
           width: 100%;
         }
