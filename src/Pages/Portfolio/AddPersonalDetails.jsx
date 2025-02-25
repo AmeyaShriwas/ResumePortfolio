@@ -165,7 +165,6 @@ const PortfolioDetails = () => {
 
         <div className="text-end mt-4">
           <Button variant="success" type="submit" className="me-2">Save</Button>
-          <Button variant="primary">Next</Button>
         </div>
       </Form>
     </div>

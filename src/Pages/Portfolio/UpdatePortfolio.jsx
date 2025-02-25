@@ -123,12 +123,13 @@ const UpdatePortfolioPage = () => {
   return (
     <div className="container-fluid p-0" style={{ background: "white", minHeight: "100vh" }}>
       {/* Header */}
-      <header className="d-flex justify-content-between align-items-center bg-dark text-light p-3">
-        <h4 className="m-0">{data.name}'s Portfolio</h4>
-        <button className="btn btn-outline-light" onClick={()=> handelLogout()}>
+      <header style={{ backgroundColor: "white", color: "black" }} className="d-flex justify-content-between border align-items-center p-3">
+      <h4 className="m-0">{data.name}'s Portfolio</h4>
+        <button className="btn" style={{ backgroundColor: "#7C99AC", color: "white" }} onClick={()=> handelLogout()}>
           <FaUser /> Logout
         </button>
       </header>
+      
 
       <div className="d-flex flex-column flex-md-row">
         {/* Left Section */}
@@ -308,7 +309,7 @@ const UpdatePortfolioPage = () => {
       </Modal>
 
       {/* Footer */}
-      <footer className="bg-dark text-light text-center p-3 mt-3">
+      <footer className="text-center p-3 mt-3 border" style={{ backgroundColor: "white", color: "black" }}>
         <small>&copy; {new Date().getFullYear()} {data.name}. All Rights Reserved.</small>
       </footer>
 

@@ -10,8 +10,26 @@ const Header = ({ isMobile, setIsMobile }) => {
   const [toggleHamburger, setToggleHamburger] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isPortfolio, setIsPortfolio] = useState(false)
 
   const { isLoggedIn, data } = useSelector((state) => state.user);
+  console.log('data', data)
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.resumeportfolio.ameyashriwas.in/portfolio/${data.id}`
+      );
+      console.log('res', response.data.success)
+      setIsPortfolio(true);
+    } catch (error) {
+      console.error("Error fetching portfolio data", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [data.id]);
 
   const handleLogout = () => {
     dispatch(UserLogout());
@@ -30,6 +48,12 @@ const Header = ({ isMobile, setIsMobile }) => {
       name: isLoggedIn ? "PORTFOLIO" : null, 
       icon:isLoggedIn ? <FileText size={20} />: null,
       path: "/portfolioTwo"
+      
+    },
+    { 
+      name: isPortfolio ? "VIEW PORTFOLIO" : null, 
+      icon:isPortfolio ? <FileText size={20} />: null,
+      path: `/viewPortfolio/${data.id}`
       
     },
     { 
