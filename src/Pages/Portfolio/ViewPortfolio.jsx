@@ -142,50 +142,45 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                   }}
                 >
                   {data.projects.concat(data.projects).map((project, index) => (
-                <div
-                key={index}
-                className="project-card"
-                style={{
-                  flex: "0 0 auto",
-                  width: isMobile ? "300px" : "600px", // Increased width when not mobile
-                  height: isMobile ? "350px" : "400px", // Height remains the same
-                  border: "1px solid grey",
-                  overflow: "hidden",
-                }}
-              >
-                <div className="card shadow-sm border-0" style={{ display: "flex", flexDirection: "column" }}>
-                  {/* Image section (50% height) */}
-                  <div className="square-container" style={{ overflow: "hidden" }}>
-                    <img
-                      src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
-                      className="card-img-top"
-                      alt={project.projectName}
-                      style={{ width: "100%"}} // Ensures full image display
-                    />
-                  </div>
-              
-                  {/* Content section (50% height) */}
-                  <div className="card-body" style={{display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                    <h6 className="card-title text-dark"  style={{ color: "black" }}>{project.projectName}</h6>
-              
-                    {/* Show full description when not mobile */}
-                    <p
-                      className="card-text text-muted small"
+                    <div
+                      key={index}
+                      className="project-card"
                       style={{
+                        flex: "0 0 auto",
+                        width: "320px",
+                        border: "1px solid grey",
                         overflow: "hidden",
-                        color:'black',
-                        display: isMobile ? "-webkit-box" : "block", // Adjust display style based on mobile
-                        WebkitBoxOrient: "vertical",
-                        WebkitLineClamp: isMobile ? 3 : "unset", // Limit to 3 lines only on mobile
-                        whiteSpace: isMobile ? "nowrap" : "normal", // Prevent wrapping on mobile
                       }}
                     >
-                      {project.projectDescription}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
+                      <div className="card shadow-sm border-0" style={{ height: "400px", display: "flex", flexDirection: "column" }}>
+                        {/* Image section (50% height) */}
+                        <div className="square-container" style={{ height: "50%", overflow: "hidden", }} >
+                          <img
+                            src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
+                            className="card-img-top"
+                            alt={project.projectName}
+                            style={{ width: "100%", height: "100%", objectFit: "cover" }} // Ensures full image display
+                          />
+                        </div>
+
+                        {/* Content section (50% height) */}
+                        <div className="card-body" style={{ height: "50%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                          <h6 className="card-title text-dark">{project.projectName}</h6>
+
+                          <p
+                            className="card-text text-muted small"
+                            style={{
+                              overflow: "hidden",
+                              display: "-webkit-box",
+                              WebkitBoxOrient: "vertical",
+                              WebkitLineClamp: 3, // Limits description to 3 lines
+                            }}
+                          >
+                            {project.projectDescription}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
 
                   ))}
                 </motion.div>
