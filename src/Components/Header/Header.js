@@ -41,33 +41,28 @@ const Header = ({ isMobile, setIsMobile }) => {
     { name: "HOME", icon: <Home size={20} />, path: "/" },
     { 
       name: isLoggedIn ? "RESUME" : null, 
-      icon:isLoggedIn ? <FileText size={20} />: null,
+      icon: isLoggedIn ? <FileText size={20} /> : null,
       path: "/resumebuild"
-      
     },
     { 
       name: isLoggedIn ? "PORTFOLIO" : null, 
-      icon:isLoggedIn ? <FileText size={20} />: null,
+      icon: isLoggedIn ? <FileText size={20} /> : null,
       path: "/portfolioTwo"
-      
     },
     { 
       name: isPortfolio ? "VIEW PORTFOLIO" : null, 
-      icon:isPortfolio ? <FileText size={20} />: null,
+      icon: isPortfolio ? <FileText size={20} /> : null,
       path: `/viewPortfolio/${data.id}`
-      
     },
     { 
       name: isLoggedIn ? "PLAN" : null, 
-      icon:isLoggedIn ? <FileText size={20} />: null,
+      icon: isLoggedIn ? <FileText size={20} /> : null,
       path: "/plan"
-      
     },
     { 
       name: isLoggedIn ? "MORE" : null, 
-      icon:isLoggedIn ? <FileText size={20} />: null,
+      icon: isLoggedIn ? <FileText size={20} /> : null,
       path: "/plan"
-      
     },
     { 
       name: isLoggedIn ? "LOGOUT" : "LOGIN", 
@@ -76,10 +71,11 @@ const Header = ({ isMobile, setIsMobile }) => {
     },
     { 
       name: isLoggedIn ? `Hi ${data.name.split(" ")[0]}` : null, 
-      icon:isLoggedIn ? <User2Icon size={20} />: null
+      icon: isLoggedIn ? <User2Icon size={20} /> : null
     }
-  ];
-
+  ].filter(item => item.name !== null || item.icon !== null);
+  
+  
   useEffect(() => {
     const fetchWidth = () => setIsMobile(window.innerWidth <= 800);
     fetchWidth();
