@@ -64,9 +64,9 @@ setLoginData((prev)=> ({
   return (
     <div className="container-fluid p-0" style={{ background: "white", minHeight: "100vh" }}>
       {/* Header */}
-      <header className="d-flex justify-content-between align-items-center bg-light text-dark p-3">
+      <header style={{backgroundColor:'white', color:'black'}} className="d-flex justify-content-between border align-items-center bg-light text-dark p-3">
         <h4 className="m-0">{data.name}'s Portfolio</h4>
-        <button className="btn btn-outline-light" onClick={() => setShowSidebar(true)}>
+        <button className="btn btn-outline-dark text-dark" style={{backgroundColor:'black', color:'white'}} onClick={() => setShowSidebar(true)}>
           <FaUser /> Login
         </button>
       </header>
@@ -162,7 +162,7 @@ setLoginData((prev)=> ({
       </div>
 
       {/* Footer */}
-      <footer className="bg-light text-dark text-center p-3 mt-3">
+      <footer className="bg-light text-dark text-center p-3 mt-3 border" style={{backgroundColor:'white', color:'black'}}>
         <small>&copy; {new Date().getFullYear()} {data.name}. All Rights Reserved.</small>
       </footer>
 
