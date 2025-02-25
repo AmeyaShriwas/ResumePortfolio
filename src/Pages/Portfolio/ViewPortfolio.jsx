@@ -62,174 +62,177 @@ setLoginData((prev)=> ({
   }
 
   return (
-    <div className="container-fluid p-0" style={{ background: "white", minHeight: "100vh" }}>
-      {/* Header */}
-      <header style={{backgroundColor:'#C1BAA1', color:'black'}} className="d-flex justify-content-between border align-items-center  p-3">
-        <h4 className="m-0">{data.name}'s Portfolio</h4>
-        <button className="btn " style={{backgroundColor:'black', color:'#C1BAA1'}} onClick={() => setShowSidebar(true)}>
-          <FaUser /> Login
-        </button>
-      </header>
+    <div className="container-fluid p-0" style={{ background: "#ECEBDE", minHeight: "100vh" }}>
+  {/* Header */}
+  <header style={{ backgroundColor: "#C1BAA1", color: "#A59D84" }} className="d-flex justify-content-between border align-items-center p-3">
+    <h4 className="m-0">{data.name}'s Portfolio</h4>
+    <button className="btn" style={{ backgroundColor: "#8D8DAA", color: "#ECEBDE" }} onClick={() => setShowSidebar(true)}>
+      <FaUser /> Login
+    </button>
+  </header>
 
-      <div className="d-flex flex-column flex-md-row">
-        {/* Left Section */}
-        <div className="col-md-3 bg-white p-4 text-center border">
-          <motion.img
-            src={`https://api.resumeportfolio.ameyashriwas.in/${data.profilePhoto.replace(/^\/+/, "")}`}
-            alt="Profile"
-            className="rounded-circle"
-            style={{ width: "140px", height: "140px" }}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-          />
-          <h5 className="mt-3 font-weight-bold">{data.name}</h5>
-          {data.bio && <p className="px-3">{data.bio}</p>}
-          <div className="d-flex flex-column gap-2 mt-3">
-            <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-              <FaLinkedin /> LinkedIn
-            </a>
-            <a href={`mailto:${data.email}`} className="btn btn-dark">
-              <FaEnvelope /> Contact
-            </a>
-            <a href={data.resume} className="btn btn-secondary" download>
-              <FaFileAlt /> Download Resume
-            </a>
+  <div className="d-flex flex-column flex-md-row">
+    {/* Left Section */}
+    <div className="col-md-3 bg-white p-4 text-center border" style={{ backgroundColor: "#D7D3BF", color: "#A59D84" }}>
+      <motion.img
+        src={`https://api.resumeportfolio.ameyashriwas.in/${data.profilePhoto.replace(/^\/+/, "")}`}
+        alt="Profile"
+        className="rounded-circle"
+        style={{ width: "140px", height: "140px" }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+      />
+      <h5 className="mt-3 font-weight-bold">{data.name}</h5>
+      {data.bio && <p className="px-3">{data.bio}</p>}
+      <div className="d-flex flex-column gap-2 mt-3">
+        <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn" style={{ backgroundColor: "#8D8DAA", color: "#ECEBDE" }}>
+          <FaLinkedin /> LinkedIn
+        </a>
+        <a href={`mailto:${data.email}`} className="btn" style={{ backgroundColor: "#A59D84", color: "#ECEBDE" }}>
+          <FaEnvelope /> Contact
+        </a>
+        <a href={data.resume} className="btn" style={{ backgroundColor: "#C1BAA1", color: "#A59D84" }} download>
+          <FaFileAlt /> Download Resume
+        </a>
+      </div>
+    </div>
+
+    {/* Right Section */}
+    <div className="col-md-9 p-4">
+      <nav className="nav nav-tabs">
+        <a className="nav-link active" data-bs-toggle="tab" href="#projects" style={{ color: "#A59D84" }}>
+          Projects
+        </a>
+        <a className="nav-link" data-bs-toggle="tab" href="#skills" style={{ color: "#A59D84" }}>
+          Skills
+        </a>
+        <a className="nav-link" data-bs-toggle="tab" href="#about" style={{ color: "#A59D84" }}>
+          About Me
+        </a>
+        <a className="nav-link" data-bs-toggle="tab" href="#experience" style={{ color: "#A59D84" }}>
+          Experience
+        </a>
+      </nav>
+
+      <div className="tab-content mt-4">
+        {/* Projects Section */}
+        <div className="tab-pane fade show active" id="projects">
+          <h4 style={{ color: "#A59D84" }}>Projects</h4>
+          <div className="row">
+            {data.projects.map((project, index) => (
+              <motion.div key={index} className="col-12 col-sm-6 col-md-4 mb-3" whileHover={{ scale: 1.05 }}>
+                <div className="card shadow-sm border-0" style={{ backgroundColor: "#D7D3BF" }}>
+                  <div className="square-container">
+                    <img
+                      src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
+                      className="card-img-top"
+                      alt={project.projectName}
+                    />
+                  </div>
+                  <div className="card-body">
+                    <h6 className="card-title" style={{ color: "#A59D84" }}>{project.projectName}</h6>
+                    <p className="card-text text-muted small">{project.projectDescription}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
 
-        {/* Right Section */}
-        <div className="col-md-9 p-4">
-          <nav className="nav nav-tabs">
-            <a className="nav-link active" data-bs-toggle="tab" href="#projects">
-              Projects
-            </a>
-            <a className="nav-link" data-bs-toggle="tab" href="#skills">
-              Skills
-            </a>
-            <a className="nav-link" data-bs-toggle="tab" href="#about">
-              About Me
-            </a>
-            <a className="nav-link" data-bs-toggle="tab" href="#experience">
-              Experience
-            </a>
-          </nav>
+        {/* Skills Section */}
+        <div className="tab-pane fade" id="skills">
+          <h4 style={{ color: "#A59D84" }}>Skills</h4>
+          <p>{data.skills}</p>
+        </div>
 
-          <div className="tab-content mt-4">
-            {/* Projects Section */}
-            <div className="tab-pane fade show active" id="projects">
-              <h4>Projects</h4>
-              <div className="row">
-                {data.projects.map((project, index) => (
-                  <motion.div key={index} className="col-12 col-sm-6 col-md-4 mb-3" whileHover={{ scale: 1.05 }}>
-                    <div className="card shadow-sm border-0">
-                      <div className="square-container">
-                        <img
-                          src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
-                          className="card-img-top"
-                          alt={project.projectName}
-                        />
-                      </div>
-                      <div className="card-body">
-                        <h6 className="card-title">{project.projectName}</h6>
-                        <p className="card-text text-muted small">{project.projectDescription}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
+        {/* About Me Section */}
+        <div className="tab-pane fade" id="about">
+          <h4 style={{ color: "#A59D84" }}>About Me</h4>
+          <p>{data.aboutMe}</p>
+        </div>
 
-            {/* Skills Section */}
-            <div className="tab-pane fade" id="skills">
-              <h4>Skills</h4>
-              <p>{data.skills}</p>
-            </div>
-
-            {/* About Me Section */}
-            <div className="tab-pane fade" id="about">
-              <h4>About Me</h4>
-              <p>{data.aboutMe}</p>
-            </div>
-
-            {/* Experience Section */}
-            <div className="tab-pane fade" id="experience">
-              <h4>Experience</h4>
-              <p>{data.experience}</p>
-            </div>
-          </div>
+        {/* Experience Section */}
+        <div className="tab-pane fade" id="experience">
+          <h4 style={{ color: "#A59D84" }}>Experience</h4>
+          <p>{data.experience}</p>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className=" text-center p-3 mt-3 border" style={{backgroundColor:'#C1BAA1', color:'black'}}>
-        <small>&copy; {new Date().getFullYear()} {data.name}. All Rights Reserved.</small>
-      </footer>
-
-      {/* Sidebar Login */}
-      <AnimatePresence>
-        {showSidebar && (
-          <motion.div
-            className="position-fixed top-0 start-0 vh-100 text-dark p-4 shadow-lg"
-            style={{ width: "25%", backgroundColor:'white' }}
-            initial={{ x: "-100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "-100%" }}
-            transition={{ duration: 0.5 }}
-          >
-            <button className="btn-close btn-close-dark position-absolute top-2 end-2" onClick={() => setShowSidebar(false)}></button>
-            <h4 className="text-center mb-4">Login</h4>
-            <form>
-              <div className="mb-3">
-                <label className="form-label">Email</label>
-                <input type="email" name='email' onChange={handleLoginChange} className="form-control" placeholder="Enter email" />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Password</label>
-                <input type="password" name="password" onChange={handleLoginChange} className="form-control" placeholder="Enter password" />
-              </div>
-              <button type="submit" onClick={handleLoginSubmit} className="btn btn-primary w-100">Login</button>
-            </form>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Styles */}
-      <style>
-        {`
-          .square-container {
-            width: 100%;
-            padding-top: 100%;
-            position: relative;
-            overflow: hidden;
-          }
-          
-          .square-container img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-          
-          @media (max-width: 768px) {
-            .col-md-3 {
-              width: 100%;
-              text-align: center;
-            }
-            
-            .col-md-9 {
-              width: 100%;
-            }
-
-            .position-fixed {
-              width: 100% !important;
-            }
-          }
-        `}
-      </style>
     </div>
+  </div>
+
+  {/* Footer */}
+  <footer className="text-center p-3 mt-3 border" style={{ backgroundColor: "#C1BAA1", color: "#A59D84" }}>
+    <small>&copy; {new Date().getFullYear()} {data.name}. All Rights Reserved.</small>
+  </footer>
+
+  {/* Sidebar Login */}
+  <AnimatePresence>
+    {showSidebar && (
+      <motion.div
+        className="position-fixed top-0 start-0 vh-100 text-dark p-4 shadow-lg"
+        style={{ width: "25%", backgroundColor: "#D7D3BF" }}
+        initial={{ x: "-100%" }}
+        animate={{ x: 0 }}
+        exit={{ x: "-100%" }}
+        transition={{ duration: 0.5 }}
+      >
+        <button className="btn-close btn-close-dark position-absolute top-2 end-2" onClick={() => setShowSidebar(false)}></button>
+        <h4 className="text-center mb-4" style={{ color: "#A59D84" }}>Login</h4>
+        <form>
+          <div className="mb-3">
+            <label className="form-label" style={{ color: "#A59D84" }}>Email</label>
+            <input type="email" name="email" onChange={handleLoginChange} className="form-control" placeholder="Enter email" />
+          </div>
+          <div className="mb-3">
+            <label className="form-label" style={{ color: "#A59D84" }}>Password</label>
+            <input type="password" name="password" onChange={handleLoginChange} className="form-control" placeholder="Enter password" />
+          </div>
+          <button type="submit" onClick={handleLoginSubmit} className="btn w-100" style={{ backgroundColor: "#8D8DAA", color: "#ECEBDE" }}>
+            Login
+          </button>
+        </form>
+      </motion.div>
+    )}
+  </AnimatePresence>
+
+  {/* Styles */}
+  <style>
+    {`
+      .square-container {
+        width: 100%;
+        padding-top: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .square-container img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
+      @media (max-width: 768px) {
+        .col-md-3 {
+          width: 100%;
+          text-align: center;
+        }
+        
+        .col-md-9 {
+          width: 100%;
+        }
+
+        .position-fixed {
+          width: 100% !important;
+        }
+      }
+    `}
+  </style>
+</div>
+
   );
 };
 
