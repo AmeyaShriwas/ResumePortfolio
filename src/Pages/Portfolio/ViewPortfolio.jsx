@@ -161,8 +161,8 @@ const ViewPortfolio = () => {
               </div>
               <div className="card-body">
                 <h6 className="card-title text-dark">{project.projectName}</h6>
-                <p className="card-text text-muted small">
-                  {project.projectDescription}
+                <p className="card-text text-muted small" style={{display:'flex', flexWrap:'wrap'}}>
+                  {project.projectDescription.slice(1, 100)}
                 </p>
               </div>
             </div>
