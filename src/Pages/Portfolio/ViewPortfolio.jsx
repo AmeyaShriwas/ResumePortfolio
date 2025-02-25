@@ -150,6 +150,8 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                         width: "320px",
                         border: "1px solid grey",
                         overflow: "hidden",
+                        height:'300px',
+                        width: `${isMobile}? 300px: 600px`
                       }}
                     >
                       <div className="card shadow-sm border-0" style={{ height: "400px", display: "flex", flexDirection: "column" }}>
