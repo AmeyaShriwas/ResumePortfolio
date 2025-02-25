@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import swal from "sweetalert";
 
 
-const ViewPortfolio = () => {
+const ViewPortfolio = ({ isMobile, setIsMobile }) => {
   const [data, setData] = useState(null);
   const [showSidebar, setShowSidebar] = useState(false);
   const { id } = useParams();
@@ -118,81 +118,83 @@ const ViewPortfolio = () => {
           <div className="tab-content mt-4">
             {/* Projects Section */}
             <div className="tab-pane fade show active" id="projects">
-              <h4 className="text-dark" style={{marginBottom:'20px'}}>Projects</h4>
+              <h4 className="text-dark" style={{ marginBottom: '20px' }}>Projects</h4>
               <div
-      className="scroll-container"
-      style={{
-        width: "100%",
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-        position: "relative",
-      }}
-    >
-      <motion.div
-        className="scroll-content"
-        style={{
-          display: "flex",
-          gap: "26px",
-        }}
-        animate={{ x: ["0%", "-100%"] }}
-        transition={{
-          ease: "linear",
-          duration: 15,
-          repeat: Infinity,
-        }}
-      >
-        {data.projects.concat(data.projects).map((project, index) => (
-          <div
-          key={index}
-          className="project-card"
-          style={{
-            flex: "0 0 auto",
-            width: "300px",
-            border: "1px solid grey",
-            overflow: "hidden",
-          }}
-        >
-          <div className="card shadow-sm border-0" style={{ height: "400px", display: "flex", flexDirection: "column" }}>
-            {/* Image section (50% height) */}
-            <div className="square-container" style={{ height: "50%", overflow: "hidden",  }} >
-              <img
-                src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
-                className="card-img-top"
-                alt={project.projectName}
-                style={{ width: "100%", height: "100%", objectFit: "cover" }} // Ensures full image display
-              />
-            </div>
-        
-            {/* Content section (50% height) */}
-            <div className="card-body" style={{ height: "50%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-              <h6 className="card-title text-dark">{project.projectName}</h6>
-        
-              <p
-                className="card-text text-muted small"
+                className="scroll-container"
                 style={{
+                  width: "100%",
                   overflow: "hidden",
-                  display: "-webkit-box",
-                  WebkitBoxOrient: "vertical",
-                  WebkitLineClamp: 3, // Limits description to 3 lines
+                  whiteSpace: "nowrap",
+                  position: "relative",
                 }}
               >
-                {project.projectDescription}
-              </p>
-            </div>
-          </div>
-        </div>
-        
-        ))}
-      </motion.div>
-    </div>
+                <motion.div
+                  className="scroll-content"
+                  style={{
+                    display: "flex",
+                    gap: "26px",
+                  }}
+                  animate={{ x: ["0%", "-100%"] }}
+                  transition={{
+                    ease: "linear",
+                    duration: 15,
+                    repeat: Infinity,
+                  }}
+                >
+                  {data.projects.concat(data.projects).map((project, index) => (
+                   <div
+                   key={index}
+                   className="project-card"
+                   style={{
+                     flex: "0 0 auto",
+                     width: isMobile ? "300px" : "500px", // Corrected the condition for width
+                     height: isMobile ? "350px" : "400px", // Set height based on isMobile condition
+                     border: "1px solid grey",
+                     overflow: "hidden",
+                   }}
+                 >
+                   <div className="card shadow-sm border-0" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+                     {/* Image section (50% height) */}
+                     <div className="square-container" style={{ height: "50%", overflow: "hidden" }}>
+                       <img
+                         src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
+                         className="card-img-top"
+                         alt={project.projectName}
+                         style={{ width: "100%", height: "100%", objectFit: "cover" }} // Ensures full image display
+                       />
+                     </div>
+                 
+                     {/* Content section (50% height) */}
+                     <div className="card-body" style={{ height: "50%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                       <h6 className="card-title text-dark">{project.projectName}</h6>
+                 
+                       <p
+                         className="card-text text-muted small"
+                         style={{
+                           overflow: "hidden",
+                           display: "-webkit-box",
+                           WebkitBoxOrient: "vertical",
+                           WebkitLineClamp: 3, // Limits description to 3 lines
+                         }}
+                       >
+                         {project.projectDescription}
+                       </p>
+                     </div>
+                   </div>
+                 </div>
+                 
+
+                  ))}
+                </motion.div>
+              </div>
             </div>
 
             {/* Skills Section */}
             <div className="tab-pane fade" id="skills">
               <h4 className="text-dark">Skills</h4>
-              <p className="text-dark" style={{display:'flex', gap:'15px'}}>{data.skills.split(",").map((data)=> {
+              <p className="text-dark" style={{ display: 'flex', gap: '15px' }}>{data.skills.split(",").map((data) => {
                 return (
-                  <p className="text-light" style={{backgroundColor:'grey', padding: '10px', margin:'10px', borderRadius:'10px'}}>{data}</p>
+                  <p className="text-light" style={{ backgroundColor: 'grey', padding: '10px', margin: '10px', borderRadius: '10px' }}>{data}</p>
                 )
               })}</p>
             </div>
