@@ -166,13 +166,14 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
               
                   {/* Content section (50% height) */}
                   <div className="card-body" style={{ height: "50%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                    <h6 className="card-title text-dark">{project.projectName}</h6>
+                    <h6 className="card-title text-dark"  style={{ color: "black" }}>{project.projectName}</h6>
               
                     {/* Show full description when not mobile */}
                     <p
                       className="card-text text-muted small"
                       style={{
                         overflow: "hidden",
+                        color:'black',
                         display: isMobile ? "-webkit-box" : "block", // Adjust display style based on mobile
                         WebkitBoxOrient: "vertical",
                         WebkitLineClamp: isMobile ? 3 : "unset", // Limit to 3 lines only on mobile
