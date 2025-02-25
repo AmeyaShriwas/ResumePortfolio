@@ -142,58 +142,57 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                   }}
                 >
                   {data.projects.concat(data.projects).map((project, index) => (
-                <div 
+                <div
                 key={index}
                 className="project-card"
                 style={{
                   flex: "0 0 auto",
                   border: "1px solid grey",
                   overflow: "hidden",
-                  height: "auto", // Allowing height to adjust based on content
-                  width: isMobile ? "300px" : "600px",
+                  height: "auto",
+                  width: isMobile ? "250px" : "500px", // Adjusted width for smaller size
                 }}
               >
-                <div 
-                  className="card shadow-sm border-0" 
+                <div
+                  className="card shadow-sm border-0"
                   style={{ height: "auto", display: "flex", flexDirection: "column" }}
                 >
                   {/* Image section (50% height) */}
-                  <div 
-                    className="square-container" 
+                  <div
+                    className="square-container"
                     style={{
                       height: "50%",
                       overflow: "hidden",
                     }}
                   >
-                    <img 
-                      src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`} 
-                      className="card-img-top" 
-                      alt={project.projectName} 
+                    <img
+                      src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
+                      className="card-img-top"
+                      alt={project.projectName}
                       style={{
-                        width: "100%", 
-                        height: "100%", 
-                        objectFit: "cover" // Ensures full image display
-                      }} 
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover", // Ensures full image display
+                      }}
                     />
                   </div>
-              
                   {/* Content section (50% height) */}
-                  <div 
-                    className="card-body" 
+                  <div
+                    className="card-body"
                     style={{
-                      height: "auto", 
-                      display: "flex", 
-                      flexDirection: "column", 
+                      height: "auto",
+                      display: "flex",
+                      flexDirection: "column",
                       justifyContent: "space-between",
-                      padding: "10px", // Add padding for better layout
+                      padding: "8px", // Reduced padding for smaller size
                     }}
                   >
-                    <h6 className="card-title text-dark" style={{ marginBottom: "10px" }}>
+                    <h6 className="card-title text-dark" style={{ marginBottom: "8px" }}>
                       {project.projectName}
                     </h6>
-                    
-                    <p 
-                      className="card-text text-muted small" 
+              
+                    <p
+                      className="card-text text-muted small"
                       style={{
                         overflow: "hidden",
                         display: "-webkit-box",
