@@ -176,7 +176,7 @@ const ViewPortfolio = () => {
                   WebkitLineClamp: 3, // Limits description to 3 lines
                 }}
               >
-                {project.projectDescription.length > 100 ? project.projectDescriptoin?.slice(0, 100): project.projectDescriptoin }
+                {project.projectDescription}
               </p>
             </div>
           </div>
