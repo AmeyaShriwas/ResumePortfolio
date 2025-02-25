@@ -161,7 +161,7 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                   <div
                     className="square-container"
                     style={{
-                   
+                      height: "50%",
                       overflow: "hidden",
                     }}
                   >
@@ -178,9 +178,11 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                   </div>
                   {/* Content section (50% height) */}
                   <div
-                    className="card-body"
+                  
                     style={{
                       height: "auto",
+                      color:'black',
+
                       display: "flex",
                       flexDirection: "column",
                       justifyContent: "space-between",
@@ -192,9 +194,10 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                     </h6>
               
                     <p
-                      className="card-text text-muted small"
+                   
                       style={{
                         overflow: "hidden",
+                        color:'black',
                         display: "-webkit-box",
                         WebkitBoxOrient: "vertical",
                         WebkitLineClamp: 3, // Limits description to 3 lines
