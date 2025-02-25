@@ -161,7 +161,7 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                   <div
                     className="square-container"
                     style={{
-                      height: "50%",
+                   
                       overflow: "hidden",
                     }}
                   >
