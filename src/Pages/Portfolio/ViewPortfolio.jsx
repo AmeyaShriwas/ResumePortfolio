@@ -154,7 +154,7 @@ const ViewPortfolio = () => {
         >
           <div className="card shadow-sm border-0" style={{ height: "400px", display: "flex", flexDirection: "column" }}>
             {/* Image section (50% height) */}
-            <div className="square-container" style={{ height: "50%", overflow: "hidden" }}>
+            <div className="square-container" style={{ height: "50%", overflow: "hidden",  }} onMouseEnter={{scale: 1.4}}>
               <img
                 src={`https://api.resumeportfolio.ameyashriwas.in/${project.projectImage}`}
                 className="card-img-top"
