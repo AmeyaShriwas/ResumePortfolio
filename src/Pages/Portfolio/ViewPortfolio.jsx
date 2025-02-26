@@ -120,7 +120,6 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
             <div className="tab-pane fade show active" id="projects">
               <h4 className="text-dark" style={{ marginBottom: '20px' }}>Projects</h4>
               <div
-                className="scroll-container"
                 style={{
                   width: "100%",
                   display:'flex',
