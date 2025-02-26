@@ -124,7 +124,16 @@ const UpdatePortfolioPage = () => {
         const formData = new FormData()
         console.log('selected project', selectedProject)
         for (let key in selectedProject) {
-          formData.append(key, selectedProject[key]);
+          if(key === projectImage){
+            if(selectedProject[key]){
+              formData.append(key, selectedProject[key]);
+
+            }
+          }
+          else{
+            formData.append(key, selectedProject[key]);
+
+          }
         }
         formData.append('index', selectedProjectIndex)
 
