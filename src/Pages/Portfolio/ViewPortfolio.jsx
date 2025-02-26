@@ -123,9 +123,8 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                 className="scroll-container"
                 style={{
                   width: "100%",
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                  position: "relative",
+                  display:'flex',
+                  overflow:'scroll'
                 }}
               >
                 {/* <motion.div
