@@ -151,7 +151,7 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                 //  border: "1px solid grey",
                  overflow: "hidden",
                  borderRadius:'10px',
-                 boxShadow: rgba`(0, 0, 0, 0.35) 0px 5px 15px`;
+                 boxShadow: rgba`(0, 0, 0, 0.35) 0px 5px 15px`,
                  width: isMobile ? "330px" : "500px", // Adjusted width for smaller size
                }}
              >
