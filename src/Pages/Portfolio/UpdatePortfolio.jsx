@@ -127,10 +127,11 @@ const UpdatePortfolioPage = () => {
   };
 
   const handleProjectDetailsChange = (e)=> {
+    console.log('dc')
     const {name,value} = e.target
     setSelectedProject((prev)=> ({
       ...prev,
-
+       [name]: value
     }))
   }
 
