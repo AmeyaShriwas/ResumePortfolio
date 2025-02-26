@@ -272,7 +272,7 @@ const UpdatePortfolioPage = () => {
             {/* Projects Section */}
             <div className="tab-pane fade show active" id="projects">
               <h4>Projects</h4>
-              <div className="row"    style={{
+              <div style={{
                   width: "100%",
                   display:'flex',
                   overflow:'scroll',
