@@ -128,7 +128,7 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                   position: "relative",
                 }}
               >
-                <motion.div
+                {/* <motion.div
                   className="scroll-content"
                   style={{
                     display: "flex",
@@ -140,7 +140,7 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                     duration: 15,
                     repeat: Infinity,
                   }}
-                >
+                > */}
                   {data?.projects?.map((project, index) => (
                <div
                key={index}
@@ -215,7 +215,7 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
              
               
                   ))}
-                </motion.div>
+                {/* </motion.div> */}
               </div>
             </div>
 
