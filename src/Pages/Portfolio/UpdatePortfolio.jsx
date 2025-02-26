@@ -119,7 +119,36 @@ const UpdatePortfolioPage = () => {
         } catch (error) {
           console.error("Error updating portfolio:", error);
         }
-      } else {
+      }
+      else if(editField === 'projects'){
+       const formData = new FormData()
+       for (let key in selectedProject) {
+        formData.append(key, selectedProject[key]);
+    }
+    formData.append('index', selectedProjectIndex)
+    
+
+
+       try {
+        const response = await axios.post(
+          `https://api.resumeportfolio.ameyashriwas.in/portfolio/updateProjects/${data.id}`,
+          formData,
+          {
+            headers: {
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json"
+            }
+          }
+        );
+
+        console.log('res updated', response.data);
+        setData(response?.data?.data);
+      } catch (error) {
+        console.error("Error updating portfolio:", error);
+      }
+
+      }
+       else {
         try {
           const response = await axios.post(
             `https://api.resumeportfolio.ameyashriwas.in/portfolio/updatePersonalDetails/${data.id}`,
