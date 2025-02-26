@@ -93,7 +93,6 @@ const UpdatePortfolioPage = () => {
 
   const handleSave = async () => {
     try {
-      const token = localStorage.getItem("token"); // Retrieve token from local storage (or wherever it's stored)
       
       if (editField === 'profilePhoto') {
         console.log('updated data', data);
