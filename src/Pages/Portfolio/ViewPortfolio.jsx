@@ -141,7 +141,7 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                     repeat: Infinity,
                   }}
                 >
-                  {data.projects.concat(data.projects).map((project, index) => (
+                  {data?.projects?.map((project, index) => (
                <div
                key={index}
                className="project-card"
