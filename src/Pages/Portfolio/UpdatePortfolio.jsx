@@ -121,24 +121,19 @@ const UpdatePortfolioPage = () => {
         }
       }
       else if (editField === 'projects') {
-        const formData = new FormData()
-        console.log('selected project', selectedProject)
+        const formData = new FormData();
+        console.log('selected project', selectedProject);
+        
         for (let key in selectedProject) {
-          if(key === 'projectImage'){
-            if(selectedProject.projectImage){
-              formData.append(key, selectedProject[key]);
-
-            }
-          }
-          else{
+          if (key === "projectImage" && selectedProject.projectImage instanceof File) {
+            formData.append(key, selectedProject.projectImage); // Append the file
+          } else {
             formData.append(key, selectedProject[key]);
-
           }
         }
-        formData.append('index', selectedProjectIndex)
-
-
-
+        
+        formData.append("index", selectedProjectIndex);
+        
         try {
           const response = await axios.post(
             `https://api.resumeportfolio.ameyashriwas.in/portfolio/updateProjects/${data.id}`,
@@ -146,16 +141,18 @@ const UpdatePortfolioPage = () => {
             {
               headers: {
                 "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json"
-              }
+                // REMOVE "Content-Type": "application/json"
+                // Axios will automatically set the correct "multipart/form-data"
+              },
             }
           );
-
-          console.log('res updated', response.data);
+        
+          console.log("res updated", response.data);
           setData(response?.data?.data);
         } catch (error) {
           console.error("Error updating portfolio:", error);
         }
+        
 
       }
       else {
