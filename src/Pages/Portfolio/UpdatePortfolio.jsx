@@ -23,6 +23,11 @@ const UpdatePortfolioPage = () => {
     linkedin: data?.linkedin || "",
     email: data?.email || "",
   });
+  const [allProjects, setAllProjects] = useState([])
+  const [selectedProject, setSelectedProject] = useState({
+
+  })
+  const [selectedProjectIndex, setSelectedProjectIndex] = useState(null)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -35,6 +40,7 @@ const UpdatePortfolioPage = () => {
       );
       console.log('res', response)
       setData(response.data.data);
+
       const personal = {
         
           name: response.data.data?.name,
@@ -44,6 +50,7 @@ const UpdatePortfolioPage = () => {
         
       }
       setPersonalDetails(personal)
+      setAllProjects(response.data.projects)
     } catch (error) {
       console.error("Error fetching portfolio data", error);
     }
@@ -61,7 +68,10 @@ const UpdatePortfolioPage = () => {
     fetchData();
   }, [id]);
 
-  const handleOpenModel = (field) => {
+  const handleOpenModel = (field, index) => {
+    setSelectedProjectIndex(index)
+    const allProjects = data.projects.filter((data, i)=> i === index)
+    setSelectedProject(allProjects)
     setEditField(field);
     setShowModal(true);
     if (field === "profilePhoto") {
@@ -116,6 +126,14 @@ const UpdatePortfolioPage = () => {
     }
   };
 
+  const handleProjectDetailsChange = (e)=> {
+    const {name,value} = e.target
+    setSelectedProject((prev)=> ({
+      ...prev,
+
+    }))
+  }
+
   if (!data) {
     return <div className="text-center text-dark py-5">Loading...</div>;
   }
@@ -144,27 +162,27 @@ const UpdatePortfolioPage = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
             />
-            <button className="btn btn-sm btn-warning position-absolute bottom-0 end-0" onClick={()=>handleOpenModel('profilePhoto')}>
+            <button className="btn btn-sm btn-warning position-absolute bottom-0 end-0" onClick={()=>handleOpenModel('profilePhoto', 0)}>
               <FaEdit />
             </button>
           </motion.div>
           <h5 className="mt-3 font-weight-bold d-flex justify-content-center align-items-center gap-2">
-            {data.name} <FaEdit onClick={()=>handleOpenModel('name')} className="text-warning cursor-pointer" />
+            {data.name} <FaEdit onClick={()=>handleOpenModel('name', 0)} className="text-warning cursor-pointer" />
           </h5>
           {data.bio && (
             <p className="px-3 d-flex justify-content-center align-items-center gap-2">
-              {data.bio} <FaEdit onClick={()=>handleOpenModel('bio')} className="text-warning cursor-pointer" />
+              {data.bio} <FaEdit onClick={()=>handleOpenModel('bio', 0)} className="text-warning cursor-pointer" />
             </p>
           )}
           <div className="d-flex flex-column gap-2 mt-3">
             <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-primary d-flex justify-content-between">
-              <FaLinkedin /> LinkedIn <FaEdit  onClick={()=>handleOpenModel('linkedin')}/>
+              <FaLinkedin /> LinkedIn <FaEdit  onClick={()=>handleOpenModel('linkedin', 0)}/>
             </a>
             <a href={`mailto:${data.email}`} className="btn btn-dark d-flex justify-content-between">
-              <FaEnvelope /> Contact <FaEdit  onClick={()=>handleOpenModel('email')} />
+              <FaEnvelope /> Contact <FaEdit  onClick={()=>handleOpenModel('email', 0)} />
             </a>
             <a href={data.resume} className="btn btn-secondary d-flex justify-content-between" download>
-              <FaFileAlt /> Download Resume <FaEdit onClick={()=>handleOpenModel('resume')} />
+              <FaFileAlt /> Download Resume <FaEdit onClick={()=>handleOpenModel('resume', 0)} />
             </a>
           </div>
         </div>
@@ -202,14 +220,14 @@ const UpdatePortfolioPage = () => {
                         />
                       </div>
                       <button className="btn btn-sm btn-warning position-absolute top-0 end-0 m-2">
-                        <FaEdit onClick={()=>handleOpenModel('projectImage')} />
+                        <FaEdit onClick={()=>handleOpenModel('projects', index)} />
                       </button>
                       <div className="card-body">
                         <h6 className="card-title d-flex justify-content-between">
-                          {project.projectName} <FaEdit onClick={()=>handleOpenModel('projectName')} className="text-warning cursor-pointer" />
+                          {project.projectName} <FaEdit onClick={()=>handleOpenModel('projects', index)} className="text-warning cursor-pointer" />
                         </h6>
                         <p className="card-text text-muted small d-flex justify-content-between">
-                          {project.projectDescription} <FaEdit onClick={()=>handleOpenModel('projectDescription')} className="text-warning cursor-pointer" />
+                          {project.projectDescription.length > 100 ? project.projectDescription?.slice(0, 100): project.projectDescription } <FaEdit onClick={()=>handleOpenModel('projects', index)} className="text-warning cursor-pointer" />
                         </p>
                       </div>
                     </div>
@@ -249,59 +267,82 @@ const UpdatePortfolioPage = () => {
           <Modal.Title>Edit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {editField === "profilePhoto" ? (
-            <Form.Group>
-              <Form.Label>Upload Image</Form.Label>
-              <Form.Control type="file" onChange={(e) => setImageFile(e.target.files[0])} />
-            </Form.Group>
-          ) :
-        
-           (
-            <Form.Group>
-            <Form.Label>Update Personal Details</Form.Label>
-            <Form.Group>
-              <Form.Label>Name</Form.Label>
-              <Form.Control 
-                name="name" 
-                type="text" 
-                value={personalDetails?.name} 
-                onChange={handlePersonalDetailsChange} 
-              />
-            </Form.Group>
-          
-            <Form.Group>
-              <Form.Label>Bio</Form.Label>
-              <Form.Control 
-                name="bio" 
-                as="textarea" 
-                value={personalDetails?.bio} 
-                onChange={handlePersonalDetailsChange} 
-              />
-            </Form.Group>
-          
-            <Form.Group>
-              <Form.Label>LinkedIn</Form.Label>
-              <Form.Control 
-                name="linkedin" 
-                type="text" 
-                value={personalDetails?.linkedin} 
-                onChange={handlePersonalDetailsChange} 
-              />
-            </Form.Group>
-          
-            <Form.Group>
-              <Form.Label>Email</Form.Label>
-              <Form.Control 
-                name="email" 
-                type="email" 
-                value={personalDetails?.email} 
-                onChange={handlePersonalDetailsChange} 
-              />
-            </Form.Group>
-          </Form.Group>
-          
-          )}
-        </Modal.Body>
+  {editField === "profilePhoto" ? (
+    <Form.Group>
+      <Form.Label>Upload Image</Form.Label>
+      <Form.Control type="file" onChange={(e) => setImageFile(e.target.files[0])} />
+    </Form.Group>
+  ) : editField === "projects" ? (
+    <>
+      <div className="card shadow-sm border-0 position-relative">
+        <div className="square-container">
+          <Form.Control value={selectedProject.projectImage} name="projectImage" type="file" onChange={handleProjectDetailsChange} />
+        </div>
+
+        <div className="card-body">
+          <Form.Control value={selectedProject?.projectName} name="projectName" type="text" onChange={handleProjectDetailsChange} />
+        </div>
+        <div className="card-body">
+          <Form.Control value={selectedProject?.projectDescription} name="projectDescription" as="textarea" onChange={handleProjectDetailsChange} />
+        </div>
+        <div className="card-body">
+          <Form.Control value={selectedProject?.techStack}  name="techStack" type="text" onChange={handleProjectDetailsChange} />
+        </div>
+        <div className="card-body">
+          <Form.Control value={selectedProject?.liveLink} name="liveLink" type="text" onChange={handleProjectDetailsChange} />
+        </div>
+        <div className="card-body">
+          <Form.Control value={selectedProject?.githubLink} name="githubLink" type="text" onChange={handleProjectDetailsChange} />
+        </div>
+      </div>
+    </>
+  ) : (
+    <Form.Group>
+      <Form.Label>Update Personal Details</Form.Label>
+
+      <Form.Group>
+        <Form.Label>Name</Form.Label>
+        <Form.Control
+          name="name"
+          type="text"
+          value={personalDetails?.name}
+          onChange={handlePersonalDetailsChange}
+        />
+      </Form.Group>
+
+      <Form.Group>
+        <Form.Label>Bio</Form.Label>
+        <Form.Control
+          name="bio"
+          as="textarea"
+          value={personalDetails?.bio}
+          onChange={handlePersonalDetailsChange}
+        />
+      </Form.Group>
+
+      <Form.Group>
+        <Form.Label>LinkedIn</Form.Label>
+        <Form.Control
+          name="linkedin"
+          type="text"
+          value={personalDetails?.linkedin}
+          onChange={handlePersonalDetailsChange}
+        />
+      </Form.Group>
+
+      <Form.Group>
+        <Form.Label>Email</Form.Label>
+        <Form.Control
+          name="email"
+          type="email"
+          value={personalDetails?.email}
+          onChange={handlePersonalDetailsChange}
+        />
+      </Form.Group>
+    </Form.Group>
+  )}
+</Modal.Body>
+
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>Cancel</Button>
           <Button variant="primary" onClick={handleSave}>Save Changes</Button>
