@@ -126,14 +126,21 @@ const UpdatePortfolioPage = () => {
     }
   };
 
-  const handleProjectDetailsChange = (e)=> {
-    console.log('dc')
-    const {name,value} = e.target
-    setSelectedProject((prev)=> ({
-      ...prev,
-       [name]: value
-    }))
-  }
+  const handleProjectDetailsChange = (e) => {
+    const { name, value, type } = e.target;
+    if (type === "file") {
+        setSelectedProject(prev => ({
+            ...prev,
+            [name]: e.target.files[0] // Store the file object
+        }));
+    } else {
+        setSelectedProject(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    }
+};
+
 
   if (!data) {
     return <div className="text-center text-dark py-5">Loading...</div>;
@@ -275,28 +282,34 @@ const UpdatePortfolioPage = () => {
     </Form.Group>
   ) : editField === "projects" ? (
     <>
-      <div className="card shadow-sm border-0 position-relative">
-        <div className="card-body">
-          <Form.Control value={selectedProject.projectImage} name="projectImage" type="file" onChange={handleProjectDetailsChange} />
-        </div>
-
-        <div className="card-body">
-          <Form.Control value={selectedProject?.projectName} name="projectName" type="text" onChange={handleProjectDetailsChange} />
-        </div>
-        <div className="card-body">
-          <Form.Control value={selectedProject?.projectDescription} name="projectDescription" as="textarea" onChange={handleProjectDetailsChange} />
-        </div>
-        <div className="card-body">
-          <Form.Control value={selectedProject?.techStack}  name="techStack" type="text" onChange={handleProjectDetailsChange} />
-        </div>
-        <div className="card-body">
-          <Form.Control value={selectedProject?.liveLink} name="liveLink" type="text" onChange={handleProjectDetailsChange} />
-        </div>
-        <div className="card-body">
-          <Form.Control value={selectedProject?.githubLink} name="githubLink" type="text" onChange={handleProjectDetailsChange} />
-        </div>
+    <div className="card shadow-sm border-0 position-relative">
+      <div className="card-body">
+        {/* Remove value for file input */}
+        <Form.Control name="projectImage" type="file" onChange={handleProjectDetailsChange} />
       </div>
-    </>
+  
+      <div className="card-body">
+        <Form.Control value={selectedProject?.projectName || ''} name="projectName" type="text" onChange={handleProjectDetailsChange} />
+      </div>
+  
+      <div className="card-body">
+        <Form.Control value={selectedProject?.projectDescription || ''} name="projectDescription" as="textarea" onChange={handleProjectDetailsChange} />
+      </div>
+  
+      <div className="card-body">
+        <Form.Control value={selectedProject?.techStack || ''} name="techStack" type="text" onChange={handleProjectDetailsChange} />
+      </div>
+  
+      <div className="card-body">
+        <Form.Control value={selectedProject?.liveLink || ''} name="liveLink" type="text" onChange={handleProjectDetailsChange} />
+      </div>
+  
+      <div className="card-body">
+        <Form.Control value={selectedProject?.githubLink || ''} name="githubLink" type="text" onChange={handleProjectDetailsChange} />
+      </div>
+    </div>
+  </>
+  
   ) : (
     <Form.Group>
       <Form.Label>Update Personal Details</Form.Label>
