@@ -69,7 +69,7 @@ const UpdatePortfolioPage = () => {
 
   const handleOpenModel = (field, index) => {
     setSelectedProjectIndex(index)
-    const allProjects = data.projects.filter((data, i)=> i === index)
+    const allProjects = data.projects.filter((data, i)=> i === index)[0]
     console.log('dat', allProjects)
     setSelectedProject(allProjects)
     setEditField(field);
