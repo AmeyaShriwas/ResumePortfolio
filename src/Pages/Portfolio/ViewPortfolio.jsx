@@ -124,7 +124,9 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                 style={{
                   width: "100%",
                   display:'flex',
-                  overflow:'scroll'
+                  overflow:'scroll',
+                  gap:'20px',
+                  borderRadius:'10px'
                 }}
               >
                 {/* <motion.div
@@ -146,7 +148,7 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                className="project-card"
                style={{
                  flex: "0 0 auto",
-                 border: "1px solid grey",
+                //  border: "1px solid grey",
                  overflow: "hidden",
                  width: isMobile ? "330px" : "500px", // Adjusted width for smaller size
                }}
