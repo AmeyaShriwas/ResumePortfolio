@@ -8,6 +8,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { Modal, Button, Form } from "react-bootstrap";
 import { UserLogout } from "../../Redux/Slices/AuthSlice";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 
 const UpdatePortfolioPage = () => {
@@ -27,6 +28,7 @@ const UpdatePortfolioPage = () => {
   const [selectedProject, setSelectedProject] = useState({
   })
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(null)
+  const {token} = useSelector(state=> state.user)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -91,40 +93,59 @@ const UpdatePortfolioPage = () => {
 
   const handleSave = async () => {
     try {
-      if(editField === 'profilePhoto'){
-        console.log('updated data', data)
-       
-        const formData = new FormData()
-     
+      const token = localStorage.getItem("token"); // Retrieve token from local storage (or wherever it's stored)
+      
+      if (editField === 'profilePhoto') {
+        console.log('updated data', data);
+  
+        const formData = new FormData();
         if (imageFile) {
-            formData.append("profilePhoto", imageFile);
+          formData.append("profilePhoto", imageFile);
         }
-      
+  
         try {
-            const response = await axios.post(`https://api.resumeportfolio.ameyashriwas.in/portfolio/updateProfilePhoto/${data.id}`, formData);
-            console.log('res updated',response.data);
-            setData(response?.data?.data)
+          const response = await axios.post(
+            `https://api.resumeportfolio.ameyashriwas.in/portfolio/updateProfilePhoto/${data.id}`,
+            formData,
+            {
+              headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "multipart/form-data"
+              }
+            }
+          );
+  
+          console.log('res updated', response.data);
+          setData(response?.data?.data);
         } catch (error) {
-            console.error("Error updating portfolio:", error);
+          console.error("Error updating portfolio:", error);
+        }
+      } else {
+        try {
+          const response = await axios.post(
+            `https://api.resumeportfolio.ameyashriwas.in/portfolio/updatePersonalDetails/${data.id}`,
+            personalDetails,
+            {
+              headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+              }
+            }
+          );
+  
+          console.log('res updated', response.data);
+          setData(response?.data?.data);
+        } catch (error) {
+          console.error("Error updating portfolio:", error);
         }
       }
-      else{
-      
-        try {
-          const response = await axios.post(`https://api.resumeportfolio.ameyashriwas.in/portfolio/updatePersonalDetails/${data.id}`, personalDetails);
-          console.log('res updated',response.data);
-          setData(response?.data?.data)
-      } catch (error) {
-          console.error("Error updating portfolio:", error);
-      }
-
-      }
-    
+  
       setShowModal(false);
     } catch (error) {
       console.error("Error updating data", error);
     }
   };
+  
 
   const handleProjectDetailsChange = (e) => {
     const { name, value, type } = e.target;
