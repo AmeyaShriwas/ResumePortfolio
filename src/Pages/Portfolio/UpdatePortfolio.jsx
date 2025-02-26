@@ -181,7 +181,7 @@ const UpdatePortfolioPage = () => {
     if (type === "file") {
       setSelectedProject(prev => ({
         ...prev,
-        [name]: e.target.files[0] // Store the file object
+        [name]: e.target.file[0] // Store the file object
       }));
     } else {
       setSelectedProject(prev => ({
