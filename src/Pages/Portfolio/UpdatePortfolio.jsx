@@ -25,7 +25,6 @@ const UpdatePortfolioPage = () => {
   });
   const [allProjects, setAllProjects] = useState([])
   const [selectedProject, setSelectedProject] = useState({
-
   })
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(null)
 
@@ -71,6 +70,7 @@ const UpdatePortfolioPage = () => {
   const handleOpenModel = (field, index) => {
     setSelectedProjectIndex(index)
     const allProjects = data.projects.filter((data, i)=> i === index)
+    console.log('dat', allProjects)
     setSelectedProject(allProjects)
     setEditField(field);
     setShowModal(true);
@@ -275,7 +275,7 @@ const UpdatePortfolioPage = () => {
   ) : editField === "projects" ? (
     <>
       <div className="card shadow-sm border-0 position-relative">
-        <div className="square-container">
+        <div className="card-body">
           <Form.Control value={selectedProject.projectImage} name="projectImage" type="file" onChange={handleProjectDetailsChange} />
         </div>
 
