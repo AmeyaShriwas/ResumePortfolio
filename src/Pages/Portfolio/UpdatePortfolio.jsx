@@ -272,7 +272,13 @@ const UpdatePortfolioPage = () => {
             {/* Projects Section */}
             <div className="tab-pane fade show active" id="projects">
               <h4>Projects</h4>
-              <div className="row">
+              <div className="row"    style={{
+                  width: "100%",
+                  display:'flex',
+                  overflow:'scroll',
+                  gap:'20px',
+                  borderRadius:'10px'
+                }}>
                 {data.projects.map((project, index) => (
                   <motion.div key={index} className="col-12 col-sm-6 col-md-4 mb-3" whileHover={{ scale: 1.05 }}>
                     <div className="card shadow-sm border-0 position-relative">
