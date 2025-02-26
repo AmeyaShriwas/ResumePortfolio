@@ -28,12 +28,12 @@ const UpdatePortfolioPage = () => {
   const [selectedProject, setSelectedProject] = useState({
   })
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(null)
-  const {token} = useSelector(state=> state.user)
+  const { token } = useSelector(state => state.user)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  
+
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -43,12 +43,12 @@ const UpdatePortfolioPage = () => {
       setData(response.data.data);
 
       const personal = {
-        
-          name: response.data.data?.name,
-          bio: response.data.data?.bio,
-          linkedin: response.data.data?.linkedin,
-          email: response.data.data?.email,
-        
+
+        name: response.data.data?.name,
+        bio: response.data.data?.bio,
+        linkedin: response.data.data?.linkedin,
+        email: response.data.data?.email,
+
       }
       setPersonalDetails(personal)
       setAllProjects(response.data.projects)
@@ -57,7 +57,7 @@ const UpdatePortfolioPage = () => {
     }
   };
 
-  const handelLogout = ()=> {
+  const handelLogout = () => {
     const id = data.id
     navigate(`/viewPortfolio/${id}`)
 
@@ -71,7 +71,7 @@ const UpdatePortfolioPage = () => {
 
   const handleOpenModel = (field, index) => {
     setSelectedProjectIndex(index)
-    const allProjects = data.projects.filter((data, i)=> i === index)[0]
+    const allProjects = data.projects.filter((data, i) => i === index)[0]
     console.log('dat', allProjects)
     setSelectedProject(allProjects)
     setEditField(field);
@@ -79,29 +79,29 @@ const UpdatePortfolioPage = () => {
     if (field === "profilePhoto") {
       setImageFile(null);
     } else {
-      
+
     }
   };
 
-  const handlePersonalDetailsChange = (e)=> {
-    const {name, value} = e.target
-     setPersonalDetails((prev)=> ({
-         ...prev,
-       [name]: value
-     }))
+  const handlePersonalDetailsChange = (e) => {
+    const { name, value } = e.target
+    setPersonalDetails((prev) => ({
+      ...prev,
+      [name]: value
+    }))
   }
 
   const handleSave = async () => {
     try {
-      
+
       if (editField === 'profilePhoto') {
         console.log('updated data', data);
-  
+
         const formData = new FormData();
         if (imageFile) {
           formData.append("profilePhoto", imageFile);
         }
-  
+
         try {
           const response = await axios.post(
             `https://api.resumeportfolio.ameyashriwas.in/portfolio/updateProfilePhoto/${data.id}`,
@@ -113,42 +113,43 @@ const UpdatePortfolioPage = () => {
               }
             }
           );
-  
+
           console.log('res updated', response.data);
           setData(response?.data?.data);
         } catch (error) {
           console.error("Error updating portfolio:", error);
         }
       }
-      else if(editField === 'projects'){
-       const formData = new FormData()
-       for (let key in selectedProject) {
-        formData.append(key, selectedProject[key]);
-    }
-    formData.append('index', selectedProjectIndex)
-    
+      else if (editField === 'projects') {
+        const formData = new FormData()
+        console.log('selected project', selectedProject)
+        for (let key in selectedProject) {
+          formData.append(key, selectedProject[key]);
+        }
+        formData.append('index', selectedProjectIndex)
 
 
-       try {
-        const response = await axios.post(
-          `https://api.resumeportfolio.ameyashriwas.in/portfolio/updateProjects/${data.id}`,
-          formData,
-          {
-            headers: {
-              "Authorization": `Bearer ${token}`,
-              "Content-Type": "application/json"
+
+        try {
+          const response = await axios.post(
+            `https://api.resumeportfolio.ameyashriwas.in/portfolio/updateProjects/${data.id}`,
+            formData,
+            {
+              headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+              }
             }
-          }
-        );
+          );
 
-        console.log('res updated', response.data);
-        setData(response?.data?.data);
-      } catch (error) {
-        console.error("Error updating portfolio:", error);
-      }
+          console.log('res updated', response.data);
+          setData(response?.data?.data);
+        } catch (error) {
+          console.error("Error updating portfolio:", error);
+        }
 
       }
-       else {
+      else {
         try {
           const response = await axios.post(
             `https://api.resumeportfolio.ameyashriwas.in/portfolio/updatePersonalDetails/${data.id}`,
@@ -160,35 +161,35 @@ const UpdatePortfolioPage = () => {
               }
             }
           );
-  
+
           console.log('res updated', response.data);
           setData(response?.data?.data);
         } catch (error) {
           console.error("Error updating portfolio:", error);
         }
       }
-  
+
       setShowModal(false);
     } catch (error) {
       console.error("Error updating data", error);
     }
   };
-  
+
 
   const handleProjectDetailsChange = (e) => {
     const { name, value, type } = e.target;
     if (type === "file") {
-        setSelectedProject(prev => ({
-            ...prev,
-            [name]: e.target.files[0] // Store the file object
-        }));
+      setSelectedProject(prev => ({
+        ...prev,
+        [name]: e.target.files[0] // Store the file object
+      }));
     } else {
-        setSelectedProject(prev => ({
-            ...prev,
-            [name]: value
-        }));
+      setSelectedProject(prev => ({
+        ...prev,
+        [name]: value
+      }));
     }
-};
+  };
 
 
   if (!data) {
@@ -199,12 +200,12 @@ const UpdatePortfolioPage = () => {
     <div className="container-fluid p-0" style={{ background: "white", minHeight: "100vh" }}>
       {/* Header */}
       <header style={{ backgroundColor: "white", color: "black" }} className="d-flex justify-content-between border align-items-center p-3">
-      <h4 className="m-0">{data.name}'s Portfolio</h4>
-        <button className="btn" style={{ backgroundColor: "#7C99AC", color: "white" }} onClick={()=> handelLogout()}>
+        <h4 className="m-0">{data.name}'s Portfolio</h4>
+        <button className="btn" style={{ backgroundColor: "#7C99AC", color: "white" }} onClick={() => handelLogout()}>
           <FaUser /> Logout
         </button>
       </header>
-      
+
 
       <div className="d-flex flex-column flex-md-row">
         {/* Left Section */}
@@ -219,27 +220,27 @@ const UpdatePortfolioPage = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
             />
-            <button className="btn btn-sm btn-warning position-absolute bottom-0 end-0" onClick={()=>handleOpenModel('profilePhoto', 0)}>
+            <button className="btn btn-sm btn-warning position-absolute bottom-0 end-0" onClick={() => handleOpenModel('profilePhoto', 0)}>
               <FaEdit />
             </button>
           </motion.div>
           <h5 className="mt-3 font-weight-bold d-flex justify-content-center align-items-center gap-2">
-            {data.name} <FaEdit onClick={()=>handleOpenModel('name', 0)} className="text-warning cursor-pointer" />
+            {data.name} <FaEdit onClick={() => handleOpenModel('name', 0)} className="text-warning cursor-pointer" />
           </h5>
           {data.bio && (
             <p className="px-3 d-flex justify-content-center align-items-center gap-2">
-              {data.bio} <FaEdit onClick={()=>handleOpenModel('bio', 0)} className="text-warning cursor-pointer" />
+              {data.bio} <FaEdit onClick={() => handleOpenModel('bio', 0)} className="text-warning cursor-pointer" />
             </p>
           )}
           <div className="d-flex flex-column gap-2 mt-3">
             <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-primary d-flex justify-content-between">
-              <FaLinkedin /> LinkedIn <FaEdit  onClick={()=>handleOpenModel('linkedin', 0)}/>
+              <FaLinkedin /> LinkedIn <FaEdit onClick={() => handleOpenModel('linkedin', 0)} />
             </a>
             <a href={`mailto:${data.email}`} className="btn btn-dark d-flex justify-content-between">
-              <FaEnvelope /> Contact <FaEdit  onClick={()=>handleOpenModel('email', 0)} />
+              <FaEnvelope /> Contact <FaEdit onClick={() => handleOpenModel('email', 0)} />
             </a>
             <a href={data.resume} className="btn btn-secondary d-flex justify-content-between" download>
-              <FaFileAlt /> Download Resume <FaEdit onClick={()=>handleOpenModel('resume', 0)} />
+              <FaFileAlt /> Download Resume <FaEdit onClick={() => handleOpenModel('resume', 0)} />
             </a>
           </div>
         </div>
@@ -277,14 +278,14 @@ const UpdatePortfolioPage = () => {
                         />
                       </div>
                       <button className="btn btn-sm btn-warning position-absolute top-0 end-0 m-2">
-                        <FaEdit onClick={()=>handleOpenModel('projects', index)} />
+                        <FaEdit onClick={() => handleOpenModel('projects', index)} />
                       </button>
                       <div className="card-body">
                         <h6 className="card-title d-flex justify-content-between">
-                          {project.projectName} <FaEdit onClick={()=>handleOpenModel('projects', index)} className="text-warning cursor-pointer" />
+                          {project.projectName} <FaEdit onClick={() => handleOpenModel('projects', index)} className="text-warning cursor-pointer" />
                         </h6>
                         <p className="card-text text-muted small d-flex justify-content-between">
-                          {project.projectDescription.length > 100 ? project.projectDescription?.slice(0, 100): project.projectDescription } <FaEdit onClick={()=>handleOpenModel('projects', index)} className="text-warning cursor-pointer" />
+                          {project.projectDescription.length > 100 ? project.projectDescription?.slice(0, 100) : project.projectDescription} <FaEdit onClick={() => handleOpenModel('projects', index)} className="text-warning cursor-pointer" />
                         </p>
                       </div>
                     </div>
@@ -297,7 +298,7 @@ const UpdatePortfolioPage = () => {
             <div className="tab-pane fade" id="skills">
               <h4>Skills</h4>
               <p className="d-flex justify-content-between">
-                {data.skills} <FaEdit onClick={()=>handleOpenModel('skills')} className="text-warning cursor-pointer" />
+                {data.skills} <FaEdit onClick={() => handleOpenModel('skills')} className="text-warning cursor-pointer" />
               </p>
             </div>
 
@@ -305,7 +306,7 @@ const UpdatePortfolioPage = () => {
             <div className="tab-pane fade" id="about">
               <h4>About Me</h4>
               <p className="d-flex justify-content-between">
-                {data.aboutMe} <FaEdit onClick={()=>handleOpenModel('aboutMe')} className="text-warning cursor-pointer" />
+                {data.aboutMe} <FaEdit onClick={() => handleOpenModel('aboutMe')} className="text-warning cursor-pointer" />
               </p>
             </div>
 
@@ -313,7 +314,7 @@ const UpdatePortfolioPage = () => {
             <div className="tab-pane fade" id="experience">
               <h4>Experience</h4>
               <p className="d-flex justify-content-between">
-                {data.experience} <FaEdit onClick={()=>handleOpenModel('experience')} className="text-warning cursor-pointer" />
+                {data.experience} <FaEdit onClick={() => handleOpenModel('experience')} className="text-warning cursor-pointer" />
               </p>
             </div>
           </div>
@@ -324,87 +325,87 @@ const UpdatePortfolioPage = () => {
           <Modal.Title>Edit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-  {editField === "profilePhoto" ? (
-    <Form.Group>
-      <Form.Label>Upload Image</Form.Label>
-      <Form.Control type="file" onChange={(e) => setImageFile(e.target.files[0])} />
-    </Form.Group>
-  ) : editField === "projects" ? (
-    <>
-    <div className="card shadow-sm border-0 position-relative">
-      <div className="card-body">
-        {/* Remove value for file input */}
-        <Form.Control name="projectImage" type="file" onChange={handleProjectDetailsChange} />
-      </div>
-  
-      <div className="card-body">
-        <Form.Control value={selectedProject?.projectName || ''} name="projectName" type="text" onChange={handleProjectDetailsChange} />
-      </div>
-  
-      <div className="card-body">
-        <Form.Control value={selectedProject?.projectDescription || ''} name="projectDescription" as="textarea" onChange={handleProjectDetailsChange} />
-      </div>
-  
-      <div className="card-body">
-        <Form.Control value={selectedProject?.techStack || ''} name="techStack" type="text" onChange={handleProjectDetailsChange} />
-      </div>
-  
-      <div className="card-body">
-        <Form.Control value={selectedProject?.liveLink || ''} name="liveLink" type="text" onChange={handleProjectDetailsChange} />
-      </div>
-  
-      <div className="card-body">
-        <Form.Control value={selectedProject?.githubLink || ''} name="githubLink" type="text" onChange={handleProjectDetailsChange} />
-      </div>
-    </div>
-  </>
-  
-  ) : (
-    <Form.Group>
-      <Form.Label>Update Personal Details</Form.Label>
+          {editField === "profilePhoto" ? (
+            <Form.Group>
+              <Form.Label>Upload Image</Form.Label>
+              <Form.Control type="file" onChange={(e) => setImageFile(e.target.files[0])} />
+            </Form.Group>
+          ) : editField === "projects" ? (
+            <>
+              <div className="card shadow-sm border-0 position-relative">
+                <div className="card-body">
+                  {/* Remove value for file input */}
+                  <Form.Control name="projectImage" type="file" onChange={handleProjectDetailsChange} />
+                </div>
 
-      <Form.Group>
-        <Form.Label>Name</Form.Label>
-        <Form.Control
-          name="name"
-          type="text"
-          value={personalDetails?.name}
-          onChange={handlePersonalDetailsChange}
-        />
-      </Form.Group>
+                <div className="card-body">
+                  <Form.Control value={selectedProject?.projectName || ''} name="projectName" type="text" onChange={handleProjectDetailsChange} />
+                </div>
 
-      <Form.Group>
-        <Form.Label>Bio</Form.Label>
-        <Form.Control
-          name="bio"
-          as="textarea"
-          value={personalDetails?.bio}
-          onChange={handlePersonalDetailsChange}
-        />
-      </Form.Group>
+                <div className="card-body">
+                  <Form.Control value={selectedProject?.projectDescription || ''} name="projectDescription" as="textarea" onChange={handleProjectDetailsChange} />
+                </div>
 
-      <Form.Group>
-        <Form.Label>LinkedIn</Form.Label>
-        <Form.Control
-          name="linkedin"
-          type="text"
-          value={personalDetails?.linkedin}
-          onChange={handlePersonalDetailsChange}
-        />
-      </Form.Group>
+                <div className="card-body">
+                  <Form.Control value={selectedProject?.techStack || ''} name="techStack" type="text" onChange={handleProjectDetailsChange} />
+                </div>
 
-      <Form.Group>
-        <Form.Label>Email</Form.Label>
-        <Form.Control
-          name="email"
-          type="email"
-          value={personalDetails?.email}
-          onChange={handlePersonalDetailsChange}
-        />
-      </Form.Group>
-    </Form.Group>
-  )}
-</Modal.Body>
+                <div className="card-body">
+                  <Form.Control value={selectedProject?.liveLink || ''} name="liveLink" type="text" onChange={handleProjectDetailsChange} />
+                </div>
+
+                <div className="card-body">
+                  <Form.Control value={selectedProject?.githubLink || ''} name="githubLink" type="text" onChange={handleProjectDetailsChange} />
+                </div>
+              </div>
+            </>
+
+          ) : (
+            <Form.Group>
+              <Form.Label>Update Personal Details</Form.Label>
+
+              <Form.Group>
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  name="name"
+                  type="text"
+                  value={personalDetails?.name}
+                  onChange={handlePersonalDetailsChange}
+                />
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>Bio</Form.Label>
+                <Form.Control
+                  name="bio"
+                  as="textarea"
+                  value={personalDetails?.bio}
+                  onChange={handlePersonalDetailsChange}
+                />
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>LinkedIn</Form.Label>
+                <Form.Control
+                  name="linkedin"
+                  type="text"
+                  value={personalDetails?.linkedin}
+                  onChange={handlePersonalDetailsChange}
+                />
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  name="email"
+                  type="email"
+                  value={personalDetails?.email}
+                  onChange={handlePersonalDetailsChange}
+                />
+              </Form.Group>
+            </Form.Group>
+          )}
+        </Modal.Body>
 
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>Cancel</Button>
