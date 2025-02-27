@@ -88,7 +88,7 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
     className="text-dark"
     style={{ 
       fontWeight: "bold", 
-      fontSize: "32px", 
+      fontSize: "25px", 
       letterSpacing: "1px",
       textTransform: "uppercase",
       color: "#333",
