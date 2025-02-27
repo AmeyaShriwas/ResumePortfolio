@@ -299,10 +299,10 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                   </p>
 
                   <p className="mb-1 fw-semibold" style={{ fontSize: "16px", color:'white' }}>
-                    {data.training_company} - <span className="text-muted">{data.course_job}</span>
+                    {data.training_company} - <span style={{ fontSize: "16px", color:'white' }} >{data.course_job}</span>
                   </p>
 
-                  <p className="text-muted" style={{ fontSize: "14px", lineHeight: "1.5", color:'white' }}>
+                  <p  style={{ fontSize: "14px", lineHeight: "1.5", color:'white' }}>
                     {data.description}
                   </p>
                 </div>
