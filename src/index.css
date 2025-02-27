@@ -37,5 +37,5 @@ code {
 /* Firefox Scrollbar */
 * {
   scrollbar-width: thin; /* Makes scrollbar thinner */
-  scrollbar-color: #636970 #f1f1f1; /* Thumb color + Track color */
+  scrollbar-color: #a9abad #f1f1f1; /* Thumb color + Track color */
 }
