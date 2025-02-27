@@ -235,7 +235,7 @@ const UpdatePortfolioPage = () => {
           </h5>
           {data.bio && (
             <p className="px-3 d-flex justify-content-center align-items-center gap-2">
-              {data.tagLind} <FaEdit onClick={() => handleOpenModel('tagLine', 0)} className="text-warning cursor-pointer" />
+              {data.tagLine} <FaEdit onClick={() => handleOpenModel('tagLine', 0)} className="text-warning cursor-pointer" />
             </p>
           )}
           <div className="d-flex flex-column gap-2 mt-3">
@@ -326,13 +326,7 @@ const UpdatePortfolioPage = () => {
             </div>
 
             {/* Experience Section */}
-            <div className="tab-pane fade" id="experience">
-              <h4>Experience</h4>
-              <p className="d-flex justify-content-between">
-                {data.experience} <FaEdit onClick={() => handleOpenModel('experience')} className="text-warning cursor-pointer" />
-              </p>
-            </div>
-
+          
             <div className="tab-pane fade" id="experience" style={{ padding: "20px" }}>
               <h4 className="text-dark mb-4" style={{ borderBottom: "2px solid #007bff", paddingBottom: "5px" }}>
                 Experience
