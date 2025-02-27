@@ -48,9 +48,8 @@ const PortfolioDetails = () => {
       }
     });
 
-    if (training_experience.some(data => Object.values(data).length !== 0)) {
       formData.append('training_Experience', JSON.stringify(training_experience));
-    }
+    
     
     // Append other project details as JSON string
     const projectsData = projects.map(({ projectImage, ...rest }) => rest); // Exclude images
