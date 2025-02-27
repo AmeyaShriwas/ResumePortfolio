@@ -83,28 +83,41 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
           />
-          <h5
-            className="mt-3 text-dark text-center"
-            style={{ fontWeight: "bold", fontSize: "30px", letterSpacing: "0.5px" }}
-          >
-            {data.name}
-          </h5>
+       <div className="text-center" style={{ marginTop: "20px" }}>
+  <h5
+    className="text-dark"
+    style={{ 
+      fontWeight: "bold", 
+      fontSize: "32px", 
+      letterSpacing: "1px",
+      textTransform: "uppercase",
+      color: "#333",
+    }}
+  >
+    {data.name}
+  </h5>
 
-          {data.tagLine && (
-            <p
-              className="px-3 text-dark text-center"
-              style={{
-                fontSize: "18px",
-                fontStyle: "italic",
-                backgroundColor: "#f8f9fa",
-                padding: "10px",
-                borderRadius: "8px",
-                display: "inline-block"
-              }}
-            >
-              {data.tagLine}
-            </p>
-          )}
+  {data.tagLine && (
+    <p
+      className="text-dark"
+      style={{
+        fontSize: "16px",
+        fontStyle: "italic",
+        backgroundColor: "#f8f9fa",
+        padding: "12px 20px",
+        borderRadius: "8px",
+        display: "inline-block",
+        borderLeft: "4px solid #007bff", // Highlight effect
+        maxWidth: "80%", 
+        margin: "10px auto",
+        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)", // Subtle shadow
+      }}
+    >
+      {data.tagLine}
+    </p>
+  )}
+</div>
+
 
           <div className="d-flex flex-column gap-2 mt-3">
             <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn" style={{ backgroundColor: "#7C99AC", color: "white" }}>
