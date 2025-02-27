@@ -373,7 +373,7 @@ const UpdatePortfolioPage = () => {
 
             <div className="tab-pane fade" id="skills">
               <h4 className="text-dark">Skills</h4>
-              <p className="text-dark" onClick={() => handleOpenModel('skills')} style={{ display: 'flex', gap: '15px' }}>{data.skills.split(",").map((data) => {
+              <p className="text-dark" onClick={() => handleOpenModel('skills', 0)} style={{ display: 'flex', gap: '15px' }}>{data.skills.split(",").map((data) => {
                 return (
                   <p className="text-light" style={{ backgroundColor: 'grey', padding: '10px', margin: '10px', borderRadius: '10px' }}>{data}  <FaEdit size={25} onClick={() => handleOpenModel('skills', 0)} className="text-warning cursor-pointer" /></p>
                 )
@@ -384,7 +384,7 @@ const UpdatePortfolioPage = () => {
             <div className="tab-pane fade" id="about">
               <h4>About Me</h4>
               <p className="d-flex justify-content-between">
-                {data.bio} <FaEdit size={25} onClick={() => handleOpenModel('aboutMe')} className="text-warning cursor-pointer" />
+                {data.bio} <FaEdit size={25} onClick={() => handleOpenModel('aboutMe', 0)} className="text-warning cursor-pointer" />
               </p>
             </div>
 
@@ -486,7 +486,7 @@ const UpdatePortfolioPage = () => {
              <Form.Control
                name="training_company"
                type="text"
-               value={personalDetails?.training_company}
+               value={experienceDetails?.training_company}
                onChange={handlePersonalDetailsChange}
              />
            </Form.Group>
@@ -495,7 +495,7 @@ const UpdatePortfolioPage = () => {
              <Form.Control
                name="from"
                type="date"
-               value={personalDetails?.from}
+               value={experienceDetails?.from}
                onChange={handlePersonalDetailsChange}
              />
            </Form.Group>
@@ -504,7 +504,7 @@ const UpdatePortfolioPage = () => {
              <Form.Control
                name="to"
                type="date"
-               value={personalDetails?.to}
+               value={experienceDetails?.to}
                onChange={handlePersonalDetailsChange}
              />
            </Form.Group>
@@ -513,7 +513,7 @@ const UpdatePortfolioPage = () => {
              <Form.Control
                name="course_job"
                type="text"
-               value={personalDetails?.course_job}
+               value={experienceDetails?.course_job}
                onChange={handlePersonalDetailsChange}
              />
            </Form.Group>
@@ -522,7 +522,7 @@ const UpdatePortfolioPage = () => {
              <Form.Control
                name="description"
                type="text"
-               value={personalDetails?.description}
+               value={experienceDetails?.description}
                onChange={handlePersonalDetailsChange}
              />
            </Form.Group>
