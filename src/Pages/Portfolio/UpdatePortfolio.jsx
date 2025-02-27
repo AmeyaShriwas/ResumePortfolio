@@ -24,6 +24,13 @@ const UpdatePortfolioPage = () => {
     linkedin: data?.linkedin || "",
     email: data?.email || "",
   });
+  const [experienceDetails, setExperienceDetails] = useState({
+    from: "",
+    to: data?.bio || "",
+    training_company: "",
+    course_job: "",
+    description: ""
+  });
   const [allProjects, setAllProjects] = useState([])
   const [selectedProject, setSelectedProject] = useState({
   })
@@ -73,6 +80,8 @@ const UpdatePortfolioPage = () => {
     setSelectedProjectIndex(index)
     const allProjects = data.projects.filter((data, i) => i === index)[0]
     console.log('dat', allProjects)
+    const allExperience = data.training_Experience.filter((data, i)=> i === index )[0]
+    setExperienceDetails(allExperience)
     setSelectedProject(allProjects)
     setEditField(field);
     setShowModal(true);
@@ -123,7 +132,7 @@ const UpdatePortfolioPage = () => {
       else if (editField === 'projects') {
         const formData = new FormData();
         console.log('selected project', selectedProject);
-        
+
         for (let key in selectedProject) {
           if (key === "projectImage" && selectedProject.projectImage instanceof File) {
             formData.append(key, selectedProject.projectImage); // Append the file
@@ -131,9 +140,9 @@ const UpdatePortfolioPage = () => {
             formData.append(key, selectedProject[key]);
           }
         }
-        
+
         formData.append("index", selectedProjectIndex);
-        
+
         try {
           const response = await axios.post(
             `https://api.resumeportfolio.ameyashriwas.in/portfolio/updateProjects/${data.id}`,
@@ -146,13 +155,13 @@ const UpdatePortfolioPage = () => {
               },
             }
           );
-        
+
           console.log("res updated", response.data);
           setData(response?.data?.data);
         } catch (error) {
           console.error("Error updating portfolio:", error);
         }
-        
+
 
       }
       else {
@@ -213,7 +222,7 @@ const UpdatePortfolioPage = () => {
       </header>
 
 
-      <div className="d-flex flex-column flex-md-row" style={{minHeight:'80vh'}}>
+      <div className="d-flex flex-column flex-md-row" style={{ minHeight: '80vh' }}>
         {/* Left Section */}
         <div className="col-md-3 bg-white p-4 text-center border">
           <motion.div className="position-relative d-inline-block">
@@ -233,22 +242,76 @@ const UpdatePortfolioPage = () => {
           <h5 className="mt-3 font-weight-bold d-flex justify-content-center align-items-center gap-2">
             {data.name} <FaEdit onClick={() => handleOpenModel('name', 0)} className="text-warning cursor-pointer" />
           </h5>
-          {data.bio && (
-            <p className="px-3 d-flex justify-content-center align-items-center gap-2">
+
+          {data.tagLine && (
+            <p
+              className="text-dark"
+              style={{
+                fontSize: "16px",
+                fontStyle: "italic",
+                backgroundColor: "#f8f9fa",
+                padding: "12px 20px",
+                borderRadius: "8px",
+                display: "inline-block",
+                borderLeft: "4px solid #007bff", // Highlight effect
+                maxWidth: "80%",
+                margin: "10px auto",
+                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)", // Subtle shadow
+              }}
+            >
               {data.tagLine} <FaEdit onClick={() => handleOpenModel('tagLine', 0)} className="text-warning cursor-pointer" />
             </p>
           )}
-          <div className="d-flex flex-column gap-2 mt-3">
-            <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn d-flex justify-content-between" style={{ backgroundColor: "#7C99AC", color: "white" }}>
-              <FaLinkedin /> LinkedIn <FaEdit onClick={() => handleOpenModel('linkedin', 0)} />
-            </a>
-            <a href={`mailto:${data.email}`} className="btn d-flex justify-content-between" style={{ backgroundColor: "#7C99AC", color: "white" }}>
-              <FaEnvelope /> Contact <FaEdit onClick={() => handleOpenModel('email', 0)} />
-            </a>
-            <a href={data.resume} className="btn d-flex justify-content-between" style={{ backgroundColor: "#7C99AC", color: "white" }} download>
-              <FaFileAlt /> Download Resume <FaEdit onClick={() => handleOpenModel('resume', 0)} />
-            </a>
-          </div>
+         <div className="d-flex flex-column gap-2 mt-3" style={{ position: "relative" }}>
+  {/* LinkedIn Button */}
+  <div className="d-flex align-items-center">
+    <a 
+      href={data.linkedin} 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      className="btn w-100 d-flex justify-content-between align-items-center" 
+      style={{ backgroundColor: "#7C99AC", color: "white" }}
+    >
+      <FaLinkedin /> LinkedIn
+    </a>
+    <FaEdit 
+      onClick={() => handleOpenModel('linkedin', 0)} 
+      style={{ marginLeft: "10px", cursor: "pointer", color: "#7C99AC" }}
+    />
+  </div>
+
+  {/* Contact Button */}
+  <div className="d-flex align-items-center">
+    <a 
+      href={`mailto:${data.email}`} 
+      className="btn w-100 d-flex justify-content-between align-items-center" 
+      style={{ backgroundColor: "#7C99AC", color: "white" }}
+    >
+      <FaEnvelope /> Contact
+    </a>
+    <FaEdit 
+      onClick={() => handleOpenModel('email', 0)} 
+      style={{ marginLeft: "10px", cursor: "pointer", color: "#7C99AC" }}
+    />
+  </div>
+
+  {/* Resume Download Button */}
+  <div className="d-flex align-items-center">
+    <a 
+      href={data.resume} 
+      className="btn w-100 d-flex justify-content-between align-items-center" 
+      style={{ backgroundColor: "#7C99AC", color: "white" }} 
+      download
+    >
+      <FaFileAlt /> Download Resume
+    </a>
+    <FaEdit 
+      onClick={() => handleOpenModel('resume', 0)} 
+      style={{ marginLeft: "10px", cursor: "pointer", color: "#7C99AC" }}
+    />
+  </div>
+</div>
+
         </div>
 
         {/* Right Section */}
@@ -273,12 +336,12 @@ const UpdatePortfolioPage = () => {
             <div className="tab-pane fade show active" id="projects">
               <h4>Projects</h4>
               <div style={{
-                  width: "100%",
-                  display:'flex',
-                  overflow:'scroll',
-                  gap:'20px',
-                  borderRadius:'10px'
-                }}>
+                width: "100%",
+                display: 'flex',
+                overflow: 'scroll',
+                gap: '20px',
+                borderRadius: '10px'
+              }}>
                 {data.projects.map((project, index) => (
                   <motion.div key={index} className="col-12 col-sm-6 col-md-4 mb-3" whileHover={{ scale: 1.05 }}>
                     <div className="card shadow-sm border-0 position-relative">
@@ -307,10 +370,10 @@ const UpdatePortfolioPage = () => {
             </div>
 
             {/* Skills Section */}
-         
+
             <div className="tab-pane fade" id="skills">
               <h4 className="text-dark">Skills</h4>
-              <p className="text-dark"  onClick={() => handleOpenModel('skills')} style={{ display: 'flex', gap: '15px' }}>{data.skills.split(",").map((data) => {
+              <p className="text-dark" onClick={() => handleOpenModel('skills')} style={{ display: 'flex', gap: '15px' }}>{data.skills.split(",").map((data) => {
                 return (
                   <p className="text-light" style={{ backgroundColor: 'grey', padding: '10px', margin: '10px', borderRadius: '10px' }}>{data}</p>
                 )
@@ -326,7 +389,7 @@ const UpdatePortfolioPage = () => {
             </div>
 
             {/* Experience Section */}
-          
+
             <div className="tab-pane fade" id="experience" style={{ padding: "20px" }}>
               <h4 className="text-dark mb-4" style={{ borderBottom: "2px solid #007bff", paddingBottom: "5px" }}>
                 Experience
@@ -338,16 +401,16 @@ const UpdatePortfolioPage = () => {
                   className="card shadow-sm mb-3 border-0"
                   style={{ padding: "15px", borderRadius: "8px", backgroundColor: "#7C99AC", color: "white" }}
                 >
-                  <p className="mb-1 fw-bold" style={{ fontSize: "14px", color:'white' }}>
+                  <p className="mb-1 fw-bold" style={{ fontSize: "14px", color: 'white' }}>
                     {data.from} - {data.to}                   <FaEdit onClick={() => handleOpenModel('experience')} className="text-warning cursor-pointer" />
 
                   </p>
 
-                  <p className="mb-1 fw-semibold" style={{ fontSize: "16px", color:'white' }}>
-                    {data.training_company} - <span style={{ fontSize: "16px", color:'white' }} >{data.course_job}</span>
+                  <p className="mb-1 fw-semibold" style={{ fontSize: "16px", color: 'white' }}>
+                    {data.training_company} - <span style={{ fontSize: "16px", color: 'white' }} >{data.course_job}</span>
                   </p>
 
-                  <p  style={{ fontSize: "14px", lineHeight: "1.5", color:'white' }}>
+                  <p style={{ fontSize: "14px", lineHeight: "1.5", color: 'white' }}>
                     {data.description}
                   </p>
                 </div>
@@ -397,7 +460,77 @@ const UpdatePortfolioPage = () => {
               </div>
             </>
 
-          ) : (
+          ) : editField === "aboutMe" ? (
+            
+            <Form.Group>
+             <Form.Label>Update About Me</Form.Label>
+
+             <Form.Group>
+               <Form.Label>About Me</Form.Label>
+               <Form.Control
+                 name="bio"
+                 type="text"
+                 value={personalDetails?.bio}
+                 onChange={handlePersonalDetailsChange}
+               />
+             </Form.Group>
+             </Form.Group>
+
+           
+         ): editField === "experience" ? (
+            
+          <Form.Group>
+           <Form.Label>Update Experience</Form.Label>
+           <Form.Group>
+             <Form.Label>Company Name</Form.Label>
+             <Form.Control
+               name="training_company"
+               type="text"
+               value={personalDetails?.training_company}
+               onChange={handlePersonalDetailsChange}
+             />
+           </Form.Group>
+           <Form.Group>
+             <Form.Label>From</Form.Label>
+             <Form.Control
+               name="from"
+               type="date"
+               value={personalDetails?.from}
+               onChange={handlePersonalDetailsChange}
+             />
+           </Form.Group>
+           <Form.Group>
+             <Form.Label>To</Form.Label>
+             <Form.Control
+               name="to"
+               type="date"
+               value={personalDetails?.to}
+               onChange={handlePersonalDetailsChange}
+             />
+           </Form.Group>
+           <Form.Group>
+             <Form.Label>Position</Form.Label>
+             <Form.Control
+               name="course_job"
+               type="text"
+               value={personalDetails?.course_job}
+               onChange={handlePersonalDetailsChange}
+             />
+           </Form.Group>
+           <Form.Group>
+             <Form.Label>Description</Form.Label>
+             <Form.Control
+               name="description"
+               type="text"
+               value={personalDetails?.description}
+               onChange={handlePersonalDetailsChange}
+             />
+           </Form.Group>
+           </Form.Group>
+
+         
+       ):
+          (
             <Form.Group>
               <Form.Label>Update Personal Details</Form.Label>
 
@@ -412,7 +545,7 @@ const UpdatePortfolioPage = () => {
               </Form.Group>
 
               <Form.Group>
-                <Form.Label>Bio</Form.Label>
+                <Form.Label>Tag Line</Form.Label>
                 <Form.Control
                   name="bio"
                   as="textarea"
