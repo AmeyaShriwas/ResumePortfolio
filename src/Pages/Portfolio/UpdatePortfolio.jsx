@@ -31,6 +31,9 @@ const UpdatePortfolioPage = () => {
     course_job: "",
     description: ""
   });
+  const [updateBio, setUpdateBio] = useState({bio: ''})
+  const [updateSkills, setUpdateSkills] = useState({skills: ''})
+
   const [allProjects, setAllProjects] = useState([])
   const [selectedProject, setSelectedProject] = useState({
   })
@@ -82,6 +85,8 @@ const UpdatePortfolioPage = () => {
     console.log('dat', allProjects)
     const allExperience = data.training_Experience.filter((data, i)=> i === index )[0]
     setExperienceDetails(allExperience)
+    setUpdateBio(data.bio)
+    setUpdateSkills(data.skills)
     setSelectedProject(allProjects)
     setEditField(field);
     setShowModal(true);
@@ -99,6 +104,31 @@ const UpdatePortfolioPage = () => {
       [name]: value
     }))
   }
+
+  const handleExperienceDetailsChange = (e) => {
+    const { name, value } = e.target
+    setExperienceDetails((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleBioDetailsChange = (e)=> {
+    const { name, value } = e.target
+    setUpdateBio((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleSkillsDetailsChange = (e)=> {
+    const { name, value } = e.target
+    setUpdateSkills((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
 
   const handleSave = async () => {
     try {
@@ -373,9 +403,9 @@ const UpdatePortfolioPage = () => {
 
             <div className="tab-pane fade" id="skills">
               <h4 className="text-dark">Skills</h4>
-              <p className="text-dark" onClick={() => handleOpenModel('skills', 0)} style={{ display: 'flex', gap: '15px' }}>{data.skills.split(",").map((data) => {
+              <p  className="text-dark" onClick={() => handleOpenModel('skills', 0)} style={{ display: 'flex', gap: '15px' }}>{data.skills.split(",").map((data) => {
                 return (
-                  <p className="text-light" style={{ backgroundColor: 'grey', padding: '10px', margin: '10px', borderRadius: '10px' }}>{data}  <FaEdit size={25} onClick={() => handleOpenModel('skills', 0)} className="text-warning cursor-pointer" /></p>
+                  <p className="text-light" style={{ backgroundColor: 'grey', padding: '10px', margin: '10px', borderRadius: '10px' }}>{data}  </p>
                 )
               })}</p>
             </div>
@@ -470,14 +500,31 @@ const UpdatePortfolioPage = () => {
                <Form.Control
                  name="bio"
                  type="text"
-                 value={personalDetails?.bio}
-                 onChange={handlePersonalDetailsChange}
+                 value={updateBio?.bio}
+                 onChange={handleBioDetailsChange}
                />
              </Form.Group>
              </Form.Group>
 
            
-         ): editField === "experience" ? (
+         ): editField === "skills" ? (
+            
+          <Form.Group>
+           <Form.Label>Update Skills</Form.Label>
+
+           <Form.Group>
+             <Form.Label>Skills</Form.Label>
+             <Form.Control
+               name="skills"
+               type="text"
+               value={updateSkills?.bio}
+               onChange={handleSkillsDetailsChange}
+             />
+           </Form.Group>
+           </Form.Group>
+
+         
+       ): editField === "experience" ? (
             
           <Form.Group>
            <Form.Label>Update Experience</Form.Label>
@@ -487,7 +534,7 @@ const UpdatePortfolioPage = () => {
                name="training_company"
                type="text"
                value={experienceDetails?.training_company}
-               onChange={handlePersonalDetailsChange}
+               onChange={handleExperienceDetailsChange}
              />
            </Form.Group>
            <Form.Group>
@@ -496,7 +543,7 @@ const UpdatePortfolioPage = () => {
                name="from"
                type="date"
                value={experienceDetails?.from}
-               onChange={handlePersonalDetailsChange}
+               onChange={handleExperienceDetailsChange}
              />
            </Form.Group>
            <Form.Group>
@@ -505,7 +552,7 @@ const UpdatePortfolioPage = () => {
                name="to"
                type="date"
                value={experienceDetails?.to}
-               onChange={handlePersonalDetailsChange}
+               onChange={handleExperienceDetailsChange}
              />
            </Form.Group>
            <Form.Group>
@@ -514,7 +561,7 @@ const UpdatePortfolioPage = () => {
                name="course_job"
                type="text"
                value={experienceDetails?.course_job}
-               onChange={handlePersonalDetailsChange}
+               onChange={handleExperienceDetailsChange}
              />
            </Form.Group>
            <Form.Group>
@@ -523,7 +570,7 @@ const UpdatePortfolioPage = () => {
                name="description"
                type="text"
                value={experienceDetails?.description}
-               onChange={handlePersonalDetailsChange}
+               onChange={handleExperienceDetailsChange}
              />
            </Form.Group>
            </Form.Group>
