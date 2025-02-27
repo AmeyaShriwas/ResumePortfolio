@@ -676,8 +676,8 @@ const UpdatePortfolioPage = () => {
               <Form.Group>
                 <Form.Label>Tag Line</Form.Label>
                 <Form.Control
-                  name="bio"
-                  as="textarea"
+                  name="tagLine"
+               type="text"
                   value={personalDetails?.tagLine}
                   onChange={handlePersonalDetailsChange}
                 />
