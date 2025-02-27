@@ -294,15 +294,15 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                   className="card shadow-sm mb-3 border-0"
                   style={{ padding: "15px", borderRadius: "8px", backgroundColor: "#7C99AC", color: "white" }}
                 >
-                  <p className="mb-1 text-primary fw-bold" style={{ fontSize: "14px" }}>
+                  <p className="mb-1 fw-bold" style={{ fontSize: "14px", color:'white' }}>
                     {data.from} - {data.to}
                   </p>
 
-                  <p className="mb-1 text-dark fw-semibold" style={{ fontSize: "16px" }}>
+                  <p className="mb-1 fw-semibold" style={{ fontSize: "16px", color:'white' }}>
                     {data.training_company} - <span className="text-muted">{data.course_job}</span>
                   </p>
 
-                  <p className="text-muted" style={{ fontSize: "14px", lineHeight: "1.5" }}>
+                  <p className="text-muted" style={{ fontSize: "14px", lineHeight: "1.5", color:'white' }}>
                     {data.description}
                   </p>
                 </div>
