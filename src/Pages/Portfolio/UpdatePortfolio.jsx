@@ -375,7 +375,7 @@ const UpdatePortfolioPage = () => {
               <h4 className="text-dark">Skills</h4>
               <p className="text-dark" onClick={() => handleOpenModel('skills')} style={{ display: 'flex', gap: '15px' }}>{data.skills.split(",").map((data) => {
                 return (
-                  <p className="text-light" style={{ backgroundColor: 'grey', padding: '10px', margin: '10px', borderRadius: '10px' }}>{data}</p>
+                  <p className="text-light" style={{ backgroundColor: 'grey', padding: '10px', margin: '10px', borderRadius: '10px' }}>{data}  <FaEdit size={25} onClick={() => handleOpenModel('skills', 0)} className="text-warning cursor-pointer" /></p>
                 )
               })}</p>
             </div>
@@ -384,7 +384,7 @@ const UpdatePortfolioPage = () => {
             <div className="tab-pane fade" id="about">
               <h4>About Me</h4>
               <p className="d-flex justify-content-between">
-                {data.bio} <FaEdit onClick={() => handleOpenModel('aboutMe')} className="text-warning cursor-pointer" />
+                {data.bio} <FaEdit size={25} onClick={() => handleOpenModel('aboutMe')} className="text-warning cursor-pointer" />
               </p>
             </div>
 
@@ -402,7 +402,7 @@ const UpdatePortfolioPage = () => {
                   style={{ padding: "15px", borderRadius: "8px", backgroundColor: "#7C99AC", color: "white" }}
                 >
                   <p className="mb-1 fw-bold" style={{ fontSize: "14px", color: 'white' }}>
-                    {data.from} - {data.to}                   <FaEdit onClick={() => handleOpenModel('experience')} className="text-warning cursor-pointer" />
+                    {data.from} - {data.to}                   <FaEdit onClick={() => handleOpenModel('experience', index)} className="text-warning cursor-pointer" />
 
                   </p>
 
