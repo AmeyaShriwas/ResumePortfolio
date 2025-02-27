@@ -205,7 +205,7 @@ const UpdatePortfolioPage = () => {
         console.log('updated data', data);
 
         const formData = new FormData();
-        formData.append("skills", updateSkills);
+        formData.append("skills", updateSkills.skills);
 
 
         try {
@@ -228,7 +228,7 @@ const UpdatePortfolioPage = () => {
         console.log('updated data', data);
 
         const formData = new FormData();
-          formData.append("bio", updateBio);
+          formData.append("bio", updateBio.bio);
 
 
         try {
