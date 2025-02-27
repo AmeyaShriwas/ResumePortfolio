@@ -245,12 +245,12 @@ const UpdatePortfolioPage = () => {
       
 
       else if (editField === 'experience') {
-     
-
+       const newData = Object.assign(experienceDetails, {index: selectedProjectIndex})
+       
         try {
           const response = await axios.post(
             `https://api.resumeportfolio.ameyashriwas.in/portfolio/updateExperienceDetails/${data.id}`,
-            experienceDetails,
+            newData,
             {
               headers: {
                 "Authorization": `Bearer ${token}`,
