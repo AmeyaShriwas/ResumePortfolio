@@ -86,8 +86,8 @@ const UpdatePortfolioPage = () => {
     console.log('dat', allProjects)
     const allExperience = data.training_Experience.filter((data, i)=> i === index )[0]
     setExperienceDetails(allExperience)
-    setUpdateBio(data.bio)
-    setUpdateSkills(data.skills)
+    setUpdateBio({bio: data.bio})
+    setUpdateSkills({skills: data.skills})
     setSelectedProject(allProjects)
     setEditField(field);
     setShowModal(true);
