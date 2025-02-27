@@ -205,7 +205,7 @@ const UpdatePortfolioPage = () => {
         console.log('updated data', data);
 
         const formData = new FormData();
-          formData.append("skills", updateSkills);
+        formData.append("skills", updateSkills);
 
 
         try {
@@ -224,7 +224,7 @@ const UpdatePortfolioPage = () => {
         } catch (error) {
           console.error("Error updating portfolio:", error);
         }
-      } else if (editField === 'bio') {
+      } else if (editField === 'aboutMe') {
         console.log('updated data', data);
 
         const formData = new FormData();
@@ -248,6 +248,7 @@ const UpdatePortfolioPage = () => {
           console.error("Error updating portfolio:", error);
         }
       }
+      
 
       else if (editField === 'experience') {
         console.log('updated data', data);
@@ -599,7 +600,7 @@ const UpdatePortfolioPage = () => {
              <Form.Control
                name="skills"
                type="text"
-               value={updateSkills?.bio}
+               value={updateSkills?.skills}
                onChange={handleSkillsDetailsChange}
              />
            </Form.Group>
