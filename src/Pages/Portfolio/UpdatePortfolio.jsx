@@ -202,16 +202,11 @@ const UpdatePortfolioPage = () => {
 
 
       } else  if (editField === 'skills') {
-        console.log('updated data', data);
-
-        const formData = new FormData();
-        formData.append("skills", updateSkills.skills);
-
-
+      
         try {
           const response = await axios.post(
             `https://api.resumeportfolio.ameyashriwas.in/portfolio/updateSkillsDetails/${data.id}`,
-            formData,
+            updateSkills,
             {
               headers: {
                 "Authorization": `Bearer ${token}`,
@@ -227,16 +222,11 @@ const UpdatePortfolioPage = () => {
           console.error("Error updating portfolio:", error);
         }
       } else if (editField === 'aboutMe') {
-        console.log('updated data', data);
-
-        const formData = new FormData();
-          formData.append("bio", updateBio.bio);
-
-
+       
         try {
           const response = await axios.post(
             `https://api.resumeportfolio.ameyashriwas.in/portfolio/updateBioDetails/${data.id}`,
-            formData,
+            updateBio,
             {
               headers: {
                 "Authorization": `Bearer ${token}`,
@@ -255,19 +245,12 @@ const UpdatePortfolioPage = () => {
       
 
       else if (editField === 'experience') {
-        console.log('updated data', data);
-
-        const formData = new FormData();
-        for(let key in experienceDetails){
-          formData.append(key, experienceDetails[key]);
-
-        }
-
+     
 
         try {
           const response = await axios.post(
             `https://api.resumeportfolio.ameyashriwas.in/portfolio/updateExperienceDetails/${data.id}`,
-            formData,
+            experienceDetails,
             {
               headers: {
                 "Authorization": `Bearer ${token}`,
