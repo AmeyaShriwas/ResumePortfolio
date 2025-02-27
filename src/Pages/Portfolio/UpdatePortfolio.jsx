@@ -31,8 +31,8 @@ const UpdatePortfolioPage = () => {
     course_job: "",
     description: ""
   });
-  const [updateBio, setUpdateBio] = useState({bio: ''})
-  const [updateSkills, setUpdateSkills] = useState({skills: ''})
+  const [updateBio, setUpdateBio] = useState()
+  const [updateSkills, setUpdateSkills] = useState({})
 
   const [allProjects, setAllProjects] = useState([])
   const [selectedProject, setSelectedProject] = useState({
@@ -407,7 +407,7 @@ const UpdatePortfolioPage = () => {
                 return (
                   <p className="text-light" style={{ backgroundColor: 'grey', padding: '10px', margin: '10px', borderRadius: '10px' }}>{data}  </p>
                 )
-              })}</p>
+              })} <FaEdit size={25} onClick={() => handleOpenModel('skills', 0)} className="text-warning cursor-pointer" /></p>
             </div>
 
             {/* About Me Section */}
