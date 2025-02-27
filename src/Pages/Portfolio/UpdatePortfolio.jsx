@@ -214,7 +214,9 @@ const UpdatePortfolioPage = () => {
             formData,
             {
               headers: {
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+
               }
             }
           );
@@ -237,7 +239,9 @@ const UpdatePortfolioPage = () => {
             formData,
             {
               headers: {
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+
               }
             }
           );
@@ -266,7 +270,9 @@ const UpdatePortfolioPage = () => {
             formData,
             {
               headers: {
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+
               }
             }
           );
