@@ -110,10 +110,10 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
             <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn" style={{ backgroundColor: "#7C99AC", color: "white" }}>
               <FaLinkedin /> LinkedIn
             </a>
-            <a href={`mailto:${data.email}`} className="btn btn-dark">
+            <a href={`mailto:${data.email}`} className="btn" style={{ backgroundColor: "#7C99AC", color: "white" }}>
               <FaEnvelope /> Contact
             </a>
-            <a href={data.resume} className="btn btn-secondary" download>
+            <a href={data.resume} style={{ backgroundColor: "#7C99AC", color: "white" }} className="btn" download>
               <FaFileAlt /> Download Resume
             </a>
           </div>
