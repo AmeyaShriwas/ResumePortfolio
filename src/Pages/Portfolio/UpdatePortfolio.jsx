@@ -221,7 +221,7 @@ const UpdatePortfolioPage = () => {
               src={`https://api.resumeportfolio.ameyashriwas.in/${data.profilePhoto.replace(/^\/+/, "")}`}
               alt="Profile"
               className="rounded-circle border border-warning shadow-lg"
-              style={{ width: "140px", height: "140px" }}
+              style={{ width: "200px", height: "200px" }}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
@@ -235,17 +235,17 @@ const UpdatePortfolioPage = () => {
           </h5>
           {data.bio && (
             <p className="px-3 d-flex justify-content-center align-items-center gap-2">
-              {data.bio} <FaEdit onClick={() => handleOpenModel('bio', 0)} className="text-warning cursor-pointer" />
+              {data.tagLind} <FaEdit onClick={() => handleOpenModel('tagLine', 0)} className="text-warning cursor-pointer" />
             </p>
           )}
           <div className="d-flex flex-column gap-2 mt-3">
-            <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-primary d-flex justify-content-between">
+            <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn d-flex justify-content-between" style={{ backgroundColor: "#7C99AC", color: "white" }}>
               <FaLinkedin /> LinkedIn <FaEdit onClick={() => handleOpenModel('linkedin', 0)} />
             </a>
-            <a href={`mailto:${data.email}`} className="btn btn-dark d-flex justify-content-between">
+            <a href={`mailto:${data.email}`} className="btn d-flex justify-content-between" style={{ backgroundColor: "#7C99AC", color: "white" }}>
               <FaEnvelope /> Contact <FaEdit onClick={() => handleOpenModel('email', 0)} />
             </a>
-            <a href={data.resume} className="btn btn-secondary d-flex justify-content-between" download>
+            <a href={data.resume} className="btn d-flex justify-content-between" style={{ backgroundColor: "#7C99AC", color: "white" }} download>
               <FaFileAlt /> Download Resume <FaEdit onClick={() => handleOpenModel('resume', 0)} />
             </a>
           </div>
@@ -307,18 +307,21 @@ const UpdatePortfolioPage = () => {
             </div>
 
             {/* Skills Section */}
+         
             <div className="tab-pane fade" id="skills">
-              <h4>Skills</h4>
-              <p className="d-flex justify-content-between">
-                {data.skills} <FaEdit onClick={() => handleOpenModel('skills')} className="text-warning cursor-pointer" />
-              </p>
+              <h4 className="text-dark">Skills</h4>
+              <p className="text-dark"  onClick={() => handleOpenModel('skills')} style={{ display: 'flex', gap: '15px' }}>{data.skills.split(",").map((data) => {
+                return (
+                  <p className="text-light" style={{ backgroundColor: 'grey', padding: '10px', margin: '10px', borderRadius: '10px' }}>{data}</p>
+                )
+              })}</p>
             </div>
 
             {/* About Me Section */}
             <div className="tab-pane fade" id="about">
               <h4>About Me</h4>
               <p className="d-flex justify-content-between">
-                {data.aboutMe} <FaEdit onClick={() => handleOpenModel('aboutMe')} className="text-warning cursor-pointer" />
+                {data.bio} <FaEdit onClick={() => handleOpenModel('aboutMe')} className="text-warning cursor-pointer" />
               </p>
             </div>
 
@@ -329,6 +332,34 @@ const UpdatePortfolioPage = () => {
                 {data.experience} <FaEdit onClick={() => handleOpenModel('experience')} className="text-warning cursor-pointer" />
               </p>
             </div>
+
+            <div className="tab-pane fade" id="experience" style={{ padding: "20px" }}>
+              <h4 className="text-dark mb-4" style={{ borderBottom: "2px solid #007bff", paddingBottom: "5px" }}>
+                Experience
+              </h4>
+
+              {data.training_Experience.map((data, index) => (
+                <div
+                  key={index}
+                  className="card shadow-sm mb-3 border-0"
+                  style={{ padding: "15px", borderRadius: "8px", backgroundColor: "#7C99AC", color: "white" }}
+                >
+                  <p className="mb-1 fw-bold" style={{ fontSize: "14px", color:'white' }}>
+                    {data.from} - {data.to}                   <FaEdit onClick={() => handleOpenModel('experience')} className="text-warning cursor-pointer" />
+
+                  </p>
+
+                  <p className="mb-1 fw-semibold" style={{ fontSize: "16px", color:'white' }}>
+                    {data.training_company} - <span style={{ fontSize: "16px", color:'white' }} >{data.course_job}</span>
+                  </p>
+
+                  <p  style={{ fontSize: "14px", lineHeight: "1.5", color:'white' }}>
+                    {data.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+
           </div>
         </div>
       </div>
