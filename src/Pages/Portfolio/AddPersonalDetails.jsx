@@ -68,6 +68,7 @@ const PortfolioDetails = () => {
   };
   
   const handleDataChange = (e, index)=> {
+    const { name, value } = e.target;
     settraining_experienceData(prev => prev.map((data, i) => (i === index ? { ...data, [name]: value } : data)));
 
   }
