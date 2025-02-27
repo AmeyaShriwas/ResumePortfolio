@@ -11,6 +11,8 @@ const PortfolioDetails = () => {
   ]);
   const dispatch = useDispatch()
   const {token} = useSelector(state=> state.user)
+  const [training_experience, settraining_experienceData] = useState([{ training_company: '', course_job: '', from: '', to: '', description: '' }])
+  
 
   const handlePersonalDataChange = (e) => {
     const { name, files, value } = e.target;
@@ -65,6 +67,22 @@ const PortfolioDetails = () => {
     });
   };
   
+  const handleDataChange = (e, index)=> {
+    settraining_experienceData(prev => prev.map((data, i) => (i === index ? { ...data, [name]: value } : data)));
+
+  }
+
+  const handleAddMoreTraining_Experience = () => {
+    const training_experienceDataGet = JSON.parse(JSON.stringify(training_experience))
+    training_experienceDataGet.push({ training_company: '', course_job: '', from: '', to: '', description: '' })
+    settraining_experienceData(training_experienceDataGet)
+}
+
+const handleRemoveTraining_Experience = (index) => {
+  const training_experienceDataGet = JSON.parse(JSON.stringify(training_experience))
+  const updateData = training_experienceDataGet.filter((data, i) => i !== index)
+  settraining_experienceData(updateData)
+}
 
   return (
     <div className="container mt-4">
@@ -79,6 +97,11 @@ const PortfolioDetails = () => {
           <Form.Group className="col-md-6 mb-3">
             <Form.Label>Profile Photo</Form.Label>
             <Form.Control type="file" name="profilePhoto" onChange={handlePersonalDataChange} />
+          </Form.Group>
+
+          <Form.Group className="col-md-6 mb-3">
+            <Form.Label>Tag Line</Form.Label>
+            <Form.Control type="text" name="tagLine" onChange={handlePersonalDataChange} />
           </Form.Group>
 
           <Form.Group className="col-md-12 mb-3">
@@ -151,6 +174,85 @@ const PortfolioDetails = () => {
             Add More
           </Button>
         </div>
+
+         <div className="container py-3">
+                    <h4 className="text-center text-secondary mb-3">
+                        🏫 Enter Your Training/Experience Details
+                    </h4>
+        
+                    {training_experience.map((data, index) => (
+                        <Form key={index} className="border rounded p-4 mb-3 shadow-sm bg-light">
+                            <div className="row">
+                                <Form.Group className="col-md-6 mb-3">
+                                    <Form.Label>Training Institute / Company Name</Form.Label>
+                                    <Form.Control
+                                        formdetail="training_experience"
+                                        name="training_company"
+                                        value={data.training_company}
+                                        onChange={(e) => handleDataChange(e, index)}
+                                        type="text"
+                                        placeholder="Enter company name"
+                                    />
+                                </Form.Group>
+        
+                                <Form.Group className="col-md-6 mb-3">
+                                    <Form.Label>Course Name / Job Position</Form.Label>
+                                    <Form.Control
+                                        formdetail="training_experience"
+                                        name="course_job"
+                                        value={data.course_job}
+                                        onChange={(e) => handleDataChange(e, index)}
+                                        type="text"
+                                        placeholder="Enter course or job position"
+                                    />
+                                </Form.Group>
+        
+                                <Form.Group className="col-md-6 mb-3">
+                                    <Form.Label>From</Form.Label>
+                                    <Form.Control
+                                        formdetail="training_experience"
+                                        name="from"
+                                        value={data.from}
+                                        onChange={(e) => handleDataChange(e, index)}
+                                        type="date"
+                                    />
+                                </Form.Group>
+        
+                                <Form.Group className="col-md-6 mb-3">
+                                    <Form.Label>To</Form.Label>
+                                    <Form.Control
+                                        formdetail="training_experience"
+                                        name="to"
+                                        value={data.to}
+                                        onChange={(e) => handleDataChange(e, index)}
+                                        type="date"
+                                    />
+                                </Form.Group>
+        
+                                <Form.Group className="col-12 mb-3">
+                                    <Form.Label>Short Description</Form.Label>
+                                    <Form.Control
+                                        formdetail="training_experience"
+                                        name="description"
+                                        value={data.description}
+                                        onChange={(e) => handleDataChange(e, index)}
+                                        as="textarea"
+                                        rows={3}
+                                        maxLength={300}
+                                        placeholder="Describe your training or experience"
+                                    />
+                                </Form.Group>
+                            </div>
+        
+                            <div className="d-flex justify-content-between">
+                                <Button variant="outline-primary" onClick={handleAddMoreTraining_Experience}>➕ Add More</Button>
+                                {index > 0 && (
+                                    <Button variant="outline-danger" onClick={() => handleRemoveTraining_Experience(index)}>❌ Remove</Button>
+                                )}
+                            </div>
+                        </Form>
+                    ))}
+                </div>
 
         <h3 className="text-center mt-5 mb-4">Contact</h3>
         <Form.Group className="mb-3">
