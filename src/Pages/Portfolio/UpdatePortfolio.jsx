@@ -31,8 +31,8 @@ const UpdatePortfolioPage = () => {
     course_job: "",
     description: ""
   });
-  const [updateBio, setUpdateBio] = useState()
-  const [updateSkills, setUpdateSkills] = useState({})
+  const [updateBio, setUpdateBio] = useState({bio: ''})
+  const [updateSkills, setUpdateSkills] = useState({skills: ''})
 
   const [allProjects, setAllProjects] = useState([])
   const [selectedProject, setSelectedProject] = useState({
@@ -80,6 +80,7 @@ const UpdatePortfolioPage = () => {
   }, [id]);
 
   const handleOpenModel = (field, index) => {
+    console.log('data', data)
     setSelectedProjectIndex(index)
     const allProjects = data.projects.filter((data, i) => i === index)[0]
     console.log('dat', allProjects)
