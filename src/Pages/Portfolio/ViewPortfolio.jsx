@@ -292,7 +292,7 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
                 <div
                   key={index}
                   className="card shadow-sm mb-3 border-0"
-                  style={{ padding: "15px", borderRadius: "8px", backgroundColor: "#F2F6D0" }}
+                  style={{ padding: "15px", borderRadius: "8px", backgroundColor: "#7C99AC", color: "white" }}
                 >
                   <p className="mb-1 text-primary fw-bold" style={{ fontSize: "14px" }}>
                     {data.from} - {data.to}
