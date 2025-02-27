@@ -25,17 +25,17 @@ code {
 
 /* Thumb (Draggable Part) */
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #007bff, #6610f2); /* Gradient effect */
+  background: linear-gradient(45deg, #636970, #9c8eb1); /* Gradient effect */
   border-radius: 10px;
 }
 
 /* Hover Effect on Scrollbar Thumb */
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, #0056b3, #520dc2);
+  background: linear-gradient(45deg,#636970, #636970);
 }
 
 /* Firefox Scrollbar */
 * {
   scrollbar-width: thin; /* Makes scrollbar thinner */
-  scrollbar-color: #007bff #f1f1f1; /* Thumb color + Track color */
+  scrollbar-color: #636970 #f1f1f1; /* Thumb color + Track color */
 }
