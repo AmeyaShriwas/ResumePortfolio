@@ -84,7 +84,7 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
             transition={{ duration: 0.5 }}
           />
           <h5 className="mt-3 font-weight-bold text-dark">{data.name}</h5>
-          {data.bio && <p className="px-3 text-dark">{data.bio}</p>}
+          {data.bio && <p className="px-3 p-4 text-dark">{data.tagLine}</p>}
           <div className="d-flex flex-column gap-2 mt-3">
             <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="btn" style={{ backgroundColor: "#7C99AC", color: "white" }}>
               <FaLinkedin /> LinkedIn
@@ -258,14 +258,36 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
             {/* About Me Section */}
             <div className="tab-pane fade" id="about">
               <h4 className="text-dark">About Me</h4>
-              <p className="text-dark">{data.aboutMe}</p>
+              <p className="text-dark">{data.bio}</p>
             </div>
 
             {/* Experience Section */}
-            <div className="tab-pane fade" id="experience">
-              <h4 className="text-dark">Experience</h4>
-              <p className="text-dark">{data.experience}</p>
-            </div>
+            <div className="tab-pane fade" id="experience" style={{ padding: "20px" }}>
+  <h4 className="text-dark mb-4" style={{ borderBottom: "2px solid #007bff", paddingBottom: "5px" }}>
+    Experience
+  </h4>
+  
+  {data.training_Experience.map((data, index) => (
+    <div 
+      key={index} 
+      className="card shadow-sm mb-3 border-0" 
+      style={{ padding: "15px", borderRadius: "8px", backgroundColor: "#f8f9fa" }}
+    >
+      <p className="mb-1 text-primary fw-bold" style={{ fontSize: "14px" }}>
+        {data.from} - {data.to}
+      </p>
+      
+      <p className="mb-1 text-dark fw-semibold" style={{ fontSize: "16px" }}>
+        {data.training_company} - <span className="text-muted">{data.course_job}</span>
+      </p>
+      
+      <p className="text-muted" style={{ fontSize: "14px", lineHeight: "1.5" }}>
+        {data.description}
+      </p>
+    </div>
+  ))}
+</div>
+
           </div>
         </div>
       </div>
