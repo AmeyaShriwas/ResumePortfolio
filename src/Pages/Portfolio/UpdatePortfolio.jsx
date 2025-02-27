@@ -213,14 +213,14 @@ const UpdatePortfolioPage = () => {
       </header>
 
 
-      <div className="d-flex flex-column flex-md-row">
+      <div className="d-flex flex-column flex-md-row" style={{minHeight:'80vh'}}>
         {/* Left Section */}
         <div className="col-md-3 bg-white p-4 text-center border">
           <motion.div className="position-relative d-inline-block">
             <motion.img
               src={`https://api.resumeportfolio.ameyashriwas.in/${data.profilePhoto.replace(/^\/+/, "")}`}
               alt="Profile"
-              className="rounded-circle border border-warning shadow-lg"
+              className="rounded-circle shadow-lg"
               style={{ width: "200px", height: "200px" }}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -416,7 +416,7 @@ const UpdatePortfolioPage = () => {
                 <Form.Control
                   name="bio"
                   as="textarea"
-                  value={personalDetails?.bio}
+                  value={personalDetails?.tagLine}
                   onChange={handlePersonalDetailsChange}
                 />
               </Form.Group>
