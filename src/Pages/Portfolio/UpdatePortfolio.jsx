@@ -20,7 +20,7 @@ const UpdatePortfolioPage = () => {
   const [imageFile, setImageFile] = useState(null);
   const [personalDetails, setPersonalDetails] = useState({
     name: data?.name || "",
-    bio: data?.bio || "",
+    tagLine: data?.tagLine || "",
     linkedin: data?.linkedin || "",
     email: data?.email || "",
   });
@@ -55,12 +55,21 @@ const UpdatePortfolioPage = () => {
       const personal = {
 
         name: response.data.data?.name,
-        bio: response.data.data?.bio,
+        tagLine: response.data.data?.tagLine,
         linkedin: response.data.data?.linkedin,
         email: response.data.data?.email,
 
       }
       setPersonalDetails(personal)
+      const bioGet = {
+        bio: response.data.data?.bio
+      }
+      setUpdateBio(bioGet)
+
+      const skillsGet = {
+        skills: response.data.data?.skills
+      }
+      setUpdateSkills(skillsGet)
       setAllProjects(response.data.projects)
     } catch (error) {
       console.error("Error fetching portfolio data", error);
@@ -86,8 +95,6 @@ const UpdatePortfolioPage = () => {
     console.log('dat', allProjects)
     const allExperience = data.training_Experience.filter((data, i)=> i === index )[0]
     setExperienceDetails(allExperience)
-    setUpdateBio({bio: data.bio})
-    setUpdateSkills({skills: data.skills})
     setSelectedProject(allProjects)
     setEditField(field);
     setShowModal(true);
@@ -207,8 +214,7 @@ const UpdatePortfolioPage = () => {
             formData,
             {
               headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "multipart/form-data"
+                "Authorization": `Bearer ${token}`
               }
             }
           );
@@ -231,8 +237,7 @@ const UpdatePortfolioPage = () => {
             formData,
             {
               headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "multipart/form-data"
+                "Authorization": `Bearer ${token}`
               }
             }
           );
@@ -260,8 +265,7 @@ const UpdatePortfolioPage = () => {
             formData,
             {
               headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "multipart/form-data"
+                "Authorization": `Bearer ${token}`
               }
             }
           );
