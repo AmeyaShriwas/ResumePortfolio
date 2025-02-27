@@ -78,14 +78,14 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
             src={`https://api.resumeportfolio.ameyashriwas.in/${data.profilePhoto.replace(/^\/+/, "")}`}
             alt="Profile"
             className="rounded-circle"
-            style={{ width: "140px", height: "140px" }}
+            style={{ width: "200px", height: "200px" }}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
           />
           <h5
             className="mt-3 text-dark text-center"
-            style={{ fontWeight: "bold", fontSize: "20px", letterSpacing: "0.5px" }}
+            style={{ fontWeight: "bold", fontSize: "30px", letterSpacing: "0.5px" }}
           >
             {data.name}
           </h5>
@@ -94,7 +94,7 @@ const ViewPortfolio = ({ isMobile, setIsMobile }) => {
             <p
               className="px-3 text-dark text-center"
               style={{
-                fontSize: "14px",
+                fontSize: "18px",
                 fontStyle: "italic",
                 backgroundColor: "#f8f9fa",
                 padding: "10px",
