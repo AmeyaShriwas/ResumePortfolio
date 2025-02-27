@@ -193,6 +193,83 @@ const UpdatePortfolioPage = () => {
         }
 
 
+      } else  if (editField === 'skills') {
+        console.log('updated data', data);
+
+        const formData = new FormData();
+          formData.append("skills", updateSkills);
+
+
+        try {
+          const response = await axios.post(
+            `https://api.resumeportfolio.ameyashriwas.in/portfolio/updateSkillsDetails/${data.id}`,
+            formData,
+            {
+              headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "multipart/form-data"
+              }
+            }
+          );
+
+          console.log('res updated', response.data);
+          setData(response?.data?.data);
+        } catch (error) {
+          console.error("Error updating portfolio:", error);
+        }
+      } else if (editField === 'bio') {
+        console.log('updated data', data);
+
+        const formData = new FormData();
+          formData.append("bio", updateBio);
+
+
+        try {
+          const response = await axios.post(
+            `https://api.resumeportfolio.ameyashriwas.in/portfolio/updateBioDetails/${data.id}`,
+            formData,
+            {
+              headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "multipart/form-data"
+              }
+            }
+          );
+
+          console.log('res updated', response.data);
+          setData(response?.data?.data);
+        } catch (error) {
+          console.error("Error updating portfolio:", error);
+        }
+      }
+
+      else if (editField === 'experience') {
+        console.log('updated data', data);
+
+        const formData = new FormData();
+        for(let key in experienceDetails){
+          formData.append(key, experienceDetails[key]);
+
+        }
+
+
+        try {
+          const response = await axios.post(
+            `https://api.resumeportfolio.ameyashriwas.in/portfolio/updateExperienceDetails/${data.id}`,
+            formData,
+            {
+              headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "multipart/form-data"
+              }
+            }
+          );
+
+          console.log('res updated', response.data);
+          setData(response?.data?.data);
+        } catch (error) {
+          console.error("Error updating portfolio:", error);
+        }
       }
       else {
         try {
