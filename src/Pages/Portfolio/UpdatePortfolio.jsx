@@ -42,6 +42,8 @@ const UpdatePortfolioPage = () => {
   const [allProjects, setAllProjects] = useState([])
   const [selectedProject, setSelectedProject] = useState({
   })
+  const [addProject, setAddProject] = useState({
+  })
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(null)
   const { token } = useSelector(state => state.user)
 
@@ -206,7 +208,41 @@ const UpdatePortfolioPage = () => {
         }
 
 
-      } else  if (editField === 'skills') {
+      }
+      else if (editField === 'addprojects') {
+        const formData = new FormData();
+        console.log('selected project', addProject);
+
+        for (let key in addProject) {
+          if (key === "projectImage" && addProject.projectImage instanceof File) {
+            formData.append(key, addProject.projectImage); // Append the file
+          } else {
+            formData.append(key, addProject[key]);
+          }
+        }
+
+        try {
+          const response = await axios.post(
+            `https://api.resumeportfolio.ameyashriwas.in/portfolio/addMoreProjects/${data.id}`,
+            formData,
+            {
+              headers: {
+                "Authorization": `Bearer ${token}`,
+                // REMOVE "Content-Type": "application/json"
+                // Axios will automatically set the correct "multipart/form-data"
+              },
+            }
+          );
+
+          console.log("res updated", response.data);
+          setData(response?.data?.data);
+        } catch (error) {
+          console.error("Error updating portfolio:", error);
+        }
+
+
+      }
+       else  if (editField === 'skills') {
       
         try {
           const response = await axios.post(
@@ -313,6 +349,21 @@ const UpdatePortfolioPage = () => {
     }
   };
 
+  const handleAddProjectDetailsChange = (e) => {
+    const { name, value, type } = e.target;
+    if (type === "file") {
+      setAddProject(prev => ({
+        ...prev,
+        [name]: e.target.files[0] // Store the file object
+      }));
+    } else {
+      setAddProject(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+  };
+
   const handleOpenDeleteModel = (e, index)=> {
     setDeleteShow(true)
     setDeleteField(e)
@@ -320,6 +371,7 @@ const UpdatePortfolioPage = () => {
   }
 
   const handleConfirm = async()=> {
+  
     if(deleteField === 'Deleteprojects'){
       try {
         const index = {index: deleteIndex}
@@ -478,7 +530,10 @@ const UpdatePortfolioPage = () => {
           <div className="tab-content mt-4">
             {/* Projects Section */}
             <div className="tab-pane fade show active" id="projects">
+              <div style={{display:'flex', justifyContent:'space-between', width:'100%'}}>
               <h4>Projects</h4>
+              <h4 onClick={() => handleOpenModel('addprojects')}>Add more Projects</h4>
+              </div>
               <div style={{
                 width: "100%",
                 display: 'flex',
@@ -498,6 +553,7 @@ const UpdatePortfolioPage = () => {
                       </div>
                       <button className="btn btn-sm btn-warning position-absolute top-0 end-0 m-2">
                         <FaEdit onClick={() => handleOpenModel('projects', index)} />
+                        <MdDelete onClick={() => handleOpenDeleteModel('Deleteprojects', index)} />
                       </button>
                       <div className="card-body">
                         <h6 className="card-title d-flex justify-content-between">
@@ -604,7 +660,38 @@ const UpdatePortfolioPage = () => {
               </div>
             </>
 
-          ) : editField === "aboutMe" ? (
+          ): editField === "addprojects" ? (
+            <>
+              <div className="card shadow-sm border-0 position-relative">
+                <div className="card-body">
+                  {/* Remove value for file input */}
+                  <Form.Control name="projectImage" type="file" onChange={handleAddProjectDetailsChange} />
+                </div>
+
+                <div className="card-body">
+                  <Form.Control value={addProject?.projectName || ''} name="projectName" type="text" onChange={handleAddProjectDetailsChange} />
+                </div>
+
+                <div className="card-body">
+                  <Form.Control value={addProject?.projectDescription || ''} name="projectDescription" as="textarea" onChange={handleAddProjectDetailsChange} />
+                </div>
+
+                <div className="card-body">
+                  <Form.Control value={addProject?.techStack || ''} name="techStack" type="text" onChange={handleAddProjectDetailsChange} />
+                </div>
+
+                <div className="card-body">
+                  <Form.Control value={addProject?.liveLink || ''} name="liveLink" type="text" onChange={handleAddProjectDetailsChange} />
+                </div>
+
+                <div className="card-body">
+                  <Form.Control value={addProject?.githubLink || ''} name="githubLink" type="text" onChange={handleAddProjectDetailsChange} />
+                </div>
+              </div>
+            </>
+
+          )
+           : editField === "aboutMe" ? (
             
             <Form.Group>
              <Form.Label>Update About Me</Form.Label>
