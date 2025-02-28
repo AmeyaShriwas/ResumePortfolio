@@ -581,7 +581,7 @@ const UpdatePortfolioPage = () => {
             {/* Resume Download Button */}
             <div className="d-flex align-items-center">
               <a
-                href={data.resume}
+                href={`https://api.resumeportfolio.ameyashriwas.in/${data.resume}`}
                 className="btn w-100 d-flex align-items-center justify-content-center gap-2 px-3"
                 style={{ backgroundColor: "#7C99AC", color: "white", fontSize: "16px", fontWeight: "500" }}
                 download
