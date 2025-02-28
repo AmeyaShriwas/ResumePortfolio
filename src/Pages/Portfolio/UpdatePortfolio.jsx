@@ -346,6 +346,10 @@ const UpdatePortfolioPage = () => {
     }
   }
 
+  const handleClose= ()=> {
+    setDeleteShow(false)
+  }
+
 
   if (!data) {
     return <div className="text-center text-dark py-5">Loading...</div>;
