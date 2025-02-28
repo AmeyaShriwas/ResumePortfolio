@@ -189,6 +189,31 @@ const UpdatePortfolioPage = () => {
           console.error("Error updating portfolio:", error);
         }
       }
+      else if (editField === 'resume') {
+
+        const formData = new FormData();
+        if (imageFile) {
+          formData.append("resume", imageFile);
+        }
+
+        try {
+          const response = await axios.post(
+            `https://api.resumeportfolio.ameyashriwas.in/portfolio/updateResume/${data.id}`,
+            formData,
+            {
+              headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "multipart/form-data"
+              }
+            }
+          );
+
+          console.log('res updated', response.data);
+          setData(response?.data?.data);
+        } catch (error) {
+          console.error("Error updating portfolio:", error);
+        }
+      }
       else if (editField === 'projects') {
         const formData = new FormData();
         console.log('selected project', selectedProject);
@@ -655,7 +680,7 @@ const UpdatePortfolioPage = () => {
             <div className="tab-pane fade" id="about">
               <h4>About Me</h4>
               <p className="d-flex justify-content-between">
-                {data.bio} <FaEdit size={25} onClick={() => handleOpenModel('aboutMe', 0)} className="text-warning cursor-pointer" />
+                {data.bio} <FaEdit size={35} onClick={() => handleOpenModel('aboutMe', 0)} className="text-warning cursor-pointer" />
               </p>
             </div>
 
@@ -666,7 +691,7 @@ const UpdatePortfolioPage = () => {
                 <h4 className="text-dark mb-4" style={{ borderBottom: "2px solid #007bff", paddingBottom: "5px" }}>
                   Experience
                 </h4>
-                <h4 onClick={() => handleOpenModel('addexperience')} className="text-dark mb-4" style={{ borderBottom: "2px solid #007bff", paddingBottom: "5px" }}>
+                <h4 onClick={() => handleOpenModel('addexperience')} className="text-dark mb-4" style={{ cursor:'pointer', borderBottom: "2px solid #007bff", paddingBottom: "5px" }}>
                   Add More Experience
                 </h4>
               </div>
@@ -723,6 +748,15 @@ const UpdatePortfolioPage = () => {
   {editField === "profilePhoto" ? (
     <Form.Group>
       <Form.Label>Upload Image</Form.Label>
+      <Form.Control 
+        type="file" 
+        onChange={(e) => setImageFile(e.target.files[0])} 
+        style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ced4da" }}
+      />
+    </Form.Group>
+  ) : editField === "resume" ? (
+    <Form.Group>
+      <Form.Label>Upload Resume</Form.Label>
       <Form.Control 
         type="file" 
         onChange={(e) => setImageFile(e.target.files[0])} 
