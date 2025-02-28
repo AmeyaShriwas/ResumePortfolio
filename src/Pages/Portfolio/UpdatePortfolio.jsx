@@ -720,259 +720,109 @@ const UpdatePortfolioPage = () => {
           <Modal.Title>Edit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {editField === "profilePhoto" ? (
-            <Form.Group>
-              <Form.Label>Upload Image</Form.Label>
-              <Form.Control type="file" onChange={(e) => setImageFile(e.target.files[0])} />
-            </Form.Group>
-          ) : editField === "projects" ? (
-            <>
-              <div className="card shadow-sm border-0 position-relative">
-                <div className="card-body">
-                  {/* Remove value for file input */}
-                  <Form.Control name="projectImage" type="file" onChange={handleProjectDetailsChange} />
-                </div>
+  {editField === "profilePhoto" ? (
+    <Form.Group>
+      <Form.Label>Upload Image</Form.Label>
+      <Form.Control 
+        type="file" 
+        onChange={(e) => setImageFile(e.target.files[0])} 
+        style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ced4da" }}
+      />
+    </Form.Group>
+  ) : editField === "projects" || editField === "addprojects" ? (
+    <div className="card shadow-sm border-0 position-relative p-3">
+      <Form.Group className="mb-3">
+        <Form.Label>Project Image</Form.Label>
+        <Form.Control 
+          name="projectImage" 
+          type="file" 
+          onChange={editField === "projects" ? handleProjectDetailsChange : handleAddProjectDetailsChange} 
+        />
+      </Form.Group>
 
-                <div className="card-body">
-                  <Form.Control value={selectedProject?.projectName || ''} name="projectName" type="text" onChange={handleProjectDetailsChange} />
-                </div>
+      {[
+        { label: "Project Name", name: "projectName", type: "text" },
+        { label: "Project Description", name: "projectDescription", type: "textarea" },
+        { label: "Tech Stack", name: "techStack", type: "text" },
+        { label: "Live Link", name: "liveLink", type: "text" },
+        { label: "GitHub Link", name: "githubLink", type: "text" }
+      ].map(({ label, name, type }) => (
+        <Form.Group className="mb-3" key={name}>
+          <Form.Label>{label}</Form.Label>
+          <Form.Control 
+            as={type === "textarea" ? "textarea" : "input"} 
+            name={name} 
+            type={type} 
+            value={(editField === "projects" ? selectedProject : addProject)?.[name] || ""} 
+            onChange={editField === "projects" ? handleProjectDetailsChange : handleAddProjectDetailsChange} 
+          />
+        </Form.Group>
+      ))}
+    </div>
+  ) : editField === "aboutMe" ? (
+    <Form.Group>
+      <Form.Label>Update About Me</Form.Label>
+      <Form.Control 
+        name="bio" 
+        type="text" 
+        value={updateBio?.bio} 
+        onChange={handleBioDetailsChange} 
+      />
+    </Form.Group>
+  ) : editField === "skills" ? (
+    <Form.Group>
+      <Form.Label>Update Skills</Form.Label>
+      <Form.Control 
+        name="skills" 
+        type="text" 
+        value={updateSkills?.skills} 
+        onChange={handleSkillsDetailsChange} 
+      />
+    </Form.Group>
+  ) : editField === "experience" || editField === "addexperience" ? (
+    <Form.Group>
+      <Form.Label>{editField === "experience" ? "Update Experience" : "Add Experience"}</Form.Label>
+      {[
+        { label: "Company Name", name: "training_company", type: "text" },
+        { label: "From", name: "from", type: "date" },
+        { label: "To", name: "to", type: "date" },
+        { label: "Position", name: "course_job", type: "text" },
+        { label: "Description", name: "description", type: "text" }
+      ].map(({ label, name, type }) => (
+        <Form.Group className="mb-3" key={name}>
+          <Form.Label>{label}</Form.Label>
+          <Form.Control 
+            name={name} 
+            type={type} 
+            value={(editField === "experience" ? experienceDetails : addexperienceDetails)?.[name] || ""} 
+            onChange={editField === "experience" ? handleExperienceDetailsChange : handleAddExperienceDetailsChange} 
+          />
+        </Form.Group>
+      ))}
+    </Form.Group>
+  ) : (
+    <Form.Group>
+      <Form.Label>Update Personal Details</Form.Label>
+      {[
+        { label: "Name", name: "name", type: "text" },
+        { label: "Tag Line", name: "tagLine", type: "text" },
+        { label: "LinkedIn", name: "linkedin", type: "text" },
+        { label: "Email", name: "email", type: "email" }
+      ].map(({ label, name, type }) => (
+        <Form.Group className="mb-3" key={name}>
+          <Form.Label>{label}</Form.Label>
+          <Form.Control 
+            name={name} 
+            type={type} 
+            value={personalDetails?.[name] || ""} 
+            onChange={handlePersonalDetailsChange} 
+          />
+        </Form.Group>
+      ))}
+    </Form.Group>
+  )}
+</Modal.Body>
 
-                <div className="card-body">
-                  <Form.Control value={selectedProject?.projectDescription || ''} name="projectDescription" as="textarea" onChange={handleProjectDetailsChange} />
-                </div>
-
-                <div className="card-body">
-                  <Form.Control value={selectedProject?.techStack || ''} name="techStack" type="text" onChange={handleProjectDetailsChange} />
-                </div>
-
-                <div className="card-body">
-                  <Form.Control value={selectedProject?.liveLink || ''} name="liveLink" type="text" onChange={handleProjectDetailsChange} />
-                </div>
-
-                <div className="card-body">
-                  <Form.Control value={selectedProject?.githubLink || ''} name="githubLink" type="text" onChange={handleProjectDetailsChange} />
-                </div>
-              </div>
-            </>
-
-          ) : editField === "addprojects" ? (
-            <>
-              <div className="card shadow-sm border-0 position-relative">
-                <div className="card-body">
-                  {/* Remove value for file input */}
-                  <Form.Control name="projectImage" type="file" onChange={handleAddProjectDetailsChange} />
-                </div>
-
-                <div className="card-body">
-                  <Form.Control value={addProject?.projectName || ''} name="projectName" type="text" onChange={handleAddProjectDetailsChange} />
-                </div>
-
-                <div className="card-body">
-                  <Form.Control value={addProject?.projectDescription || ''} name="projectDescription" as="textarea" onChange={handleAddProjectDetailsChange} />
-                </div>
-
-                <div className="card-body">
-                  <Form.Control value={addProject?.techStack || ''} name="techStack" type="text" onChange={handleAddProjectDetailsChange} />
-                </div>
-
-                <div className="card-body">
-                  <Form.Control value={addProject?.liveLink || ''} name="liveLink" type="text" onChange={handleAddProjectDetailsChange} />
-                </div>
-
-                <div className="card-body">
-                  <Form.Control value={addProject?.githubLink || ''} name="githubLink" type="text" onChange={handleAddProjectDetailsChange} />
-                </div>
-              </div>
-            </>
-
-          )
-            : editField === "aboutMe" ? (
-
-              <Form.Group>
-                <Form.Label>Update About Me</Form.Label>
-
-                <Form.Group>
-                  <Form.Label>About Me</Form.Label>
-                  <Form.Control
-                    name="bio"
-                    type="text"
-                    value={updateBio?.bio}
-                    onChange={handleBioDetailsChange}
-                  />
-                </Form.Group>
-              </Form.Group>
-
-
-            ) : editField === "skills" ? (
-
-              <Form.Group>
-                <Form.Label>Update Skills</Form.Label>
-
-                <Form.Group>
-                  <Form.Label>Skills</Form.Label>
-                  <Form.Control
-                    name="skills"
-                    type="text"
-                    value={updateSkills?.skills}
-                    onChange={handleSkillsDetailsChange}
-                  />
-                </Form.Group>
-              </Form.Group>
-
-
-            )
-              : editField === "experience" ? (
-
-                <Form.Group>
-                  <Form.Label>Update Experience</Form.Label>
-                  <Form.Group>
-                    <Form.Label>Company Name</Form.Label>
-                    <Form.Control
-                      name="training_company"
-                      type="text"
-                      value={experienceDetails?.training_company}
-                      onChange={handleExperienceDetailsChange}
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>From</Form.Label>
-                    <Form.Control
-                      name="from"
-                      type="date"
-                      value={experienceDetails?.from}
-                      onChange={handleExperienceDetailsChange}
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>To</Form.Label>
-                    <Form.Control
-                      name="to"
-                      type="date"
-                      value={experienceDetails?.to}
-                      onChange={handleExperienceDetailsChange}
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Position</Form.Label>
-                    <Form.Control
-                      name="course_job"
-                      type="text"
-                      value={experienceDetails?.course_job}
-                      onChange={handleExperienceDetailsChange}
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Description</Form.Label>
-                    <Form.Control
-                      name="description"
-                      type="text"
-                      value={experienceDetails?.description}
-                      onChange={handleExperienceDetailsChange}
-                    />
-                  </Form.Group>
-                </Form.Group>
-
-
-              ) : editField === "addexperience" ? (
-
-                <Form.Group>
-                  <Form.Label>Add Experience</Form.Label>
-                  <Form.Group>
-                    <Form.Label>Company Name</Form.Label>
-                    <Form.Control
-                      name="training_company"
-                      type="text"
-                      value={addexperienceDetails?.training_company}
-                      onChange={handleAddExperienceDetailsChange}
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>From</Form.Label>
-                    <Form.Control
-                      name="from"
-                      type="date"
-                      value={addexperienceDetails?.from}
-                      onChange={handleAddExperienceDetailsChange}
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>To</Form.Label>
-                    <Form.Control
-                      name="to"
-                      type="date"
-                      value={addexperienceDetails?.to}
-                      onChange={handleAddExperienceDetailsChange}
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Position</Form.Label>
-                    <Form.Control
-                      name="course_job"
-                      type="text"
-                      value={addexperienceDetails?.course_job}
-                      onChange={handleAddExperienceDetailsChange}
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Description</Form.Label>
-                    <Form.Control
-                      name="description"
-                      type="text"
-                      value={addexperienceDetails?.description}
-                      onChange={handleAddExperienceDetailsChange}
-                    />
-                  </Form.Group>
-                </Form.Group>
-
-
-              )
-                :
-                (
-                  <Form.Group>
-                    <Form.Label>Update Personal Details</Form.Label>
-
-                    <Form.Group>
-                      <Form.Label>Name</Form.Label>
-                      <Form.Control
-                        name="name"
-                        type="text"
-                        value={personalDetails?.name}
-                        onChange={handlePersonalDetailsChange}
-                      />
-                    </Form.Group>
-
-                    <Form.Group>
-                      <Form.Label>Tag Line</Form.Label>
-                      <Form.Control
-                        name="tagLine"
-                        type="text"
-                        value={personalDetails?.tagLine}
-                        onChange={handlePersonalDetailsChange}
-                      />
-                    </Form.Group>
-
-                    <Form.Group>
-                      <Form.Label>LinkedIn</Form.Label>
-                      <Form.Control
-                        name="linkedin"
-                        type="text"
-                        value={personalDetails?.linkedin}
-                        onChange={handlePersonalDetailsChange}
-                      />
-                    </Form.Group>
-
-                    <Form.Group>
-                      <Form.Label>Email</Form.Label>
-                      <Form.Control
-                        name="email"
-                        type="email"
-                        value={personalDetails?.email}
-                        onChange={handlePersonalDetailsChange}
-                      />
-                    </Form.Group>
-                  </Form.Group>
-                )}
-        </Modal.Body>
 
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>Cancel</Button>
