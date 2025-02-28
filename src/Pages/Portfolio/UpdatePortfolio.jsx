@@ -36,6 +36,13 @@ const UpdatePortfolioPage = () => {
     course_job: "",
     description: ""
   });
+  const [addexperienceDetails, setAddExperienceDetails] = useState({
+    from: "",
+    to: data?.bio || "",
+    training_company: "",
+    course_job: "",
+    description: ""
+  });
   const [updateBio, setUpdateBio] = useState({bio: ''})
   const [updateSkills, setUpdateSkills] = useState({skills: ''})
 
@@ -123,6 +130,14 @@ const UpdatePortfolioPage = () => {
   const handleExperienceDetailsChange = (e) => {
     const { name, value } = e.target
     setExperienceDetails((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleAddExperienceDetailsChange = (e) => {
+    const { name, value } = e.target
+    setAddExperienceDetails((prev) => ({
       ...prev,
       [name]: value
     }))
@@ -307,6 +322,27 @@ const UpdatePortfolioPage = () => {
           console.error("Error updating portfolio:", error);
         }
       }
+      else if (editField === 'addexperience') {
+        
+         try {
+           const response = await axios.post(
+             `https://api.resumeportfolio.ameyashriwas.in/portfolio/addExperienceDetails/${data.id}`,
+             addexperienceDetails,
+             {
+               headers: {
+                 "Authorization": `Bearer ${token}`,
+                 "Content-Type": "application/json"
+ 
+               }
+             }
+           );
+ 
+           console.log('res updated', response.data);
+           setData(response?.data?.data);
+         } catch (error) {
+           console.error("Error updating portfolio:", error);
+         }
+       }
       else {
         try {
           const response = await axios.post(
@@ -377,6 +413,30 @@ const UpdatePortfolioPage = () => {
         const index = {index: deleteIndex}
         const response = await axios.post(
           `https://api.resumeportfolio.ameyashriwas.in/portfolio/deleteProject/${data.id}`,
+          index,
+          {
+            headers: {
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json"
+
+            }
+          }
+        );
+
+        console.log('res updated', response.data);
+        setData(response?.data?.data);
+        setDeleteShow(false)
+        setDeleteField(null)
+        setDeleteIndex(null)
+      } catch (error) {
+        console.error("Error updating portfolio:", error);
+      }
+    }
+    else if(deleteField === 'handleOpenDeleteModel'){
+      try {
+        const index = {index: deleteIndex}
+        const response = await axios.post(
+          `https://api.resumeportfolio.ameyashriwas.in/portfolio/deleteExperienceDetails/${data.id}`,
           index,
           {
             headers: {
@@ -591,9 +651,14 @@ const UpdatePortfolioPage = () => {
             {/* Experience Section */}
 
             <div className="tab-pane fade" id="experience" style={{ padding: "20px" }}>
+              <div style={{display:'flex', justifyContent:'space-between', width:'100%'}}>
               <h4 className="text-dark mb-4" style={{ borderBottom: "2px solid #007bff", paddingBottom: "5px" }}>
                 Experience
               </h4>
+              <h4 onClick={()=>handleOpenModel('addexperience') } className="text-dark mb-4" style={{ borderBottom: "2px solid #007bff", paddingBottom: "5px" }}>
+                Add More Experience
+              </h4>
+              </div>
 
               {data.training_Experience.map((data, index) => (
                 <div
@@ -603,6 +668,7 @@ const UpdatePortfolioPage = () => {
                 >
                   <p className="mb-1 fw-bold" style={{ fontSize: "14px", color: 'white' }}>
                     {data.from} - {data.to}                   <FaEdit onClick={() => handleOpenModel('experience', index)} className="text-warning cursor-pointer" />
+                    <MdDelete onClick={() => handleOpenDeleteModel('deleteexperience', index)} className="text-warning cursor-pointer" />
 
                   </p>
 
@@ -778,7 +844,60 @@ const UpdatePortfolioPage = () => {
            </Form.Group>
 
          
-       ):
+       ) : editField === "addexperience" ? (
+            
+        <Form.Group>
+         <Form.Label>Add Experience</Form.Label>
+         <Form.Group>
+           <Form.Label>Company Name</Form.Label>
+           <Form.Control
+             name="training_company"
+             type="text"
+             value={addexperienceDetails?.training_company}
+             onChange={handleAddExperienceDetailsChange}
+           />
+         </Form.Group>
+         <Form.Group>
+           <Form.Label>From</Form.Label>
+           <Form.Control
+             name="from"
+             type="date"
+             value={addexperienceDetails?.from}
+             onChange={handleAddExperienceDetailsChange}
+           />
+         </Form.Group>
+         <Form.Group>
+           <Form.Label>To</Form.Label>
+           <Form.Control
+             name="to"
+             type="date"
+             value={addexperienceDetails?.to}
+             onChange={handleAddExperienceDetailsChange}
+           />
+         </Form.Group>
+         <Form.Group>
+           <Form.Label>Position</Form.Label>
+           <Form.Control
+             name="course_job"
+             type="text"
+             value={addexperienceDetails?.course_job}
+             onChange={handleAddExperienceDetailsChange}
+           />
+         </Form.Group>
+         <Form.Group>
+           <Form.Label>Description</Form.Label>
+           <Form.Control
+             name="description"
+             type="text"
+             value={addexperienceDetails?.description}
+             onChange={handleAddExperienceDetailsChange}
+           />
+         </Form.Group>
+         </Form.Group>
+
+       
+     )
+       :
           (
             <Form.Group>
               <Form.Label>Update Personal Details</Form.Label>
