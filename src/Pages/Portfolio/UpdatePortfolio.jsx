@@ -43,8 +43,8 @@ const UpdatePortfolioPage = () => {
     course_job: "",
     description: ""
   });
-  const [updateBio, setUpdateBio] = useState({bio: ''})
-  const [updateSkills, setUpdateSkills] = useState({skills: ''})
+  const [updateBio, setUpdateBio] = useState({ bio: '' })
+  const [updateSkills, setUpdateSkills] = useState({ skills: '' })
 
   const [allProjects, setAllProjects] = useState([])
   const [selectedProject, setSelectedProject] = useState({
@@ -107,7 +107,7 @@ const UpdatePortfolioPage = () => {
     setSelectedProjectIndex(index)
     const allProjects = data.projects.filter((data, i) => i === index)[0]
     console.log('dat', allProjects)
-    const allExperience = data.training_Experience.filter((data, i)=> i === index )[0]
+    const allExperience = data.training_Experience.filter((data, i) => i === index)[0]
     setExperienceDetails(allExperience)
     setSelectedProject(allProjects)
     setEditField(field);
@@ -143,7 +143,7 @@ const UpdatePortfolioPage = () => {
     }))
   }
 
-  const handleBioDetailsChange = (e)=> {
+  const handleBioDetailsChange = (e) => {
     const { name, value } = e.target
     setUpdateBio((prev) => ({
       ...prev,
@@ -151,7 +151,7 @@ const UpdatePortfolioPage = () => {
     }))
   }
 
-  const handleSkillsDetailsChange = (e)=> {
+  const handleSkillsDetailsChange = (e) => {
     const { name, value } = e.target
     setUpdateSkills((prev) => ({
       ...prev,
@@ -257,8 +257,8 @@ const UpdatePortfolioPage = () => {
 
 
       }
-       else  if (editField === 'skills') {
-      
+      else if (editField === 'skills') {
+
         try {
           const response = await axios.post(
             `https://api.resumeportfolio.ameyashriwas.in/portfolio/updateSkillsDetails/${data.id}`,
@@ -278,7 +278,7 @@ const UpdatePortfolioPage = () => {
           console.error("Error updating portfolio:", error);
         }
       } else if (editField === 'aboutMe') {
-       
+
         try {
           const response = await axios.post(
             `https://api.resumeportfolio.ameyashriwas.in/portfolio/updateBioDetails/${data.id}`,
@@ -298,11 +298,11 @@ const UpdatePortfolioPage = () => {
           console.error("Error updating portfolio:", error);
         }
       }
-      
+
 
       else if (editField === 'experience') {
-       const newData = Object.assign(experienceDetails, {index: selectedProjectIndex})
-       
+        const newData = Object.assign(experienceDetails, { index: selectedProjectIndex })
+
         try {
           const response = await axios.post(
             `https://api.resumeportfolio.ameyashriwas.in/portfolio/updateExperienceDetails/${data.id}`,
@@ -323,26 +323,26 @@ const UpdatePortfolioPage = () => {
         }
       }
       else if (editField === 'addexperience') {
-        
-         try {
-           const response = await axios.post(
-             `https://api.resumeportfolio.ameyashriwas.in/portfolio/addExperienceDetails/${data.id}`,
-             addexperienceDetails,
-             {
-               headers: {
-                 "Authorization": `Bearer ${token}`,
-                 "Content-Type": "application/json"
- 
-               }
-             }
-           );
- 
-           console.log('res updated', response.data);
-           setData(response?.data?.data);
-         } catch (error) {
-           console.error("Error updating portfolio:", error);
-         }
-       }
+
+        try {
+          const response = await axios.post(
+            `https://api.resumeportfolio.ameyashriwas.in/portfolio/addExperienceDetails/${data.id}`,
+            addexperienceDetails,
+            {
+              headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+
+              }
+            }
+          );
+
+          console.log('res updated', response.data);
+          setData(response?.data?.data);
+        } catch (error) {
+          console.error("Error updating portfolio:", error);
+        }
+      }
       else {
         try {
           const response = await axios.post(
@@ -400,17 +400,17 @@ const UpdatePortfolioPage = () => {
     }
   };
 
-  const handleOpenDeleteModel = (e, index)=> {
+  const handleOpenDeleteModel = (e, index) => {
     setDeleteShow(true)
     setDeleteField(e)
     setDeleteIndex(index)
   }
 
-  const handleConfirm = async()=> {
-  
-    if(deleteField === 'Deleteprojects'){
+  const handleConfirm = async () => {
+
+    if (deleteField === 'Deleteprojects') {
       try {
-        const index = {index: deleteIndex}
+        const index = { index: deleteIndex }
         const response = await axios.post(
           `https://api.resumeportfolio.ameyashriwas.in/portfolio/deleteProject/${data.id}`,
           index,
@@ -432,9 +432,9 @@ const UpdatePortfolioPage = () => {
         console.error("Error updating portfolio:", error);
       }
     }
-    else if(deleteField === 'deleteexperience'){
+    else if (deleteField === 'deleteexperience') {
       try {
-        const index = {index: deleteIndex}
+        const index = { index: deleteIndex }
         const response = await axios.post(
           `https://api.resumeportfolio.ameyashriwas.in/portfolio/deleteExperienceDetails/${data.id}`,
           index,
@@ -458,7 +458,7 @@ const UpdatePortfolioPage = () => {
     }
   }
 
-  const handleClose= ()=> {
+  const handleClose = () => {
     setDeleteShow(false)
   }
 
@@ -518,55 +518,58 @@ const UpdatePortfolioPage = () => {
               {data.tagLine} <FaEdit onClick={() => handleOpenModel('tagLine', 0)} className="text-warning cursor-pointer" />
             </p>
           )}
-         <div className="d-flex flex-column gap-2 mt-3" style={{ position: "relative" }}>
-  {/* LinkedIn Button */}
-  <div className="d-flex align-items-center">
-    <a 
-      href={data.linkedin} 
-      target="_blank" 
-      rel="noopener noreferrer" 
-      className="btn w-100 d-flex justify-content-between align-items-center" 
-      style={{ backgroundColor: "#7C99AC", color: "white" }}
-    >
-      <FaLinkedin /> LinkedIn
-    </a>
-    <FaEdit 
-      onClick={() => handleOpenModel('linkedin', 0)} 
-      style={{ marginLeft: "10px", cursor: "pointer", color: "#7C99AC" }}
-    />
-  </div>
+        <div className="d-flex flex-column gap-3 mt-3" style={{ position: "relative" }}>
+      {/* LinkedIn Button */}
+      <div className="d-flex align-items-center">
+        <a
+          href={data.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn w-100 d-flex align-items-center justify-content-center gap-2 px-3"
+          style={{ backgroundColor: "#7C99AC", color: "white", fontSize: "16px", fontWeight: "500" }}
+        >
+          <FaLinkedin size={20} /> LinkedIn
+        </a>
+        <FaEdit
+          size={18}
+          onClick={() => handleOpenModel("linkedin", 0)}
+          style={{ marginLeft: "12px", cursor: "pointer", color: "#7C99AC" }}
+        />
+      </div>
 
-  {/* Contact Button */}
-  <div className="d-flex align-items-center">
-    <a 
-      href={`mailto:${data.email}`} 
-      className="btn w-100 d-flex justify-content-between align-items-center" 
-      style={{ backgroundColor: "#7C99AC", color: "white" }}
-    >
-      <FaEnvelope /> Contact
-    </a>
-    <FaEdit 
-      onClick={() => handleOpenModel('email', 0)} 
-      style={{ marginLeft: "10px", cursor: "pointer", color: "#7C99AC" }}
-    />
-  </div>
+      {/* Contact Button */}
+      <div className="d-flex align-items-center">
+        <a
+          href={`mailto:${data.email}`}
+          className="btn w-100 d-flex align-items-center justify-content-center gap-2 px-3"
+          style={{ backgroundColor: "#7C99AC", color: "white", fontSize: "16px", fontWeight: "500" }}
+        >
+          <FaEnvelope size={20} /> Contact
+        </a>
+        <FaEdit
+          size={18}
+          onClick={() => handleOpenModel("email", 0)}
+          style={{ marginLeft: "12px", cursor: "pointer", color: "#7C99AC" }}
+        />
+      </div>
 
-  {/* Resume Download Button */}
-  <div className="d-flex align-items-center">
-    <a 
-      href={data.resume} 
-      className="btn w-100 d-flex justify-content-between align-items-center" 
-      style={{ backgroundColor: "#7C99AC", color: "white" }} 
-      download
-    >
-      <FaFileAlt /> Download Resume
-    </a>
-    <FaEdit 
-      onClick={() => handleOpenModel('resume', 0)} 
-      style={{ marginLeft: "10px", cursor: "pointer", color: "#7C99AC" }}
-    />
-  </div>
-</div>
+      {/* Resume Download Button */}
+      <div className="d-flex align-items-center">
+        <a
+          href={data.resume}
+          className="btn w-100 d-flex align-items-center justify-content-center gap-2 px-3"
+          style={{ backgroundColor: "#7C99AC", color: "white", fontSize: "16px", fontWeight: "500" }}
+          download
+        >
+          <FaFileAlt size={20} /> Download Resume
+        </a>
+        <FaEdit
+          size={18}
+          onClick={() => handleOpenModel("resume", 0)}
+          style={{ marginLeft: "12px", cursor: "pointer", color: "#7C99AC" }}
+        />
+      </div>
+    </div>
 
         </div>
 
@@ -590,10 +593,16 @@ const UpdatePortfolioPage = () => {
           <div className="tab-content mt-4">
             {/* Projects Section */}
             <div className="tab-pane fade show active" id="projects">
-              <div style={{display:'flex', justifyContent:'space-between', width:'100%'}}>
-              <h4>Projects</h4>
-              <h4 onClick={() => handleOpenModel('addprojects')}>Add more Projects</h4>
-              </div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+  <h4 style={{ margin: 0 }}>Projects</h4>
+  <h4 
+    onClick={() => handleOpenModel("addprojects")} 
+    style={{ margin: 0, cursor: "pointer", color: "#007bff" }}
+  >
+    + Add More Projects
+  </h4>
+</div>
+
               <div style={{
                 width: "100%",
                 display: 'flex',
@@ -613,6 +622,8 @@ const UpdatePortfolioPage = () => {
                       </div>
                       <button className="btn btn-sm btn-warning position-absolute top-0 end-0 m-2">
                         <FaEdit onClick={() => handleOpenModel('projects', index)} />
+                      </button>
+                      <button className="btn btn-sm btn-warning position-absolute top-0 end-0 m-2">
                         <MdDelete onClick={() => handleOpenDeleteModel('Deleteprojects', index)} />
                       </button>
                       <div className="card-body">
@@ -633,7 +644,7 @@ const UpdatePortfolioPage = () => {
 
             <div className="tab-pane fade" id="skills">
               <h4 className="text-dark">Skills</h4>
-              <p  className="text-dark" onClick={() => handleOpenModel('skills', 0)} style={{ display: 'flex', gap: '15px' }}>{data.skills.split(",").map((data) => {
+              <p className="text-dark" onClick={() => handleOpenModel('skills', 0)} style={{ display: 'flex', gap: '15px' }}>{data.skills.split(",").map((data) => {
                 return (
                   <p className="text-light" style={{ backgroundColor: 'grey', padding: '10px', margin: '10px', borderRadius: '10px' }}>{data}  </p>
                 )
@@ -651,13 +662,13 @@ const UpdatePortfolioPage = () => {
             {/* Experience Section */}
 
             <div className="tab-pane fade" id="experience" style={{ padding: "20px" }}>
-              <div style={{display:'flex', justifyContent:'space-between', width:'100%'}}>
-              <h4 className="text-dark mb-4" style={{ borderBottom: "2px solid #007bff", paddingBottom: "5px" }}>
-                Experience
-              </h4>
-              <h4 onClick={()=>handleOpenModel('addexperience') } className="text-dark mb-4" style={{ borderBottom: "2px solid #007bff", paddingBottom: "5px" }}>
-                Add More Experience
-              </h4>
+              <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                <h4 className="text-dark mb-4" style={{ borderBottom: "2px solid #007bff", paddingBottom: "5px" }}>
+                  Experience
+                </h4>
+                <h4 onClick={() => handleOpenModel('addexperience')} className="text-dark mb-4" style={{ borderBottom: "2px solid #007bff", paddingBottom: "5px" }}>
+                  Add More Experience
+                </h4>
               </div>
 
               {data.training_Experience.map((data, index) => (
@@ -726,7 +737,7 @@ const UpdatePortfolioPage = () => {
               </div>
             </>
 
-          ): editField === "addprojects" ? (
+          ) : editField === "addprojects" ? (
             <>
               <div className="card shadow-sm border-0 position-relative">
                 <div className="card-body">
@@ -757,192 +768,192 @@ const UpdatePortfolioPage = () => {
             </>
 
           )
-           : editField === "aboutMe" ? (
-            
-            <Form.Group>
-             <Form.Label>Update About Me</Form.Label>
-
-             <Form.Group>
-               <Form.Label>About Me</Form.Label>
-               <Form.Control
-                 name="bio"
-                 type="text"
-                 value={updateBio?.bio}
-                 onChange={handleBioDetailsChange}
-               />
-             </Form.Group>
-             </Form.Group>
-
-           
-         ): editField === "skills" ? (
-            
-          <Form.Group>
-           <Form.Label>Update Skills</Form.Label>
-
-           <Form.Group>
-             <Form.Label>Skills</Form.Label>
-             <Form.Control
-               name="skills"
-               type="text"
-               value={updateSkills?.skills}
-               onChange={handleSkillsDetailsChange}
-             />
-           </Form.Group>
-           </Form.Group>
-
-         
-       )
-       : editField === "experience" ? (
-            
-          <Form.Group>
-           <Form.Label>Update Experience</Form.Label>
-           <Form.Group>
-             <Form.Label>Company Name</Form.Label>
-             <Form.Control
-               name="training_company"
-               type="text"
-               value={experienceDetails?.training_company}
-               onChange={handleExperienceDetailsChange}
-             />
-           </Form.Group>
-           <Form.Group>
-             <Form.Label>From</Form.Label>
-             <Form.Control
-               name="from"
-               type="date"
-               value={experienceDetails?.from}
-               onChange={handleExperienceDetailsChange}
-             />
-           </Form.Group>
-           <Form.Group>
-             <Form.Label>To</Form.Label>
-             <Form.Control
-               name="to"
-               type="date"
-               value={experienceDetails?.to}
-               onChange={handleExperienceDetailsChange}
-             />
-           </Form.Group>
-           <Form.Group>
-             <Form.Label>Position</Form.Label>
-             <Form.Control
-               name="course_job"
-               type="text"
-               value={experienceDetails?.course_job}
-               onChange={handleExperienceDetailsChange}
-             />
-           </Form.Group>
-           <Form.Group>
-             <Form.Label>Description</Form.Label>
-             <Form.Control
-               name="description"
-               type="text"
-               value={experienceDetails?.description}
-               onChange={handleExperienceDetailsChange}
-             />
-           </Form.Group>
-           </Form.Group>
-
-         
-       ) : editField === "addexperience" ? (
-            
-        <Form.Group>
-         <Form.Label>Add Experience</Form.Label>
-         <Form.Group>
-           <Form.Label>Company Name</Form.Label>
-           <Form.Control
-             name="training_company"
-             type="text"
-             value={addexperienceDetails?.training_company}
-             onChange={handleAddExperienceDetailsChange}
-           />
-         </Form.Group>
-         <Form.Group>
-           <Form.Label>From</Form.Label>
-           <Form.Control
-             name="from"
-             type="date"
-             value={addexperienceDetails?.from}
-             onChange={handleAddExperienceDetailsChange}
-           />
-         </Form.Group>
-         <Form.Group>
-           <Form.Label>To</Form.Label>
-           <Form.Control
-             name="to"
-             type="date"
-             value={addexperienceDetails?.to}
-             onChange={handleAddExperienceDetailsChange}
-           />
-         </Form.Group>
-         <Form.Group>
-           <Form.Label>Position</Form.Label>
-           <Form.Control
-             name="course_job"
-             type="text"
-             value={addexperienceDetails?.course_job}
-             onChange={handleAddExperienceDetailsChange}
-           />
-         </Form.Group>
-         <Form.Group>
-           <Form.Label>Description</Form.Label>
-           <Form.Control
-             name="description"
-             type="text"
-             value={addexperienceDetails?.description}
-             onChange={handleAddExperienceDetailsChange}
-           />
-         </Form.Group>
-         </Form.Group>
-
-       
-     )
-       :
-          (
-            <Form.Group>
-              <Form.Label>Update Personal Details</Form.Label>
+            : editField === "aboutMe" ? (
 
               <Form.Group>
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  name="name"
-                  type="text"
-                  value={personalDetails?.name}
-                  onChange={handlePersonalDetailsChange}
-                />
+                <Form.Label>Update About Me</Form.Label>
+
+                <Form.Group>
+                  <Form.Label>About Me</Form.Label>
+                  <Form.Control
+                    name="bio"
+                    type="text"
+                    value={updateBio?.bio}
+                    onChange={handleBioDetailsChange}
+                  />
+                </Form.Group>
               </Form.Group>
 
-              <Form.Group>
-                <Form.Label>Tag Line</Form.Label>
-                <Form.Control
-                  name="tagLine"
-               type="text"
-                  value={personalDetails?.tagLine}
-                  onChange={handlePersonalDetailsChange}
-                />
-              </Form.Group>
+
+            ) : editField === "skills" ? (
 
               <Form.Group>
-                <Form.Label>LinkedIn</Form.Label>
-                <Form.Control
-                  name="linkedin"
-                  type="text"
-                  value={personalDetails?.linkedin}
-                  onChange={handlePersonalDetailsChange}
-                />
+                <Form.Label>Update Skills</Form.Label>
+
+                <Form.Group>
+                  <Form.Label>Skills</Form.Label>
+                  <Form.Control
+                    name="skills"
+                    type="text"
+                    value={updateSkills?.skills}
+                    onChange={handleSkillsDetailsChange}
+                  />
+                </Form.Group>
               </Form.Group>
 
-              <Form.Group>
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  name="email"
-                  type="email"
-                  value={personalDetails?.email}
-                  onChange={handlePersonalDetailsChange}
-                />
-              </Form.Group>
-            </Form.Group>
-          )}
+
+            )
+              : editField === "experience" ? (
+
+                <Form.Group>
+                  <Form.Label>Update Experience</Form.Label>
+                  <Form.Group>
+                    <Form.Label>Company Name</Form.Label>
+                    <Form.Control
+                      name="training_company"
+                      type="text"
+                      value={experienceDetails?.training_company}
+                      onChange={handleExperienceDetailsChange}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>From</Form.Label>
+                    <Form.Control
+                      name="from"
+                      type="date"
+                      value={experienceDetails?.from}
+                      onChange={handleExperienceDetailsChange}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>To</Form.Label>
+                    <Form.Control
+                      name="to"
+                      type="date"
+                      value={experienceDetails?.to}
+                      onChange={handleExperienceDetailsChange}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Position</Form.Label>
+                    <Form.Control
+                      name="course_job"
+                      type="text"
+                      value={experienceDetails?.course_job}
+                      onChange={handleExperienceDetailsChange}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control
+                      name="description"
+                      type="text"
+                      value={experienceDetails?.description}
+                      onChange={handleExperienceDetailsChange}
+                    />
+                  </Form.Group>
+                </Form.Group>
+
+
+              ) : editField === "addexperience" ? (
+
+                <Form.Group>
+                  <Form.Label>Add Experience</Form.Label>
+                  <Form.Group>
+                    <Form.Label>Company Name</Form.Label>
+                    <Form.Control
+                      name="training_company"
+                      type="text"
+                      value={addexperienceDetails?.training_company}
+                      onChange={handleAddExperienceDetailsChange}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>From</Form.Label>
+                    <Form.Control
+                      name="from"
+                      type="date"
+                      value={addexperienceDetails?.from}
+                      onChange={handleAddExperienceDetailsChange}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>To</Form.Label>
+                    <Form.Control
+                      name="to"
+                      type="date"
+                      value={addexperienceDetails?.to}
+                      onChange={handleAddExperienceDetailsChange}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Position</Form.Label>
+                    <Form.Control
+                      name="course_job"
+                      type="text"
+                      value={addexperienceDetails?.course_job}
+                      onChange={handleAddExperienceDetailsChange}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control
+                      name="description"
+                      type="text"
+                      value={addexperienceDetails?.description}
+                      onChange={handleAddExperienceDetailsChange}
+                    />
+                  </Form.Group>
+                </Form.Group>
+
+
+              )
+                :
+                (
+                  <Form.Group>
+                    <Form.Label>Update Personal Details</Form.Label>
+
+                    <Form.Group>
+                      <Form.Label>Name</Form.Label>
+                      <Form.Control
+                        name="name"
+                        type="text"
+                        value={personalDetails?.name}
+                        onChange={handlePersonalDetailsChange}
+                      />
+                    </Form.Group>
+
+                    <Form.Group>
+                      <Form.Label>Tag Line</Form.Label>
+                      <Form.Control
+                        name="tagLine"
+                        type="text"
+                        value={personalDetails?.tagLine}
+                        onChange={handlePersonalDetailsChange}
+                      />
+                    </Form.Group>
+
+                    <Form.Group>
+                      <Form.Label>LinkedIn</Form.Label>
+                      <Form.Control
+                        name="linkedin"
+                        type="text"
+                        value={personalDetails?.linkedin}
+                        onChange={handlePersonalDetailsChange}
+                      />
+                    </Form.Group>
+
+                    <Form.Group>
+                      <Form.Label>Email</Form.Label>
+                      <Form.Control
+                        name="email"
+                        type="email"
+                        value={personalDetails?.email}
+                        onChange={handlePersonalDetailsChange}
+                      />
+                    </Form.Group>
+                  </Form.Group>
+                )}
         </Modal.Body>
 
         <Modal.Footer>
@@ -952,36 +963,36 @@ const UpdatePortfolioPage = () => {
       </Modal>
 
       <Modal show={deleteShow} onHide={handleClose} centered>
-      <Modal.Header closeButton>
-        <Modal.Title>Confirm Deletion</Modal.Title>
-      </Modal.Header>
-      {deleteField === 'Deleteprojects'? <>
-        <Modal.Body>
-        <p>Are you sure you want to delete this item? This action cannot be undone.</p>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Cancel
-        </Button>
-        <Button variant="danger" onClick={handleConfirm}>
-          Delete
-        </Button>
-      </Modal.Footer>
-      </>: deleteField === 'deleteexperience'? <>
-        <Modal.Body>
-        <p>Are you sure you want to delete this item? This action cannot be undone.</p>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Cancel
-        </Button>
-        <Button variant="danger" onClick={handleConfirm}>
-          Delete
-        </Button>
-      </Modal.Footer>
-      </>: null}
-     
-    </Modal>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Deletion</Modal.Title>
+        </Modal.Header>
+        {deleteField === 'Deleteprojects' ? <>
+          <Modal.Body>
+            <p>Are you sure you want to delete this item? This action cannot be undone.</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button variant="danger" onClick={handleConfirm}>
+              Delete
+            </Button>
+          </Modal.Footer>
+        </> : deleteField === 'deleteexperience' ? <>
+          <Modal.Body>
+            <p>Are you sure you want to delete this item? This action cannot be undone.</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button variant="danger" onClick={handleConfirm}>
+              Delete
+            </Button>
+          </Modal.Footer>
+        </> : null}
+
+      </Modal>
 
       {/* Footer */}
       <footer className="text-center p-3 mt-3 border" style={{ backgroundColor: "white", color: "black" }}>
