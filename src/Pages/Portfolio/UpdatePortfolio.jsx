@@ -432,7 +432,7 @@ const UpdatePortfolioPage = () => {
         console.error("Error updating portfolio:", error);
       }
     }
-    else if(deleteField === 'handleOpenDeleteModel'){
+    else if(deleteField === 'deleteexperience'){
       try {
         const index = {index: deleteIndex}
         const response = await axios.post(
@@ -956,6 +956,18 @@ const UpdatePortfolioPage = () => {
         <Modal.Title>Confirm Deletion</Modal.Title>
       </Modal.Header>
       {deleteField === 'Deleteprojects'? <>
+        <Modal.Body>
+        <p>Are you sure you want to delete this item? This action cannot be undone.</p>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Cancel
+        </Button>
+        <Button variant="danger" onClick={handleConfirm}>
+          Delete
+        </Button>
+      </Modal.Footer>
+      </>: deleteField === 'deleteexperience'? <>
         <Modal.Body>
         <p>Are you sure you want to delete this item? This action cannot be undone.</p>
       </Modal.Body>
