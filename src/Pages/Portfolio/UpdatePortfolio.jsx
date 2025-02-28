@@ -518,58 +518,58 @@ const UpdatePortfolioPage = () => {
               {data.tagLine} <FaEdit onClick={() => handleOpenModel('tagLine', 0)} className="text-warning cursor-pointer" />
             </p>
           )}
-        <div className="d-flex flex-column gap-3 mt-3" style={{ position: "relative" }}>
-      {/* LinkedIn Button */}
-      <div className="d-flex align-items-center">
-        <a
-          href={data.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn w-100 d-flex align-items-center justify-content-center gap-2 px-3"
-          style={{ backgroundColor: "#7C99AC", color: "white", fontSize: "16px", fontWeight: "500" }}
-        >
-          <FaLinkedin size={20} /> LinkedIn
-        </a>
-        <FaEdit
-          size={18}
-          onClick={() => handleOpenModel("linkedin", 0)}
-          style={{ marginLeft: "12px", cursor: "pointer", color: "#7C99AC" }}
-        />
-      </div>
+          <div className="d-flex flex-column gap-3 mt-3" style={{ position: "relative" }}>
+            {/* LinkedIn Button */}
+            <div className="d-flex align-items-center">
+              <a
+                href={data.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn w-100 d-flex align-items-center justify-content-center gap-2 px-3"
+                style={{ backgroundColor: "#7C99AC", color: "white", fontSize: "16px", fontWeight: "500" }}
+              >
+                <FaLinkedin size={20} /> LinkedIn
+              </a>
+              <FaEdit
+                size={18}
+                onClick={() => handleOpenModel("linkedin", 0)}
+                style={{ marginLeft: "12px", cursor: "pointer", color: "#7C99AC" }}
+              />
+            </div>
 
-      {/* Contact Button */}
-      <div className="d-flex align-items-center">
-        <a
-          href={`mailto:${data.email}`}
-          className="btn w-100 d-flex align-items-center justify-content-center gap-2 px-3"
-          style={{ backgroundColor: "#7C99AC", color: "white", fontSize: "16px", fontWeight: "500" }}
-        >
-          <FaEnvelope size={20} /> Contact
-        </a>
-        <FaEdit
-          size={18}
-          onClick={() => handleOpenModel("email", 0)}
-          style={{ marginLeft: "12px", cursor: "pointer", color: "#7C99AC" }}
-        />
-      </div>
+            {/* Contact Button */}
+            <div className="d-flex align-items-center">
+              <a
+                href={`mailto:${data.email}`}
+                className="btn w-100 d-flex align-items-center justify-content-center gap-2 px-3"
+                style={{ backgroundColor: "#7C99AC", color: "white", fontSize: "16px", fontWeight: "500" }}
+              >
+                <FaEnvelope size={20} /> Contact
+              </a>
+              <FaEdit
+                size={18}
+                onClick={() => handleOpenModel("email", 0)}
+                style={{ marginLeft: "12px", cursor: "pointer", color: "#7C99AC" }}
+              />
+            </div>
 
-      {/* Resume Download Button */}
-      <div className="d-flex align-items-center">
-        <a
-          href={data.resume}
-          className="btn w-100 d-flex align-items-center justify-content-center gap-2 px-3"
-          style={{ backgroundColor: "#7C99AC", color: "white", fontSize: "16px", fontWeight: "500" }}
-          download
-        >
-          <FaFileAlt size={20} /> Download Resume
-        </a>
-        <FaEdit
-          size={18}
-          onClick={() => handleOpenModel("resume", 0)}
-          style={{ marginLeft: "12px", cursor: "pointer", color: "#7C99AC" }}
-        />
-      </div>
-    </div>
+            {/* Resume Download Button */}
+            <div className="d-flex align-items-center">
+              <a
+                href={data.resume}
+                className="btn w-100 d-flex align-items-center justify-content-center gap-2 px-3"
+                style={{ backgroundColor: "#7C99AC", color: "white", fontSize: "16px", fontWeight: "500" }}
+                download
+              >
+                <FaFileAlt size={20} /> Download Resume
+              </a>
+              <FaEdit
+                size={18}
+                onClick={() => handleOpenModel("resume", 0)}
+                style={{ marginLeft: "12px", cursor: "pointer", color: "#7C99AC" }}
+              />
+            </div>
+          </div>
 
         </div>
 
@@ -593,15 +593,15 @@ const UpdatePortfolioPage = () => {
           <div className="tab-content mt-4">
             {/* Projects Section */}
             <div className="tab-pane fade show active" id="projects">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
-  <h4 style={{ margin: 0 }}>Projects</h4>
-  <h4 
-    onClick={() => handleOpenModel("addprojects")} 
-    style={{ margin: 0, cursor: "pointer", color: "#007bff" }}
-  >
-    + Add More Projects
-  </h4>
-</div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+                <h4 style={{ margin: 0 }}>Projects</h4>
+                <h4
+                  onClick={() => handleOpenModel("addprojects")}
+                  style={{ margin: 0, cursor: "pointer", color: "#007bff" }}
+                >
+                  + Add More Projects
+                </h4>
+              </div>
 
               <div style={{
                 width: "100%",
@@ -628,10 +628,10 @@ const UpdatePortfolioPage = () => {
                       </button>
                       <div className="card-body">
                         <h6 className="card-title d-flex justify-content-between">
-                          {project.projectName} <FaEdit onClick={() => handleOpenModel('projects', index)} className="text-warning cursor-pointer" />
+                          {project.projectName} 
                         </h6>
                         <p className="card-text text-muted small d-flex justify-content-between">
-                          {project.projectDescription.length > 100 ? project.projectDescription?.slice(0, 100) : project.projectDescription} <FaEdit onClick={() => handleOpenModel('projects', index)} className="text-warning cursor-pointer" /><MdDelete onClick={() => handleOpenDeleteModel('Deleteprojects', index)} className="text-warning cursor-pointer" />
+                          {project.projectDescription.length > 100 ? project.projectDescription?.slice(0, 100) : project.projectDescription} 
                         </p>
                       </div>
                     </div>
