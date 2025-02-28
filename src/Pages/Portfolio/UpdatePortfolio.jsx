@@ -623,7 +623,7 @@ const UpdatePortfolioPage = () => {
                       <button className="btn btn-sm btn-warning position-absolute top-0 end-0 m-2">
                         <FaEdit onClick={() => handleOpenModel('projects', index)} />
                       </button>
-                      <button className="btn btn-sm btn-warning position-absolute top-0 end-10 m-2">
+                      <button className="btn btn-sm btn-danger position-absolute top-0 end-10 m-2">
                         <MdDelete onClick={() => handleOpenDeleteModel('Deleteprojects', index)} />
                       </button>
                       <div className="card-body">
@@ -644,7 +644,7 @@ const UpdatePortfolioPage = () => {
 
             <div className="tab-pane fade" id="skills">
               <h4 className="text-dark">Skills</h4>
-              <p className="text-dark" onClick={() => handleOpenModel('skills', 0)} style={{ display: 'flex', gap: '15px' }}>{data.skills.split(",").map((data) => {
+              <p className="text-dark" onClick={() => handleOpenModel('skills', 0)} style={{ display: 'flex', gap: '15px', flexWrap:'wrap' }}>{data.skills.split(",").map((data) => {
                 return (
                   <p className="text-light" style={{ backgroundColor: 'grey', padding: '10px', margin: '10px', borderRadius: '10px' }}>{data}  </p>
                 )
@@ -671,27 +671,45 @@ const UpdatePortfolioPage = () => {
                 </h4>
               </div>
 
-              {data.training_Experience.map((data, index) => (
-                <div
-                  key={index}
-                  className="card shadow-sm mb-3 border-0"
-                  style={{ padding: "15px", borderRadius: "8px", backgroundColor: "#7C99AC", color: "white" }}
-                >
-                  <p className="mb-1 fw-bold" style={{ fontSize: "14px", color: 'white' }}>
-                    {data.from} - {data.to}                   <FaEdit onClick={() => handleOpenModel('experience', index)} className="text-warning cursor-pointer" />
-                    <MdDelete onClick={() => handleOpenDeleteModel('deleteexperience', index)} className="text-warning cursor-pointer" />
+              {data.training_Experience.map((item, index) => (
+  <div
+    key={index}
+    className="card shadow-sm mb-3 border-0"
+    style={{ padding: "15px", borderRadius: "8px", backgroundColor: "#7C99AC", color: "white" }}
+  >
+    {/* Experience Duration with Edit & Delete Icons */}
+    <div className="d-flex justify-content-between align-items-center mb-2">
+      <p className="mb-0 fw-bold" style={{ fontSize: "14px", color: "white" }}>
+        {item.from} - {item.to}
+      </p>
+      <div>
+        <FaEdit 
+          onClick={() => handleOpenModel("experience", index)} 
+          className="text-warning cursor-pointer me-2"
+          size={18}
+          style={{ cursor: "pointer" }}
+        />
+        <MdDelete 
+          onClick={() => handleOpenDeleteModel("deleteexperience", index)} 
+          className="btn btn-danger p-1"
+          size={18}
+          style={{ cursor: "pointer", borderRadius: "4px" }}
+        />
+      </div>
+    </div>
 
-                  </p>
+    {/* Company and Job Title */}
+    <p className="mb-1 fw-semibold" style={{ fontSize: "16px", color: "white" }}>
+      {item.training_company} - <span>{item.course_job}</span>
+    </p>
 
-                  <p className="mb-1 fw-semibold" style={{ fontSize: "16px", color: 'white' }}>
-                    {data.training_company} - <span style={{ fontSize: "16px", color: 'white' }} >{data.course_job}</span>
-                  </p>
+    {/* Description */}
+    <p style={{ fontSize: "14px", lineHeight: "1.5", color: "white" }}>
+      {item.description}
+    </p>
+  </div>
+))}
 
-                  <p style={{ fontSize: "14px", lineHeight: "1.5", color: 'white' }}>
-                    {data.description}
-                  </p>
-                </div>
-              ))}
             </div>
 
           </div>
