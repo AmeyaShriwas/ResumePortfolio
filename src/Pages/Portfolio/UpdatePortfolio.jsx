@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { FaLinkedin, FaEnvelope, FaFileAlt, FaUser, FaEdit } from "react-icons/fa";
+import { FaLinkedin, FaEnvelope, FaFileAlt, FaUser, FaEdit, FaDelete } from "react-icons/fa";
 import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -15,9 +15,12 @@ const UpdatePortfolioPage = () => {
   const [data, setData] = useState(null);
   const { id } = useParams();
   const [showModal, setShowModal] = useState(false);
+  const [deleteShow, setDeleteShow] = useState(false)
   const [editField, setEditField] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [imageFile, setImageFile] = useState(null);
+  const [deleteField, setDeleteField] = useState(null)
+  const [deleteIndex, setDeleteIndex] = useState(null)
   const [personalDetails, setPersonalDetails] = useState({
     name: data?.name || "",
     tagLine: data?.tagLine || "",
@@ -308,6 +311,39 @@ const UpdatePortfolioPage = () => {
     }
   };
 
+  const handleOpenDeleteModel = (e, index)=> {
+    setDeleteShow(true)
+    setDeleteField(e)
+    setDeleteIndex(index)
+  }
+
+  const handleConfirm = async()=> {
+    if(deleteField === 'Deleteprojects'){
+      try {
+        const index = {index: deleteIndex}
+        const response = await axios.post(
+          `https://api.resumeportfolio.ameyashriwas.in/portfolio/deleteProject/${data.id}`,
+          index,
+          {
+            headers: {
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json"
+
+            }
+          }
+        );
+
+        console.log('res updated', response.data);
+        setData(response?.data?.data);
+        setDeleteShow(false)
+        setDeleteField(null)
+        setDeleteIndex(null)
+      } catch (error) {
+        console.error("Error updating portfolio:", error);
+      }
+    }
+  }
+
 
   if (!data) {
     return <div className="text-center text-dark py-5">Loading...</div>;
@@ -462,7 +498,7 @@ const UpdatePortfolioPage = () => {
                           {project.projectName} <FaEdit onClick={() => handleOpenModel('projects', index)} className="text-warning cursor-pointer" />
                         </h6>
                         <p className="card-text text-muted small d-flex justify-content-between">
-                          {project.projectDescription.length > 100 ? project.projectDescription?.slice(0, 100) : project.projectDescription} <FaEdit onClick={() => handleOpenModel('projects', index)} className="text-warning cursor-pointer" />
+                          {project.projectDescription.length > 100 ? project.projectDescription?.slice(0, 100) : project.projectDescription} <FaEdit onClick={() => handleOpenModel('projects', index)} className="text-warning cursor-pointer" /><FaDelete onClick={() => handleOpenDeleteModel('Deleteprojects', index)} className="text-warning cursor-pointer" />
                         </p>
                       </div>
                     </div>
@@ -596,7 +632,8 @@ const UpdatePortfolioPage = () => {
            </Form.Group>
 
          
-       ): editField === "experience" ? (
+       )
+       : editField === "experience" ? (
             
           <Form.Group>
            <Form.Label>Update Experience</Form.Label>
@@ -701,6 +738,26 @@ const UpdatePortfolioPage = () => {
           <Button variant="primary" onClick={handleSave}>Save Changes</Button>
         </Modal.Footer>
       </Modal>
+
+      <Modal show={deleteShow} onHide={handleClose} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>Confirm Deletion</Modal.Title>
+      </Modal.Header>
+      {deleteField === 'Deleteprojects'? <>
+        <Modal.Body>
+        <p>Are you sure you want to delete this item? This action cannot be undone.</p>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Cancel
+        </Button>
+        <Button variant="danger" onClick={handleConfirm}>
+          Delete
+        </Button>
+      </Modal.Footer>
+      </>: null}
+     
+    </Modal>
 
       {/* Footer */}
       <footer className="text-center p-3 mt-3 border" style={{ backgroundColor: "white", color: "black" }}>
