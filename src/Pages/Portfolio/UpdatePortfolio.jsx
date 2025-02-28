@@ -636,7 +636,7 @@ const UpdatePortfolioPage = () => {
                 borderRadius: '10px'
               }}>
                 {data.projects.map((project, index) => (
-                  <motion.div key={index} style={{minWidth:'400px'}} className="col-12 col-sm-6 col-md-4 mb-3" whileHover={{ scale: 1.03 }}>
+                  <motion.div key={index} style={{minWidth:'400px', boxShadow: `rgba(0, 0, 0, 0.24) 0px 3px 8px`}} className="col-12 col-sm-6 col-md-4 mb-3" whileHover={{ scale: 1.03 }}>
                     <div className="card shadow-sm border-0 position-relative">
                       <div className="square-container">
                         <img
