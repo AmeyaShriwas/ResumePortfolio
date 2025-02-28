@@ -593,7 +593,7 @@ const UpdatePortfolioPage = () => {
           <div className="tab-content mt-4">
             {/* Projects Section */}
             <div className="tab-pane fade show active" id="projects">
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom:'10px' }}>
                 <h4 style={{ margin: 0 }}>Projects</h4>
                 <h4
                   onClick={() => handleOpenModel("addprojects")}
@@ -623,7 +623,7 @@ const UpdatePortfolioPage = () => {
                       <button className="btn btn-sm btn-warning position-absolute top-0 end-0 m-2">
                         <FaEdit onClick={() => handleOpenModel('projects', index)} />
                       </button>
-                      <button className="btn btn-sm btn-warning position-absolute top-0 end-0 m-2">
+                      <button className="btn btn-sm btn-warning position-absolute top-0 end-10 m-2">
                         <MdDelete onClick={() => handleOpenDeleteModel('Deleteprojects', index)} />
                       </button>
                       <div className="card-body">
