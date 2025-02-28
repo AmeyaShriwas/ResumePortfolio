@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { FaLinkedin, FaEnvelope, FaFileAlt, FaUser, FaEdit, FaDelete } from "react-icons/fa";
+import { FaLinkedin, FaEnvelope, FaFileAlt, FaUser, FaEdit } from "react-icons/fa";
 import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -9,6 +9,8 @@ import { Modal, Button, Form } from "react-bootstrap";
 import { UserLogout } from "../../Redux/Slices/AuthSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { MdDelete } from "react-icons/md";
+
 
 
 const UpdatePortfolioPage = () => {
@@ -498,7 +500,7 @@ const UpdatePortfolioPage = () => {
                           {project.projectName} <FaEdit onClick={() => handleOpenModel('projects', index)} className="text-warning cursor-pointer" />
                         </h6>
                         <p className="card-text text-muted small d-flex justify-content-between">
-                          {project.projectDescription.length > 100 ? project.projectDescription?.slice(0, 100) : project.projectDescription} <FaEdit onClick={() => handleOpenModel('projects', index)} className="text-warning cursor-pointer" /><FaDelete onClick={() => handleOpenDeleteModel('Deleteprojects', index)} className="text-warning cursor-pointer" />
+                          {project.projectDescription.length > 100 ? project.projectDescription?.slice(0, 100) : project.projectDescription} <FaEdit onClick={() => handleOpenModel('projects', index)} className="text-warning cursor-pointer" /><MdDelete onClick={() => handleOpenDeleteModel('Deleteprojects', index)} className="text-warning cursor-pointer" />
                         </p>
                       </div>
                     </div>
